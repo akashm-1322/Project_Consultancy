@@ -1,28 +1,65 @@
-import React from 'react';
-import { Card, Col, Row , Container} from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Row, Container, Button } from 'react-bootstrap';
+import { FaPassport, FaBriefcase, FaUserGraduate, FaLanguage } from 'react-icons/fa';
 
 const services = [
-  { title: "Immigration Consulting", description: "Expert advice on immigration." },
-  { title: "Visa Processing", description: "Assistance with visa applications." },
-  { title: "Career Counseling", description: "Guidance for career growth abroad." },
+  { 
+    title: "Travel Abroad", 
+    description: "Get expert advice on immigration policies. Discover the best travel options for your international journey.", 
+    icon: <FaPassport /> 
+  },
+  { 
+    title: "Study Abroad", 
+    description: "Assistance with securing student visas. Explore educational opportunities across the globe.", 
+    icon: <FaBriefcase /> 
+  },
+  { 
+    title: "Career Counseling", 
+    description: "Guidance to grow your career internationally. Find the best opportunities that match your skillset.", 
+    icon: <FaUserGraduate /> 
+  },
+  { 
+    title: "Language Training", 
+    description: "Achieve fluency with our language training programs. Tailored courses to prepare you for global communication.", 
+    icon: <FaLanguage /> 
+  },
 ];
 
 const Service = () => (
-  <Container style={{background: "#f4ecf7"}}>
-    <h2 className="text-center my-4"> Our Services: </h2>
+  <Container fluid style={{ background: "#f4ecf7", padding: "20px" }}>
+    <h3 className="text-center mb-4">Our Services</h3>
     <Row>
       {services.map((service, index) => (
-        <Col key={index} md={4} className="mb-3">
-          <Card>
-            <Card.Body>
-              <Card.Title>{service.title}</Card.Title>
-              <Card.Text>{service.description}</Card.Text>
-            </Card.Body>
-          </Card>
+        <Col key={index} md={3} className="mb-3">
+          <ServiceCard service={service} />
         </Col>
       ))}
     </Row>
   </Container>
 );
+
+const ServiceCard = ({ service }) => {
+  const [showDescription, setShowDescription] = useState(false);
+
+  return (
+    <Card className="text-center">
+      <Card.Body>
+        <div style={{ fontSize: "40px", color: "#6c63ff" }}>
+          {service.icon}
+        </div>
+        <Card.Title className="mt-3">{service.title}</Card.Title>
+        {showDescription && <Card.Text>{service.description}</Card.Text>}
+        <Button 
+          variant="link" 
+          onClick={() => setShowDescription(!showDescription)}
+          className="mt-2 bg-primary text-white"
+          style={{ textDecoration: 'none' }}
+        >
+          {showDescription ? 'Hide' : 'Read'}
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+};
 
 export default Service;

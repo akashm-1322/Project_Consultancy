@@ -8,7 +8,7 @@ const testimonials = [
 
 const Testimonials = () => (
   <Container className= "shadow my-5" style={{background:"#f5eef8"}}>
-    <h2 className="text-center">What Our Clients Say</h2>
+    <h3 className="text-center">What Our Clients Say</h3>
     <Carousel>
       {testimonials.map((testimony, index) => (
         <Carousel.Item key={index}>
