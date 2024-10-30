@@ -1,46 +1,101 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
+  Menu,
+  MenuItem,
+  Box,
+  Container,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const NavbarComponent = () => (
-  <Navbar className="shadow fs-6" expand="lg" sticky="top" style={{ background: "#eaf2f8" }}>
-    <Container>
-      <Navbar.Brand href="/" className="fw-bold">
-        <img
-          src={`${process.env.PUBLIC_URL}/logo.png`}
-          alt="logo"
-          width="70"
-          height="30"
-          className="d-inline-block align-top"
-          style={{ marginRight: "8px" }}
-        />
-        J99 World Tours
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ms-auto" style={{ fontWeight: 500 }}>
-          <Nav.Link as={Link} to="/" className="mx-2">
-            Home
-          </Nav.Link>
-          <Nav.Link as={Link} to="/services" className="mx-2">
-            Services
-          </Nav.Link>
-          <Nav.Link as={Link} to="/about" className="mx-2">
-            About Us
-          </Nav.Link>
-          <Nav.Link as={Link} to="/contact" className="mx-2">
-            Contact
-          </Nav.Link>
-          {/* Dropdown Example */}
-          <NavDropdown title="More" id="basic-nav-dropdown" className="mx-2">
-            <NavDropdown.Item as={Link} to="/action">Action</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/another-action">Another Action</NavDropdown.Item>
-            <NavDropdown.Item as={Link} to="/something-else">Something Else</NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-);
+const NavbarComponent = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <AppBar position="sticky" style={{ backgroundColor: '#eaf2f8', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)' }}>
+      <Container className='text-dark' style={{fontWeight: "600" , fontSize:"24px"}}>
+        <Toolbar>
+          {/* Logo and Brand */}
+          <Box display="flex" alignItems="center" flexGrow={1}>
+            <IconButton component={Link} to="/" edge="start" color="inherit" aria-label="logo">
+              <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="logo" width="70" height="30" style={{ marginRight: '8px' }} />
+            </IconButton>
+            <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>
+              J99 World Tours
+            </Typography>
+          </Box>
+
+          {/* Menu Links */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
+            <Button component={Link} to="/" color="inherit">
+              <b>Home</b>
+            </Button>
+            <Button component={Link} to="/services" color="inherit">
+              <b>Services</b>
+            </Button>
+            <Button component={Link} to="/about" color="inherit">
+              <b>About Us</b>
+            </Button>
+            <Button component={Link} to="/contact" color="inherit">
+              <b>Contact</b>
+            </Button>
+
+            {/* Dropdown Menu */}
+            <Button
+              color="inherit"
+              onClick={handleMenuOpen}
+              endIcon={<MenuIcon />}
+            >
+              <b>More</b>
+            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem onClick={handleMenuClose} component={Link} to="/action">
+                <b>Action</b>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose} component={Link} to="/another-action">
+                <b>Another Action</b>
+              </MenuItem>
+              <MenuItem onClick={handleMenuClose} component={Link} to="/something-else">
+                <b>Something Else</b>
+              </MenuItem>
+            </Menu>
+          </Box>
+
+          {/* Mobile Menu Button */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton color="inherit" onClick={handleMenuOpen}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
 
 export default NavbarComponent;
