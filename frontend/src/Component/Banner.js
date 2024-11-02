@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import Study from "../Asset/Study.jpg";
-import lang from "../Asset/Language_Training.jpg";
-import WorkAbroad from "../Asset/Work_Abroad.jpg";
-import career from "../Asset/Career_Advancement.jpg";
+import { MdOutlineWifiTethering } from "react-icons/md";
 
+// Updated image data array with relative paths
 const images = [
-  { src: Study, title: "Study Abroad", description: "Explore top universities and gain international experience." },
-  { src: lang, title: "Language Training", description: "Enhance your language skills in immersive environments." },
-  { src: WorkAbroad, title: "Work Abroad", description: "Open doors to global job opportunities." },
-  { src: career, title: "Career Guidance", description: "Get professional advice to boost your career." }
+  { src: "/FL_img1.jpg", title: "Language Training", description: "Enhance your language skills in immersive environments." },
+  { src: "/S&S_img2.jpg", title: "Study Abroad", description: "Explore top universities and gain international experience." },
+  { src: "/World_Tour.jpg", title: "Work Abroad", description: "Open doors to global job opportunities." },
+  { src: "/Visa_Consult.jpg", title: "Career Guidance", description: "Get professional advice to boost your career." }
 ];
 
 const Banner = () => {
@@ -24,8 +22,8 @@ const Banner = () => {
   };
 
   return (
-    <Container fluid>
-      <Row>
+    <Container fluid className="p-0">
+      <Row noGutters>
         <Col xs={12}>
           <Carousel 
             activeIndex={activeIndex} 
@@ -38,10 +36,12 @@ const Banner = () => {
             {images.map((image, index) => (
               <Carousel.Item key={index}>
                 <div style={{ position: "relative" }}>
+                  {/* Fullscreen Image */}
                   <img 
                     src={image.src} 
                     alt={image.title} 
-                    className={`d-block w-100 carousel-image ${activeIndex === index ? 'animate-blur' : ''}`}
+                    style={{ width: "100vw", height: "100vh", objectFit: "cover" }}
+                    className={`d-block carousel-image ${activeIndex === index ? 'animate-blur' : ''}`}
                   />
 
                   {/* Centered Title and Description */}
@@ -49,7 +49,7 @@ const Banner = () => {
                     style={{
                       position: "absolute",
                       top: "50%",
-                      left: "30%",
+                      left: "50%",
                       transform: "translate(-50%, -50%)",
                       textAlign: "center",
                       color: "#ffffff",
@@ -63,7 +63,7 @@ const Banner = () => {
                     <p>{image.description}</p>
                   </div>
 
-                  {/* Vertical Dot Navigation Inside Image */}
+                  {/* Vertical Icon Navigation */}
                   <div 
                     style={{
                       position: "absolute",
@@ -77,17 +77,14 @@ const Banner = () => {
                     }}
                   >
                     {images.map((_, dotIndex) => (
-                      <div 
+                      <MdOutlineWifiTethering
                         key={dotIndex}
                         onClick={() => handleDotClick(dotIndex)}
+                        size={activeIndex === dotIndex ? 28 : 20}
+                        color={activeIndex === dotIndex ? "#6c63ff" : "#e9ecef"}
                         style={{
-                          width: activeIndex === dotIndex ? "24px" : "16px",
-                          height: activeIndex === dotIndex ? "24px" : "16px",
-                          backgroundColor: activeIndex === dotIndex ? "#6c63ff" : "#e9ecef",
-                          border: activeIndex === dotIndex ? "2px solid #ffffff" : "none",
-                          borderRadius: "50%",
                           cursor: "pointer",
-                          transition: "all 0.3s ease"
+                          transition: "all 0.3s ease",
                         }}
                       />
                     ))}
