@@ -3,11 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Sample certification data
 const certifications = [
-  { title: 'Certified React Developer', logo: 'path/to/react-certification.png' },
-  { title: 'AWS Certified Solutions Architect', logo: 'path/to/aws-certification.png' },
-  { title: 'Google Cloud Professional', logo: 'path/to/google-cloud-certification.png' },
-  { title: 'Scrum Master Certified', logo: 'path/to/scrum-certification.png' },
-  { title: 'PMP Certified', logo: 'path/to/pmp-certification.png' },
+  { image: require('../Asset/100_trusted.jpeg') },
+  { image: require('../Asset/5_star_rating.png') },
+  { image: require('../Asset/certified_buisness_excellence.png') },
+  { image: require('../Asset/multi_award_winner.jpeg') },
+  { image: require('../Asset/scholarship_guarenteed.png') },
 ];
 
 const Certifications = () => {
@@ -18,8 +18,8 @@ const Certifications = () => {
         {certifications.map((certification, index) => (
           <div className="col-2 text-center mx-2" key={index}>
             <img
-              src={certification.logo}
-              alt={certification.title}
+              src={certification.image}
+              alt={certification}
               style={{
                 width: '100%', // Scalable width
                 height: 'auto', // Auto height to maintain aspect ratio

@@ -3,7 +3,6 @@ import Banner from '../Component/Banner';
 import Testimonials from '../Component/Testimonials';
 import CountryPage from './CountryPage';
 import ProcessImageBanner from './ProcessImageBanner';
-import OurTeam from '../Component/CountryGuide';
 import Certifications from './Certifications';
 
 const HomePage = () => (
@@ -12,7 +11,6 @@ const HomePage = () => (
     <CountryPage />
     <Testimonials />
     <ProcessImageBanner />
-    <OurTeam />
     <Certifications />
   </>
 );
