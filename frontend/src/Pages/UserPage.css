@@ -1,0 +1,67 @@
+.user-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  .user-page-header {
+    margin-bottom: 2rem;
+  }
+  
+  .user-icon {
+    font-size: 3rem;
+    color: #4A90E2;
+    margin-bottom: 1rem;
+  }
+  
+  .user-page-header h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .user-page-content {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    padding: 1rem;
+  }
+  
+  .feature-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .feature-icon {
+    font-size: 2rem;
+    color: #4A90E2;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-page-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  

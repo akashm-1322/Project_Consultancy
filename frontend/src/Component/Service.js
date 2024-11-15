@@ -9,22 +9,18 @@ import TravelAbroadProcess from "./TravelAbroadProcess";
 const services = [
   { 
     title: "Travel Abroad", 
-    description: "Get expert advice on immigration policies. Discover the best travel options for your international journey.", 
     icon: <FaPassport /> 
   },
   { 
     title: "Study Abroad", 
-    description: "Assistance with securing student visas. Explore educational opportunities across the globe.", 
     icon: <FaBriefcase /> 
   },
   { 
     title: "Career Counseling", 
-    description: "Guidance to grow your career internationally. Find the best opportunities that match your skillset.", 
     icon: <FaUserGraduate /> 
   },
   { 
     title: "Language Training", 
-    description: "Achieve fluency with our language training programs. Tailored courses to prepare you for global communication.", 
     icon: <FaLanguage /> 
   },
 ];
@@ -63,7 +59,6 @@ const ServiceCard = ({ service, onReadMore }) => (
         {service.icon}
       </div>
       <Card.Title className="mt-3">{service.title}</Card.Title>
-      <Card.Text>{service.description}</Card.Text>
       <Button variant="link" onClick={onReadMore} className="mt-2 text-primary" style={{ textDecoration: 'none' }}>
         Learn More
       </Button>

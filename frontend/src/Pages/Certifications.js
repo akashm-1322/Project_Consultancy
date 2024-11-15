@@ -13,7 +13,6 @@ const certifications = [
 const Certifications = () => {
   return (
     <div className="container my-5">
-      <h2 className="text-center mb-4">Our Certifications</h2>
       <div className="row justify-content-between align-items-center">
         {certifications.map((certification, index) => (
           <div className="col-2 text-center mx-2" key={index}>

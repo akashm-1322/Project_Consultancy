@@ -1,6 +1,6 @@
-// firebaseConfig.js
+// src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore"; // Add getDocs and collection
 import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
@@ -20,4 +20,4 @@ const db = getFirestore(firebaseApp); // Initialize Firestore instance
 const analytics = getAnalytics(firebaseApp); // Optional: Initialize Analytics
 
 // Export Firestore instance and analytics (optional)
-export { db, analytics };
+export { db, analytics, collection, getDocs }; // Export collection and getDocs
