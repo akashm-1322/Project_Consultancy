@@ -1,14 +1,14 @@
-import React from 'react'
-import TopNavbar from './TopNavbar'
-import BottomNavbar from './BottomNavbar'
+import React from 'react';
+import TopNavbar from './TopNavbar';
+import BottomNavbar from './BottomNavbar';
 
-const Navbar = () => {
+const Navbar = ({ isAdmin }) => {
   return (
     <div>
       <TopNavbar />
-      <BottomNavbar />
+      <BottomNavbar isAdmin={isAdmin} />
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

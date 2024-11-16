@@ -1,7 +1,7 @@
 // src/pages/AdminLoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, collection, getDocs } from './firebaseConfig';
+import { db, collection, getDocs } from '../firebaseConfig';
 import './AdminLoginPage.css';
 
 const AdminLoginPage = () => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Box, Typography, Grid, Card, CardContent, Avatar } from '@mui/material';
 import { styled } from '@mui/system';
+import { motion } from 'framer-motion';
 
 // Define the team members
 const teamMembers = [
@@ -19,7 +20,7 @@ const BackgroundSection = styled(Box)(({ theme }) => ({
   color: '#fff',
   position: 'relative',
   textAlign: 'center',
-  boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.4)', // Apply shadow here
+  boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.4)',
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -27,17 +28,35 @@ const BackgroundSection = styled(Box)(({ theme }) => ({
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Enhanced dark overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   zIndex: 1,
 }));
+
+// Animation Variants
+const fadeIn = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
+};
 
 const AboutPage = () => {
   return (
     <Box>
       {/* Introduction Section */}
       <BackgroundSection>
-        <Container maxWidth="md" style={{ position: 'relative', zIndex: 2 }}>
+        <Container
+          maxWidth="md"
+          component={motion.div}
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          style={{ position: 'relative', zIndex: 2 }}
+        >
           <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold', fontSize: '2.5rem' }}>
             About Us
           </Typography>
@@ -48,7 +67,14 @@ const AboutPage = () => {
       </BackgroundSection>
 
       {/* Our Mission Section */}
-      <Container sx={{ py: 8, textAlign: 'center', boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.2)', borderRadius: '16px', my: 4 }}>
+      <Container
+        component={motion.div}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        sx={{ py: 8, textAlign: 'center', boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.2)', borderRadius: '16px', my: 4 }}
+      >
         <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#3f51b5', fontSize: '2rem' }}>
           Our Mission
         </Typography>
@@ -59,37 +85,55 @@ const AboutPage = () => {
 
       {/* Meet the Team Section */}
       <Container sx={{ py: 8, boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)', borderRadius: '16px', my: 4 }}>
-        <Typography variant="h4" component="h2" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', color: '#3f51b5', fontSize: '2rem' }}>
+        <Typography
+          component={motion.div}
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeIn}
+          variant="h4"
+          sx={{ textAlign: 'center', fontWeight: 'bold', color: '#3f51b5', fontSize: '2rem' }}
+        >
           Meet the Team
         </Typography>
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} justifyContent="center" component={motion.div} variants={staggerContainer} initial="hidden" animate="visible">
           {teamMembers.map((member, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card sx={{
-                boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.1)', // Soft shadow on team cards
-                transition: '0.3s',
-                '&:hover': { transform: 'scale(1.05)', boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.3)' },
-                borderRadius: '16px',
-              }}>
-                <Box display="flex" justifyContent="center" mt={3}>
-                  <Avatar src={member.image} alt={member.name} sx={{ width: 100, height: 100, border: '3px solid #3f51b5' }} />
-                </Box>
-                <CardContent>
-                  <Typography variant="h6" component="h3" align="center" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
-                    {member.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" align="center">
-                    {member.role}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <motion.div variants={fadeIn}>
+                <Card
+                  sx={{
+                    boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.1)',
+                    transition: '0.3s',
+                    '&:hover': { transform: 'scale(1.05)', boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.3)' },
+                    borderRadius: '16px',
+                  }}
+                >
+                  <Box display="flex" justifyContent="center" mt={3}>
+                    <Avatar src={member.image} alt={member.name} sx={{ width: 100, height: 100, border: '3px solid #3f51b5' }} />
+                  </Box>
+                  <CardContent>
+                    <Typography variant="h6" component="h3" align="center" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
+                      {member.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" align="center">
+                      {member.role}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </Grid>
           ))}
         </Grid>
       </Container>
 
       {/* Our Values Section */}
-      <Container sx={{ py: 8, textAlign: 'center', backgroundColor: '#f5f5f5', borderRadius: '16px', boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.1)', my: 4 }}>
+      <Container
+        component={motion.div}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeIn}
+        sx={{ py: 8, textAlign: 'center', backgroundColor: '#f5f5f5', borderRadius: '16px', boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.1)', my: 4 }}
+      >
         <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#3f51b5', fontSize: '2rem' }}>
           Our Values
         </Typography>

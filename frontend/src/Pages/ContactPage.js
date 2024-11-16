@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit, FaUserAlt } from 'react-icons/fa'; // Using React Icons
 import ContactImage from '../Asset/Contact.jpg'; // Adjust path as needed
 
-import { db } from './firebaseConfig';
+import { db } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 
 // Country Data
@@ -40,7 +40,7 @@ const languageLearning = [
 ];
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '', type: '', message: '', designation: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', email: '', type: '', message: '', destination: '' });
   const [selectedType, setSelectedType] = useState(''); // For selecting study/work/language
   const [selectedCountry, setSelectedCountry] = useState(''); // For selecting the country
   const [statusMessage, setStatusMessage] = useState('');
@@ -54,7 +54,7 @@ const ContactPage = () => {
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value); // Set selected country when dropdown value changes
-    setFormData({ ...formData, designation: e.target.value }); // Update designation as country code
+    setFormData({ ...formData, destination: e.target.value }); // Update designation as country code
   };
 
   const handleSubmit = async (e) => {
@@ -63,7 +63,7 @@ const ContactPage = () => {
       // Add form data to Firestore
       await addDoc(collection(db, "contacts"), formData);
       setStatusMessage("Message sent successfully!");
-      setFormData({ name: '', phone: '', email: '', type: '', message: '', designation: '' }); // Clear form
+      setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '' }); // Clear form
       setSelectedType('');
       setSelectedCountry('');
     } catch (error) {

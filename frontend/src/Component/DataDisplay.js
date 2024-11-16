@@ -1,6 +1,6 @@
 // src/components/DataDisplay.js
 import React, { useEffect, useState } from 'react';
-import { db, collection, getDocs } from '../Pages/firebaseConfig'; // Import Firestore methods
+import { db, collection, getDocs } from '../firebaseConfig'; // Import Firestore methods
 
 const DataDisplay = () => {
   const [data, setData] = useState([]);

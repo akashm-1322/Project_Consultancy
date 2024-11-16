@@ -1,38 +1,48 @@
-// src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './Component/Navbar';
 import OpeningPage from './Pages/OpeningPage';
-import FirstApp from './Pages/FirstApp'; // Import the FirstApp component
-import NavbarComponent from './Component/Navbar'; // Navbar should be available across main pages only
-import ServicesPage from './Component/Service'; // Services Page
-import AboutPage from './Pages/AboutPage'; // About Page
-import ContactPage from './Pages/ContactPage'; // Contact Page
+import HomePage from './Pages/HomePage';
+import ServicesPage from './Component/Service';
+import AboutPage from './Pages/AboutPage';
+import ContactPage from './Pages/ContactPage';
+import AdminContacts from './Component/AdminContacts';
 import Footer from './Component/Footer';
 import NavFooter from './Component/NavFooter';
 
 const AppContent = () => {
-  const location = useLocation();
-  
-  // Conditionally show Navbar and Footers based on the current route
-  const showNavAndFooter = location.pathname !== '/';
+  const [isFirstVisit, setIsFirstVisit] = useState(true); // OpeningPage visible initially
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleNavigate = (admin) => {
+    // Set visit states only after user takes action
+    localStorage.setItem('hasVisited', 'true');
+    localStorage.setItem('isAdmin', admin ? 'true' : 'false');
+    setIsFirstVisit(false);
+    setIsAdmin(admin);
+  };
+
+  if (isFirstVisit) {
+    // Always render OpeningPage until action is taken
+    return <OpeningPage onNavigate={handleNavigate} />;
+  }
 
   return (
     <>
-      {showNavAndFooter && <NavbarComponent />}
-      
+      <Navbar isAdmin={isAdmin} />
       <Routes>
-        <Route path="/" element={<OpeningPage />} />
-        <Route path="/home/*" element={<FirstApp />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        {isAdmin && <Route path="/admincontacts" element={<AdminContacts />} />}
       </Routes>
-      
-      {showNavAndFooter && <Footer />}
-      {showNavAndFooter && <NavFooter />}
+      <Footer />
+      <NavFooter />
     </>
   );
 };
+
 
 const App = () => (
   <Router>

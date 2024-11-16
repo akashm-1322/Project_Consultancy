@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Menu, Box, Button, Fade } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Menu,
+  Box,
+  Button,
+  Fade,
+  Tooltip,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
@@ -8,9 +17,10 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { styled } from '@mui/system';
 
-const BottomNavbar = () => {
+const BottomNavbar = ({ isAdmin }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  // Handle mobile menu toggle
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,7 +37,7 @@ const BottomNavbar = () => {
         boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
         height: '60px',
         width: '100%',
-        overflow: 'hidden',  // Remove scrollbars
+        overflow: 'hidden',
         zIndex: 1201,
       }}
     >
@@ -38,10 +48,9 @@ const BottomNavbar = () => {
           alignItems: 'center',
           width: '100%',
           padding: 0,
-          overflow: 'hidden', // Prevent overflow that might cause scrollbars
         }}
       >
-        {/* Desktop Menu Items */}
+        {/* Desktop Navigation */}
         <Box
           sx={{
             display: { xs: 'none', md: 'flex' },
@@ -50,18 +59,33 @@ const BottomNavbar = () => {
             justifyContent: 'center',
           }}
         >
-          <StyledButton component={Link} to="/" startIcon={<HomeIcon />} sx={{ textTransform: 'none' }}>
-            Home
-          </StyledButton>
-          <StyledButton component={Link} to="/services" startIcon={<FlightTakeoffIcon />} sx={{ textTransform: 'none' }}>
-            Services
-          </StyledButton>
-          <StyledButton component={Link} to="/about" startIcon={<InfoIcon />} sx={{ textTransform: 'none' }}>
-            About Us
-          </StyledButton>
-          <StyledButton component={Link} to="/contact" startIcon={<ContactMailIcon />} sx={{ textTransform: 'none' }}>
-            Contact
-          </StyledButton>
+          <Tooltip title="Home" arrow>
+            <StyledButton component={Link} to="/" startIcon={<HomeIcon />}>
+              Home
+            </StyledButton>
+          </Tooltip>
+          <Tooltip title="Services" arrow>
+            <StyledButton component={Link} to="/services" startIcon={<FlightTakeoffIcon />}>
+              Services
+            </StyledButton>
+          </Tooltip>
+          <Tooltip title="About Us" arrow>
+            <StyledButton component={Link} to="/about" startIcon={<InfoIcon />}>
+              About Us
+            </StyledButton>
+          </Tooltip>
+          <Tooltip title="Contact" arrow>
+            <StyledButton component={Link} to="/contact" startIcon={<ContactMailIcon />}>
+              Contact
+            </StyledButton>
+          </Tooltip>
+          {isAdmin && (
+            <Tooltip title="Admin Contacts" arrow>
+              <StyledButton component={Link} to="/admincontacts" startIcon={<ContactMailIcon />}>
+                Admin Contacts
+              </StyledButton>
+            </Tooltip>
+          )}
         </Box>
 
         {/* Mobile Menu Icon */}
@@ -69,13 +93,19 @@ const BottomNavbar = () => {
           <IconButton
             color="inherit"
             onClick={handleMenuOpen}
-            sx={{ color: '#fff', '&:hover': { color: '#ffcc00' }, transition: 'color 0.3s ease' }}
+            sx={{
+              color: '#fff',
+              '&:hover': {
+                transform: 'scale(1.1)',
+                transition: 'transform 0.3s ease',
+              },
+            }}
           >
             <MenuIcon sx={{ fontSize: '1.8rem' }} />
           </IconButton>
         </Box>
 
-        {/* Mobile Dropdown Menu with Fade Animation */}
+        {/* Mobile Dropdown Menu */}
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -89,6 +119,9 @@ const BottomNavbar = () => {
             horizontal: 'right',
           }}
           TransitionComponent={Fade}
+          TransitionProps={{
+            timeout: 500,
+          }}
         >
           <StyledMenuButton onClick={handleMenuClose} component={Link} to="/" fullWidth>
             Home
@@ -102,41 +135,44 @@ const BottomNavbar = () => {
           <StyledMenuButton onClick={handleMenuClose} component={Link} to="/contact" fullWidth>
             Contact
           </StyledMenuButton>
+          {isAdmin && (
+            <StyledMenuButton onClick={handleMenuClose} component={Link} to="/admincontacts" fullWidth>
+              Admin Contacts
+            </StyledMenuButton>
+          )}
         </Menu>
       </Toolbar>
     </AppBar>
   );
 };
 
-// Styled Button for Desktop with animations
+// Styled Button for Desktop Menu with hover animation
 const StyledButton = styled(Button)(({ theme }) => ({
   color: '#fff',
   fontWeight: '700',
   fontSize: '1.2rem',
   fontFamily: 'Roboto, sans-serif',
-  textTransform: 'uppercase',
-  transition: 'color 0.3s ease, transform 0.3s ease',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
+  padding: '10px 15px',
   '&:hover': {
-    color: '#ffcc00',
-    transform: 'scale(1.1)',
+    color: '#FF7F50', // Orange color
+    backgroundColor: 'transparent',
+    transform: 'scale(1.05)', // Zoom-in effect on hover
+    transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
   },
 }));
 
-// Styled Menu Button for Mobile with hover effect
+// Styled Button for Mobile Dropdown Menu
 const StyledMenuButton = styled(Button)(({ theme }) => ({
-  color: '#fff',
-  fontWeight: '500',
+  color: '#000',
+  fontWeight: '700',
   fontSize: '1rem',
-  textTransform: 'capitalize',
   fontFamily: 'Roboto, sans-serif',
-  padding: '10px 20px',
-  transition: 'background-color 0.2s ease, color 0.3s ease',
+  padding: '10px 15px',
   '&:hover': {
-    backgroundColor: '#ffcc00',
-    color: '#000',
+    color: '#FF7F50', // Orange color
+    backgroundColor: 'transparent',
+    transform: 'scale(1.05)', // Zoom-in effect on hover
+    transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
   },
 }));
 

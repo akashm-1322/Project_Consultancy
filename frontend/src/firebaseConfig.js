@@ -1,9 +1,9 @@
 // src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore"; // Add getDocs and collection
+import { getFirestore, collection, getDocs } from "firebase/firestore"; 
 import { getAnalytics } from "firebase/analytics";
 
-// Your web app's Firebase configuration
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDzSuVBCoUNJgViror0_UTJVGeWnlnbm1Q",
   authDomain: "j22datafile.firebaseapp.com",
@@ -16,8 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp); // Initialize Firestore instance
-const analytics = getAnalytics(firebaseApp); // Optional: Initialize Analytics
+const db = getFirestore(firebaseApp);  // Firestore instance
+const analytics = getAnalytics(firebaseApp);  // Optional Analytics
 
-// Export Firestore instance and analytics (optional)
-export { db, analytics, collection, getDocs }; // Export collection and getDocs
+export { db, analytics, collection, getDocs };

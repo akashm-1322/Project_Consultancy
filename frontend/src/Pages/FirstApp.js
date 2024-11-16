@@ -1,18 +1,21 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; // Use Routes and Route for nested routes
-import HomePage from './HomePage';  // HomePage component
-import ServicesPage from '../Component/Service';  // Services page
-import AboutPage from './AboutPage';  // About page
-import ContactPage from './ContactPage';  // Contact page
+import { Routes, Route, Navigate } from 'react-router-dom';
+import HomePage from './HomePage'; // HomePage component
+import ServicesPage from '../Component/Service'; // ServicesPage component
+import AboutPage from './AboutPage'; // AboutPage component
+import ContactPage from './ContactPage'; // ContactPage component
 
 const FirstApp = () => (
   <div>
-    {/* FirstApp will handle the nested routes */}
     <Routes>
+      {/* Route for HomePage */}
       <Route path="/" element={<HomePage />} />
+      {/* Other nested routes */}
       <Route path="services" element={<ServicesPage />} />
       <Route path="about" element={<AboutPage />} />
       <Route path="contact" element={<ContactPage />} />
+      {/* Fallback for unmatched routes */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </div>
 );

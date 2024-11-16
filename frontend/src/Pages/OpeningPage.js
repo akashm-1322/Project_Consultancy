@@ -1,21 +1,18 @@
-// src/pages/OpeningPage.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaUser, FaSignInAlt } from 'react-icons/fa';
-import { db, collection, getDocs } from './firebaseConfig';
+import { db, collection, getDocs } from '../firebaseConfig'; // Firebase setup
 import './OpeningPage.css';
 
-const OpeningPage = () => {
+const OpeningPage = ({ onNavigate }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleUserLogin = () => {
-    // Redirect to main user application
-    navigate('/home');
+    // Regular user navigation
+    onNavigate(false);
   };
 
   const handleAdminLogin = async (e) => {
@@ -25,18 +22,19 @@ const OpeningPage = () => {
 
     try {
       const querySnapshot = await getDocs(collection(db, 'admins'));
-      const admins = querySnapshot.docs.map(doc => doc.data());
+      const admins = querySnapshot.docs.map((doc) => doc.data());
 
-      const admin = admins.find(admin => admin.username === username && admin.password === password);
+      const admin = admins.find(
+        (admin) => admin.username === username && admin.password === password
+      );
 
       if (admin) {
-        localStorage.setItem('isAuthenticated', true); // Store authentication status
-        navigate('/home'); // Redirect to main app for authenticated admin
+        onNavigate(true); // Navigate as admin
       } else {
         setErrorMessage('Invalid credentials');
       }
     } catch (error) {
-      setErrorMessage('Error connecting to database');
+      setErrorMessage('Error connecting to the database');
     } finally {
       setLoading(false);
     }
@@ -53,8 +51,10 @@ const OpeningPage = () => {
             <button onClick={handleUserLogin} className="button user-button">
               <FaUser className="button-icon" /> User Page
             </button>
-
-            <button onClick={() => setIsAdminLogin(true)} className="button admin-button">
+            <button
+              onClick={() => setIsAdminLogin(true)}
+              className="button admin-button"
+            >
               <FaSignInAlt className="button-icon" /> Admin Login
             </button>
           </div>
@@ -82,7 +82,13 @@ const OpeningPage = () => {
               {loading ? 'Logging in...' : 'Login'}
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <button onClick={() => setIsAdminLogin(false)} className="back-button">Back</button>
+            <button
+              type="button"
+              onClick={() => setIsAdminLogin(false)}
+              className="back-button"
+            >
+              Back
+            </button>
           </form>
         )}
       </div>
