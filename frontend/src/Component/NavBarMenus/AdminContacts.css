@@ -1,0 +1,47 @@
+.admin-contacts-container {
+    margin: 20px;
+  }
+  
+  .heading {
+    color: #4caf50;
+  }
+  
+  .form-container {
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    margin-bottom: 15px;
+  }
+  
+  .select-box {
+    margin-bottom: 15px;
+  }
+  
+  .submit-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .table-container {
+    margin-top: 20px;
+  }
+  
+  .table-row {
+    transition: background-color 0.3s ease;
+  }
+  
+  .table-row:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .action-btn {
+    margin-right: 10px;
+  }
+  
+  .error-text {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  

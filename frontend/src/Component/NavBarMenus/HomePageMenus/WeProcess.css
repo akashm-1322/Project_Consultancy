@@ -1,0 +1,91 @@
+/* WeProcess.css */
+
+.we-process-container {
+    background: #f9f9f9;
+    min-height: 100vh;
+    padding: 50px 20px;
+  }
+  
+  .header-section {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4caf50;
+  }
+  
+  .header-section p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px;
+    width: 250px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stat-card .stat-icon {
+    margin-bottom: 20px;
+  }
+  
+  .stat-card .stat-counter {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  .stat-card p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  .graphics-section {
+    margin-top: 50px;
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    border-radius: 20px;
+  }
+  
+  .graphics-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3f51b5;
+    margin-bottom: 20px;
+  }
+  
+  .graphics-section p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .graphics-section .image-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .graphics-section .image-container img {
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  

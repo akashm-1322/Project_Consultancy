@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaUser, FaSignInAlt } from 'react-icons/fa';
-import { db, collection, getDocs } from '../firebaseConfig'; // Firebase setup
+import { db, collection, getDocs } from '../../firebaseConfig'; // Firebase setup
 import './OpeningPage.css';
 
 const OpeningPage = ({ onNavigate }) => {

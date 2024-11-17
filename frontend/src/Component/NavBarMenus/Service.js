@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Card, Col, Row, Container, Button } from "react-bootstrap";
 import { FaPassport, FaBriefcase, FaUserGraduate, FaLanguage } from "react-icons/fa";
-import CareerCounselingProcess from "./CareerCounselingProcess";
-import LanguageTrainingProcess from "./LanguageTrainingProcess";
-import StudyAbroadProcess from "./StudyAbroadProcess";
-import TravelAbroadProcess from "./TravelAbroadProcess";
+import CareerCounselingProcess from "./ServicePageMenus/CareerCounselingProcess";
+import LanguageTrainingProcess from "./ServicePageMenus/LanguageTrainingProcess";
+import StudyAbroadProcess from "./ServicePageMenus/StudyAbroadProcess";
+import TravelAbroadProcess from "./ServicePageMenus/TravelAbroadProcess";
 import { motion } from "framer-motion"; // Framer Motion for animations
+import './Service.css';  // Importing external CSS file
 
 const services = [
   {
@@ -38,42 +39,10 @@ const Service = () => {
   };
 
   return (
-    <Container
-      fluid
-      style={{
-        background: "linear-gradient(135deg, #f4ecf7, #e8e9fc)",
-        padding: "40px",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
+    <Container fluid className="service-container">  {/* Use specific class name */}
       {/* Add Background Graphics */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-50px",
-          right: "-100px",
-          width: "300px",
-          height: "300px",
-          background: "rgba(108, 99, 255, 0.2)",
-          borderRadius: "50%",
-          filter: "blur(100px)",
-          zIndex: 1,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "-50px",
-          left: "-100px",
-          width: "300px",
-          height: "300px",
-          background: "rgba(108, 99, 255, 0.2)",
-          borderRadius: "50%",
-          filter: "blur(100px)",
-          zIndex: 1,
-        }}
-      />
+      <div className="background-circle top-left" />
+      <div className="background-circle bottom-left" />
 
       <Row>
         {services.map((service, index) => (
@@ -101,22 +70,21 @@ const Service = () => {
 };
 
 const ServiceCard = ({ service, onReadMore }) => (
-  <Card className="text-center shadow-sm" style={{ border: "none", overflow: "hidden", borderRadius: "15px" }}>
+  <Card className="service-card shadow-sm">
     <Card.Body>
       <motion.div
         whileHover={{ rotate: 15, scale: 1.2 }}
         transition={{ type: "spring", stiffness: 200 }}
-        style={{ fontSize: "40px", color: "#6c63ff" }}
+        className="icon"
       >
         {service.icon}
       </motion.div>
-      <Card.Title className="mt-3">{service.title}</Card.Title>
-      <Card.Text style={{ fontSize: "0.9rem", color: "#6c757d" }}>{service.description}</Card.Text>
+      <Card.Title className="title">{service.title}</Card.Title>
+      <Card.Text className="description">{service.description}</Card.Text>
       <Button
         variant="link"
         onClick={onReadMore}
-        className="mt-2 text-primary"
-        style={{ textDecoration: "none", fontWeight: "bold" }}
+        className="learn-more-btn"
       >
         Learn More
       </Button>
@@ -125,15 +93,7 @@ const ServiceCard = ({ service, onReadMore }) => (
       initial={{ scaleX: 0 }}
       animate={{ scaleX: 1 }}
       transition={{ duration: 0.5 }}
-      style={{
-        position: "absolute",
-        bottom: "0",
-        left: "0",
-        height: "5px",
-        background: "#6c63ff",
-        width: "100%",
-        transformOrigin: "left",
-      }}
+      className="bottom-line"
     />
   </Card>
 );

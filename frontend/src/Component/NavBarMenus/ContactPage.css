@@ -1,0 +1,115 @@
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 0;
+    background: linear-gradient(135deg, #6e7e84, #9fa6b2); /* Background gradient */
+  }
+  
+  .contact-row {
+    width: 100%;
+  }
+  
+  .contact-form-col,
+  .contact-image-col {
+    padding: 20px;
+  }
+  
+  .contact-form-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    height: 100vh;  /* Set the height of the container to match the viewport height */
+    width: 50%; /* Set width to 50% for splitting the container */
+    padding: 30px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width/height calculation */
+  }
+  
+  .contact-image-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set height to match the left container */
+    width: 50%;  /* Set width to 50% for splitting the container */
+  }
+  
+  .contact-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .contact-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 30px;
+  }
+  
+  .contact-form {
+    width: 100%;
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .status-message {
+    margin: 15px;
+    font-size: 16px;
+    color: #28a745;
+  }
+  
+  @media (max-width: 768px) {
+    .contact-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .contact-form-col,
+    .contact-image-col {
+      width: 100%;
+      max-width: none;
+    }
+  
+    .contact-img {
+      max-height: 400px;
+    }
+  }
+  

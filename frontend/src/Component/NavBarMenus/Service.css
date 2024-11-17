@@ -1,0 +1,64 @@
+/* Service.css */
+.service-container {
+    background: linear-gradient(135deg, #f4ecf7, #e8e9fc);
+    padding: 40px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .background-circle {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(108, 99, 255, 0.2);
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 1;
+  }
+  
+  .background-circle.top-left {
+    top: -50px;
+    right: -100px;
+  }
+  
+  .background-circle.bottom-left {
+    bottom: -50px;
+    left: -100px;
+  }
+  
+  .service-card {
+    border: none;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+  
+  .service-card .icon {
+    font-size: 40px;
+    color: #6c63ff;
+  }
+  
+  .service-card .title {
+    margin-top: 20px;
+  }
+  
+  .service-card .description {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+  
+  .learn-more-btn {
+    text-decoration: none;
+    font-weight: bold;
+    color: #007bff;
+  }
+  
+  .bottom-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background: #6c63ff;
+    width: 100%;
+    transform-origin: left;
+  }
+  

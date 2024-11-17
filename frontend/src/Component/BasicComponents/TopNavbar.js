@@ -89,11 +89,11 @@ const TopNavbar = () => {
         <Box display="flex" alignItems="center" gap={2}>
           <Box sx={contactDetailsBox}>
             <PhoneIcon sx={iconStyles} />
-            <Typography sx={{ color: '#fff', fontSize: '1.2rem', padding: '3px' }}>8270528540</Typography>
+            <Typography sx={{ color: '#fff', fontSize: '1.2rem', padding: '3px' }}>+91 9884945606</Typography>
           </Box>
           <Box sx={contactDetailsBox}>
             <MailIcon sx={iconStyles} />
-            <Typography sx={{ color: '#fff', fontSize: '1.2rem', padding: '3px' }}>J99WorldTour@gmail.com</Typography>
+            <Typography sx={{ color: '#fff', fontSize: '1.2rem', padding: '3px' }}>J99Recruitmentservices@gmail.com</Typography>
           </Box>
 
           {/* User/Admin Icon */}

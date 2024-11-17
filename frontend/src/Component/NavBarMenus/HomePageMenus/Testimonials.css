@@ -1,0 +1,128 @@
+/* Testimonials.css */
+
+.testimonials-page {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+  }
+  
+  .banner {
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 40px 20px;
+    margin-bottom: 40px;
+  }
+  
+  .banner-title {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  
+  .banner-subtitle {
+    font-size: 18px;
+    font-weight: lighter;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .comments-section {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .comments-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .comments-list {
+    margin-top: 20px;
+  }
+  
+  .comment {
+    background-color: #f1f1f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .comment p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .comment strong {
+    color: #333;
+  }
+  
+  .comment-form {
+    width: 100%;
+    max-width: 800px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .comment-form h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .comment-form input,
+  .comment-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .comment-form input:focus,
+  .comment-form textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  .comment-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .comment-form button:hover {
+    background-color: #45a049;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      padding: 10px;
+    }
+  
+    .comments-section,
+    .comment-form {
+      width: 100%;
+    }
+  }
+  

@@ -1,7 +1,6 @@
-// src/pages/AdminLoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, collection, getDocs } from '../firebaseConfig';
+import { db, collection, getDocs } from '../../firebaseConfig';
 import './AdminLoginPage.css';
 
 const AdminLoginPage = () => {
@@ -9,15 +8,29 @@ const AdminLoginPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
+
+  // Function to validate the password strength
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
+    setPasswordError('');
+
+    if (!validatePassword(password)) {
+      setPasswordError('Password must be at least 8 characters long, include one uppercase letter, one number, and one special character.');
+      setLoading(false);
+      return;
+    }
 
     try {
-      const querySnapshot = await getDocs(collection(db, "admins"));
+      const querySnapshot = await getDocs(collection(db, 'admins'));
       const admins = querySnapshot.docs.map(doc => doc.data());
 
       const admin = admins.find(admin => admin.username === username && admin.password === password);
@@ -57,6 +70,7 @@ const AdminLoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {passwordError && <p className="error-message">{passwordError}</p>}
           </div>
           <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
         </form>

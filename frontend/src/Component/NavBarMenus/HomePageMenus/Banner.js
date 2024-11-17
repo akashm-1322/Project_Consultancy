@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
 import { FaCircle } from "react-icons/fa"; // Modern dot icon
+import './Banner.css'; // Importing the external CSS file
 
 const images = [
   { src: "/FL_img1.jpg", title: "Language Training", description: "Achieve fluency with our language training programs. Tailored courses to prepare you for global communication." },
@@ -34,7 +35,7 @@ const Banner = () => {
           >
             {images.map((image, index) => (
               <Carousel.Item key={index}>
-                <div style={{ position: "relative" }}>
+                <div className="carousel-container">
                   {/* Fullscreen Image with Parallax Effect */}
                   <img 
                     src={image.src} 
@@ -51,40 +52,12 @@ const Banner = () => {
                   
                   {/* Centered Title and Description */}
                   <div 
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      textAlign: "center",
-                      color: "#fff",
-                      opacity: activeIndex === index ? 1 : 0,
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: '1.2rem',
-                      transition: 'opacity 1s ease, transform 1s ease',
-                      transform: activeIndex === index ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0.95)',
-                      background: 'rgba(0, 0, 0, 0.5)',
-                      padding: '20px',
-                      borderRadius: '10px',
-                      maxWidth: '80%'
-                    }}
+                    className={`carousel-item-content ${activeIndex === index ? 'active' : ''}`}
                   >
-                    <h3 style={{
-                      fontSize: "2rem", 
-                      fontWeight: "600", 
-                      margin: "0",
-                      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)"
-                    }}>
+                    <h3 className="carousel-title">
                       {image.title}
                     </h3>
-                    <p style={{
-                      marginTop: '15px',
-                      fontSize: '1.1rem',
-                      lineHeight: '1.5',
-                      maxWidth: '600px',
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                      color: "#e0e0e0"
-                    }}>
+                    <p className="carousel-description">
                       {image.description}
                     </p>
                   </div>
@@ -94,31 +67,13 @@ const Banner = () => {
           </Carousel>
 
           {/* Dotted Indicators at Left Mid */}
-          <div 
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "10px",
-              transform: "translateY(-50%)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "10px",
-              zIndex: 1000
-            }}
-          >
+          <div className="carousel-dot-container">
             {images.map((_, dotIndex) => (
               <FaCircle
                 key={dotIndex}
                 onClick={() => handleDotClick(dotIndex)}
                 size={activeIndex === dotIndex ? 14 : 10}
-                color={activeIndex === dotIndex ? "#6c63ff" : "#e9ecef"}
-                style={{
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  transform: activeIndex === dotIndex ? 'scale(1.2)' : 'scale(1)',
-                  boxShadow: activeIndex === dotIndex ? '0 0 10px rgba(108, 99, 255, 0.6)' : 'none',
-                }}
+                className={`carousel-dot ${activeIndex === dotIndex ? 'active' : 'passive'}`}
               />
             ))}
           </div>

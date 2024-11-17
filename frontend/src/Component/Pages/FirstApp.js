@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './HomePage'; // HomePage component
-import ServicesPage from '../Component/Service'; // ServicesPage component
-import AboutPage from './AboutPage'; // AboutPage component
+import HomePage from '../NavBarMenus/HomePage'; // HomePage component
+import ServicesPage from '../NavBarMenus/Service'; // ServicesPage component
+import AboutPage from '../NavBarMenus/AboutPage'; // AboutPage component
 import ContactPage from './ContactPage'; // ContactPage component
 
 const FirstApp = () => (

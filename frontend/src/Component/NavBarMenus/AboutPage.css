@@ -1,0 +1,103 @@
+/* Global Animations */
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInBox {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Styling the overall About Page */
+  .about-page {
+    margin-top: 40px;
+  }
+  
+  /* Box Layout for Each Section (Mission, Vision, Values) */
+  .about-box {
+    padding: 30px;
+    background-color: #f4f6f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeInBox 1s ease-in-out;
+  }
+  
+  .about-box h4 {
+    color: #3f51b5;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .about-box p {
+    color: #555;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+  
+  /* Team Section Styling */
+  .meet-the-team {
+    margin-top: 40px;
+  }
+  
+  .meet-the-team h4 {
+    color: #3f51b5;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    animation: slideIn 1s ease-out;
+  }
+  
+  /* Card Styling for Team Members */
+  .card {
+    border-radius: 16px;
+  }
+  
+  .card img {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 16px;
+  }
+  
+  .card .MuiCardContent-root {
+    padding: 16px;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  }
+  

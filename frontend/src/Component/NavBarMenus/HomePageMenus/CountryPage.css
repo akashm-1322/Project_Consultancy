@@ -1,0 +1,70 @@
+/* Country Strip - Full-Width */
+.country-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px 40px; /* Adds space to the left and right */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100vw; /* Ensures full screen width */
+    max-width: 100%; /* Prevents overflow */
+    margin: 10px 0; /* Space between strips */
+    gap: 20px; /* Uniform spacing between elements */
+    overflow: hidden;
+    box-sizing: border-box; /* Ensures padding is included in width */
+  }
+  
+  /* Country Code */
+  .country-code {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin: 0; /* No extra margins */
+  }
+  
+  /* Country Name */
+  .country-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    flex-grow: 1; /* Allows name to expand evenly */
+    margin: 0; /* No extra margins */
+    padding: 0 20px; /* Adds space on both sides */
+  }
+  
+  /* Country Flag */
+  .country-flag {
+    width: 50px;
+    height: auto;
+    border-radius: 5px;
+    margin: 0; /* No extra margins */
+  }
+  
+  /* Plus Icon */
+  .plus-icon {
+    font-size: 24px;
+    color: #4CAF50;
+    margin: 0; /* No extra margins */
+    padding-left: 20px; /* Adds space between flag and the plus icon */
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .country-strip {
+      flex-direction: column;
+      text-align: center;
+      gap: 10px; /* Adjust gap for smaller screens */
+      padding: 20px; /* Reduce padding on smaller screens */
+    }
+  
+    .country-name {
+      margin-top: 10px;
+      padding: 0; /* Remove side padding for smaller screens */
+    }
+  
+    .plus-icon {
+      padding-left: 0; /* Remove additional padding on smaller screens */
+    }
+  }
+  
