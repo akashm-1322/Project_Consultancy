@@ -1,11 +1,15 @@
-import React from 'react';
-import TopNavbar from './TopNavbar';
-import BottomNavbar from './BottomNavbar';
+import React from "react";
+import TopNavbar from "./TopNavbar";
+import BottomNavbar from "./BottomNavbar";
 
-const Navbar = ({ isAdmin }) => {
+const Navbar = ({ isAdmin, adminName, onLogout }) => {
   return (
     <div>
-      <TopNavbar />
+      <TopNavbar
+        userRole={isAdmin ? "admin" : "user"}
+        adminName={adminName}
+        onLogout={onLogout}
+      />
       <BottomNavbar isAdmin={isAdmin} />
     </div>
   );

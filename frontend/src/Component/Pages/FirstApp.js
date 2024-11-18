@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from '../NavBarMenus/HomePage'; // HomePage component
 import ServicesPage from '../NavBarMenus/Service'; // ServicesPage component
 import AboutPage from '../NavBarMenus/AboutPage'; // AboutPage component
-import ContactPage from './ContactPage'; // ContactPage component
+import ContactPage from '../NavBarMenus/ContactPage'; // ContactPage component
 
 const FirstApp = () => (
   <div>

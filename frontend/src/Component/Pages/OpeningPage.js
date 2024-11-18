@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import { FaUser, FaSignInAlt } from 'react-icons/fa';
-import { db, collection, getDocs } from '../../firebaseConfig'; // Firebase setup
-import './OpeningPage.css';
+import React, { useState } from "react";
+import { FaUser, FaSignInAlt } from "react-icons/fa";
+import { db, collection, getDocs } from "../../firebaseConfig";
+import "./OpeningPage.css";
 
 const OpeningPage = ({ onNavigate }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleUserLogin = () => {
-    // Regular user navigation
-    onNavigate(false);
+    onNavigate("USER"); // Navigate as USER
   };
 
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMessage('');
+    setErrorMessage("");
 
     try {
-      const querySnapshot = await getDocs(collection(db, 'admins'));
+      const querySnapshot = await getDocs(collection(db, "admins"));
       const admins = querySnapshot.docs.map((doc) => doc.data());
 
       const admin = admins.find(
@@ -29,12 +28,12 @@ const OpeningPage = ({ onNavigate }) => {
       );
 
       if (admin) {
-        onNavigate(true); // Navigate as admin
+        onNavigate("ADMIN", admin.username); // Pass admin's name
       } else {
-        setErrorMessage('Invalid credentials');
+        setErrorMessage("Invalid credentials");
       }
     } catch (error) {
-      setErrorMessage('Error connecting to the database');
+      setErrorMessage("Error connecting to the database");
     } finally {
       setLoading(false);
     }
@@ -79,7 +78,7 @@ const OpeningPage = ({ onNavigate }) => {
               />
             </div>
             <button type="submit" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? "Logging in..." : "Login"}
             </button>
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <button

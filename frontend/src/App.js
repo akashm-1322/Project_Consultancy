@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Component/BasicComponents/Navbar";
 import OpeningPage from "./Component/Pages/OpeningPage";
 import HomePage from "./Component/NavBarMenus/HomePage";
@@ -8,68 +8,80 @@ import AboutPage from "./Component/NavBarMenus/AboutPage";
 import ContactPage from "./Component/NavBarMenus/ContactPage";
 import AdminContacts from "./Component/NavBarMenus/AdminContacts";
 import Footer from "./Component/BasicComponents/Footer";
-import ContactBoxes from "./Component/Pages/ContactBoxes";
 import EndFooter from "./Component/BasicComponents/EndFooter";
 import "./App.css";
 
 const AppContent = () => {
-  const [isFirstVisit, setIsFirstVisit] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isHidden, setIsHidden] = useState(false);  // State for hiding contact box
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(""); // "USER" or "ADMIN"
+  const [loading, setLoading] = useState(true);
+  const [adminName, setAdminName] = useState(""); // Store the admin's name here
 
-  const handleNavigate = (isAdmin) => {
-    localStorage.setItem("hasVisited", "true");
-    localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
-    setIsFirstVisit(false);
-    setIsAdmin(isAdmin);
+  const handleNavigate = (type, adminName = "") => {
+    setIsLoggedIn(true);
+    setUserType(type); // Set "ADMIN" or "USER" directly
+    setAdminName(adminName); // Set the admin's name
+
+    // Persist login state
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userType", type);
+    if (type === "ADMIN") localStorage.setItem("adminName", adminName);
+  };
+
+  const handleLogout = () => {
+    // Clear localStorage and reset states
+    localStorage.clear();
+    setIsLoggedIn(false);
+    setUserType("");
+    setAdminName("");
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Calculate how far the user has scrolled from the bottom of the page
-      const scrollPosition = document.documentElement.scrollHeight - window.scrollY - window.innerHeight;
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+    const storedUserType = localStorage.getItem("userType");
 
-      // Hide contact boxes if scrolled 500px or less from the bottom
-      if (scrollPosition <= 500) {
-        setIsHidden(true); // Hide the contact boxes
-      } else {
-        setIsHidden(false); // Show the contact boxes
+    if (storedIsLoggedIn === "true" && storedUserType) {
+      setIsLoggedIn(true);
+      setUserType(storedUserType);
+      if (storedUserType === "ADMIN") {
+        const name = localStorage.getItem("adminName");
+        setAdminName(name); // Fetch the admin name from localStorage
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    }
+    setLoading(false);
   }, []);
 
-  if (isFirstVisit) {
-    return <OpeningPage onNavigate={handleNavigate} />;
-  }
+  if (loading) return <div>Loading...</div>; // Display loading state while data is being retrieved
 
   return (
-    <div className="app-wrapper">
-      <Navbar isAdmin={isAdmin} />
-      <div className="main-content">
-        {/* Conditionally hide or show the ContactBoxes */}
-        {!isHidden && <ContactBoxes />}
-
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          {isAdmin && <Route path="/admincontacts" element={<AdminContacts />} />}
-        </Routes>
-      </div>
-      <div className="d-flex flex-column">
-        <Footer /> {/* Footer with an id for scroll detection */}
-        <div style={{ marginTop: '20px' }}>
+    <>
+      {!isLoggedIn ? (
+        <OpeningPage onNavigate={handleNavigate} />
+      ) : (
+        <div className="app-wrapper">
+          <Navbar
+            isAdmin={userType === "ADMIN"}
+            adminName={adminName}
+            onLogout={handleLogout}
+          />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* Admin Route */}
+              {userType === "ADMIN" && (
+                <Route path="/admincontacts" element={<AdminContacts />} />
+              )}
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
+          <Footer />
           <EndFooter />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
