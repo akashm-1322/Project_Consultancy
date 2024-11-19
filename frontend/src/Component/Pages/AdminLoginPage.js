@@ -1,6 +1,8 @@
+// AdminLoginPage.jsx
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, collection, getDocs } from '../../firebaseConfig';
+import axios from 'axios';
 import './AdminLoginPage.css';
 
 const AdminLoginPage = () => {
@@ -11,7 +13,6 @@ const AdminLoginPage = () => {
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
 
-  // Function to validate the password strength
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
     return passwordRegex.test(password);
@@ -30,14 +31,14 @@ const AdminLoginPage = () => {
     }
 
     try {
-      const querySnapshot = await getDocs(collection(db, 'admins'));
-      const admins = querySnapshot.docs.map(doc => doc.data());
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        username,
+        password,
+      });
 
-      const admin = admins.find(admin => admin.username === username && admin.password === password);
-
-      if (admin) {
-        localStorage.setItem('isAuthenticated', true);  // Store authentication status
-        navigate('/home');  // Redirect to home page after successful login
+      if (response.data.message === 'Login successful') {
+        localStorage.setItem('isAuthenticated', true);
+        navigate('/home');
       } else {
         setErrorMessage('Invalid credentials');
       }

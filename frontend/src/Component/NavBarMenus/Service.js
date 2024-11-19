@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Card, Col, Row, Container, Button } from "react-bootstrap";
 import { FaPassport, FaBriefcase, FaUserGraduate, FaLanguage } from "react-icons/fa";
-import CareerCounselingProcess from "./ServicePageMenus/CareerCounselingProcess";
+import DomesticPlacements from "./ServicePageMenus/DomesticPlacements";
 import LanguageTrainingProcess from "./ServicePageMenus/LanguageTrainingProcess";
 import StudyAbroadProcess from "./ServicePageMenus/StudyAbroadProcess";
-import TravelAbroadProcess from "./ServicePageMenus/TravelAbroadProcess";
+import TravelAbroadProcess from "./ServicePageMenus/TravelANDWorklAbroadProcess";
 import { motion } from "framer-motion"; // Framer Motion for animations
 import './Service.css';  // Importing external CSS file
 
 const services = [
   {
-    title: "Travel Abroad",
+    title: "Travel and Work Abroad",
     icon: <FaPassport />,
-    description: "Explore exciting destinations and start your global journey with ease.",
+    description: "Explore exciting destinations and start your global journey with ease.Get into your Favourite Jobs in your Favourite Destinations.",
   },
   {
     title: "Study Abroad",
@@ -20,12 +20,12 @@ const services = [
     description: "Achieve your academic dreams with our comprehensive study abroad guidance.",
   },
   {
-    title: "Career Counseling",
+    title: "Domestic Placements",
     icon: <FaUserGraduate />,
-    description: "Shape your future with personalized career counseling and advice.",
+    description: "Domestic recruitment focuses on sourcing and placing qualified candidates within IT and non-IT sectors across the country, tailored to meet both employer and job seeker needs.",
   },
   {
-    title: "Language Training",
+    title: "Language Coaching",
     icon: <FaLanguage />,
     description: "Master new languages and break barriers with our expert training programs.",
   },
@@ -61,10 +61,10 @@ const Service = () => {
       </Row>
 
       {/* Conditionally render the correct process component */}
-      {selectedService === "Travel Abroad" && <TravelAbroadProcess onClose={() => setSelectedService(null)} />}
+      {selectedService === "Travel and Work Abroad" && <TravelAbroadProcess onClose={() => setSelectedService(null)} />}
       {selectedService === "Study Abroad" && <StudyAbroadProcess onClose={() => setSelectedService(null)} />}
-      {selectedService === "Career Counseling" && <CareerCounselingProcess onClose={() => setSelectedService(null)} />}
-      {selectedService === "Language Training" && <LanguageTrainingProcess onClose={() => setSelectedService(null)} />}
+      {selectedService === "Domestic Placements" && <DomesticPlacements onClose={() => setSelectedService(null)} />}
+      {selectedService === "Language Coaching" && <LanguageTrainingProcess onClose={() => setSelectedService(null)} />}
     </Container>
   );
 };

@@ -1,12 +1,3 @@
-/* src/pages/OpeningPage.css */
-
-/* Keyframes for background animation */
-@keyframes gradientBackground {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 /* Main container styling */
 .opening-page {
   display: flex;
@@ -15,22 +6,158 @@
   height: 100vh;
   background: linear-gradient(45deg, #4A90E2, #50E3C2, #B39DDB, #FF8A65);
   background-size: 300% 300%;
-  animation: gradientBackground 10s ease infinite;
+  animation: gradientBackground 10s ease infinite, pulse 3s infinite;
   font-family: 'Arial', sans-serif;
   overflow: hidden;
   position: relative;
 }
 
-/* Inner content styling */
+/* Gradient animation for background */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Pulse effect for background */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Content wrapper styling to hold two equal boxes */
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  max-width: 1200px;
+  z-index: 1;
+  animation: fadeIn 2s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.content-wrapper:hover {
+  transform: scale(1.02);
+}
+
+/* Left box (login form) */
+.left-box {
+  width: 50%;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  animation: slideInLeft 1s ease-in-out;
+  transform: translateX(-10%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.left-box:hover {
+  transform: translateX(0);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Right box (logo and consultancy name) */
+.right-box {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: slideInRight 1s ease-in-out;
+  transform: translateX(10%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.right-box:hover {
+  transform: translateX(0);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.company-logo img {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.5s ease-in-out;
+}
+
+.company-logo img:hover {
+  transform: scale(1.1);
+}
+
+/* Consultancy name style with text animation */
+.consultancy-name {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  animation: textAnimation 3s ease-in-out infinite;
+}
+
+/* Text animation */
+@keyframes textAnimation {
+  0% {
+    color: #333;
+    text-shadow: none;
+  }
+  50% {
+    color: #FF8A65;
+    text-shadow: 2px 2px 10px rgba(255, 138, 101, 0.7);
+  }
+  100% {
+    color: #333;
+    text-shadow: none;
+  }
+}
+
+/* Page content */
 .page-content {
   text-align: center;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 2.5rem;
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  width: 80%;
+  width: 100%;
   max-width: 500px;
-  position: relative;
+  animation: zoomIn 1s ease-out;
+  transform: translateY(20px);
+  transition: transform 0.5s ease;
+}
+
+.page-content:hover {
+  transform: translateY(0);
+}
+
+/* Zoom-in effect for content */
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Title and subheading styles */
@@ -39,136 +166,68 @@
   color: #333;
   margin-bottom: 1.5rem;
   font-weight: bold;
+  animation: fadeInText 1.5s ease-in-out;
+}
+
+/* Fade-in effect for title */
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .subheading {
   font-size: 1.3rem;
   color: #666;
   margin-bottom: 2.5rem;
+  animation: fadeInText 2s ease-in-out;
 }
 
-/* Button container styling */
+/* Button styles with hover effects */
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-top: 20px;
+  align-items: center;
 }
 
-/* Button styling */
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  color: white;
-  text-transform: uppercase;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #50E3C2;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Specific button types */
-.user-button {
-  background-color: #50E3C2;
-}
-
-.admin-button {
-  background-color: #4A90E2;
-}
-
-/* Button icon styling */
 .button-icon {
   margin-right: 10px;
-  font-size: 1.3rem;
 }
 
-/* Admin login form styling */
-.admin-login-form {
-  margin-top: 20px;
-  animation: fadeIn 0.6s ease;
-}
-
-/* Fade-in effect for admin login form */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Input field styling */
-.input-container input {
-  width: 100%;
-  padding: 0.8rem;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  margin: 0.5rem 0;
-  transition: border-color 0.3s;
-}
-
-.input-container input:focus {
-  border-color: #4A90E2;
-  outline: none;
-}
-
-/* Error message styling */
-.error-message {
-  color: #E57373;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* Back button styling */
+/* Button styles for back button */
 .back-button {
-  background: none;
+  padding: 10px 20px;
   border: none;
-  color: #4A90E2;
+  background-color: #B39DDB;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  transition: color 0.3s;
+  transition: transform 0.3s ease;
 }
 
 .back-button:hover {
-  color: #333;
-}
-
-/* Pulsing effect on button hover */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.button:hover {
-  animation: pulse 1s infinite;
-}
-
-/* Add subtle graphics to the background */
-.opening-page::before {
-  content: '';
-  position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  filter: blur(100px);
-  animation: move 6s linear infinite;
-}
-
-@keyframes move {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(50px, 50px); }
-  100% { transform: translate(0, 0); }
+  transform: scale(1.05);
 }

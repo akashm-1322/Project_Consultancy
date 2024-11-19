@@ -1,44 +1,48 @@
-// Testimonials.jsx
 import React, { useState, useEffect } from 'react';
-import { db, collection, getDocs, addDoc } from '../../../firebaseConfig';
+import axios from 'axios';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { AiOutlineUser } from 'react-icons/ai';
 import './Testimonials.css';
 
 const Testimonials = () => {
   const [comments, setComments] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [newComment, setNewComment] = useState({ name: '', message: '' });
 
+  const colors = [
+    '#FFADAD',
+    '#FFD6A5',
+    '#FDFFB6',
+    '#CAFFBF',
+    '#9BF6FF',
+    '#A0C4FF',
+    '#BDB2FF',
+    '#FFC6FF',
+  ];
+
   useEffect(() => {
-    // Fetch comments when the page loads
     fetchComments();
   }, []);
 
   const fetchComments = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'testimonials')); // Fetch comments from Firestore
-      const fetchedComments = querySnapshot.docs.map(doc => doc.data());
-      setComments(fetchedComments);
-    } catch (err) {
-      console.error("Error fetching comments:", err);
+      const response = await axios.get('/comments'); // Replace with your backend API endpoint
+      setComments(response.data);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
     }
   };
 
-  const handleCommentSubmit = async () => {
-    if (!newComment.name || !newComment.message) return;
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? comments.length - 1 : prevIndex - 1
+    );
+  };
 
-    try {
-      // Add comment to Firestore
-      await addDoc(collection(db, 'testimonials'), {
-        name: newComment.name,
-        message: newComment.message,
-        createdAt: new Date(),
-      });
-
-      // Update state to show the new comment
-      setComments(prevComments => [...prevComments, newComment]);
-      setNewComment({ name: '', message: '' });
-    } catch (err) {
-      console.error('Error submitting comment:', err);
-    }
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === comments.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const handleInputChange = (e) => {
@@ -48,42 +52,59 @@ const Testimonials = () => {
     });
   };
 
+  const handleCommentSubmit = async () => {
+    if (!newComment.name || !newComment.message) return;
+
+    try {
+      const response = await axios.post('/comments', newComment); // Replace with your backend API endpoint
+      setComments((prevComments) => [response.data, ...prevComments]);
+      setNewComment({ name: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
+
+  if (comments.length === 0) {
+    return <p>Loading comments...</p>;
+  }
+
+  const randomColor =
+    colors[Math.floor(Math.random() * colors.length)];
+
   return (
     <div className="testimonials-page">
-      <div className="banner">
-        <h1 className="banner-title">Comments</h1>
-        <p className="banner-subtitle">Hear from our users and share your thoughts!</p>
-      </div>
-      <div className="content">
-        <div className="comments-section">
-          <h2>Comments:</h2>
-          <div className="comments-list">
-            {comments.map((comment, idx) => (
-              <div key={idx} className="comment">
-                <p><strong>{comment.name}:</strong> {comment.message}</p>
-              </div>
-            ))}
-          </div>
+      <h1 className="heading">Comments</h1>
+      <div className="comment-container" style={{ backgroundColor: randomColor }}>
+        <div className="comment-content">
+          <AiOutlineUser className="user-icon" />
+          <h3>{comments[currentIndex].name}</h3>
+          <p>{comments[currentIndex].message}</p>
         </div>
-        <div className="comment-form">
-          <h3>Leave a Comment:</h3>
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={newComment.name}
-            onChange={handleInputChange}
-          />
-          <textarea
-            name="message"
-            placeholder="Your Testimonial"
-            value={newComment.message}
-            onChange={handleInputChange}
-          />
-          <button onClick={handleCommentSubmit}>
-            Submit Comments
+        <div className="navigation">
+          <button onClick={handlePrevious}>
+            <FaChevronLeft />
+          </button>
+          <button onClick={handleNext}>
+            <FaChevronRight />
           </button>
         </div>
+      </div>
+      <div className="comment-form">
+        <h2>Add Your Comment</h2>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          value={newComment.name}
+          onChange={handleInputChange}
+        />
+        <textarea
+          name="message"
+          placeholder="Your Comment"
+          value={newComment.message}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleCommentSubmit}>Submit Comment</button>
       </div>
     </div>
   );

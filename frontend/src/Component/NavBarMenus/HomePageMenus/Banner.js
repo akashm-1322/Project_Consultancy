@@ -1,79 +1,98 @@
-import React, { useState } from 'react';
-import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import { FaCircle } from "react-icons/fa"; // Modern dot icon
-import './Banner.css'; // Importing the external CSS file
+import React, { useState, useEffect, useRef } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { FaCircleDot } from 'react-icons/fa6'; // Updated icon
+import './Banner.css';
 
-const images = [
-  { src: "/FL_img1.jpg", title: "Language Training", description: "Achieve fluency with our language training programs. Tailored courses to prepare you for global communication." },
-  { src: "/S&S_img2.jpg", title: "Study Abroad", description: "Assistance with securing student visas. Explore educational opportunities across the globe." },
-  { src: "/World_Tour.jpg", title: "Work Abroad", description: "Get expert advice on immigration policies. Discover the best travel options for your international journey." },
-  { src: "/Visa_Consult.jpg", title: "Career Guidance", description: "Guidance to grow your career internationally. Find the best opportunities that match your skillset." }
+const videos = [
+  {
+    src: '/videos/Language_Learning_1.mp4',
+    title: 'Language Coaching',
+    description: 'Achieve fluency with our language training programs. Tailored courses to prepare you for global communication.',
+  },
+  {
+    src: '/videos/Study_Abroad_1.mp4',
+    title: 'Study Abroad',
+    description: 'Assistance with securing student visas. Explore educational opportunities across the globe.',
+  },
+  {
+    src: '/videos/Work_Abroad_1.mp4',
+    title: 'Travel and Work Abroad',
+    description: 'Do what you like at where you want. Discover the best travel options for your international journey.',
+  },
+  {
+    src: '/videos/Domestic_Recruitment_1.mp4',
+    title: 'Domestic Placements',
+    description: 'Guidance to grow your career inside India. Find the best opportunities that match your skillset.',
+  },
 ];
 
 const Banner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const videoRef = useRef(null);
 
-  const handleSelect = (selectedIndex) => {
-    setActiveIndex(selectedIndex);
-  };
+  // Automatically progress videos
+  useEffect(() => {
+    const currentVideo = videoRef.current;
+
+    const handleVideoEnd = () => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % videos.length);
+    };
+
+    if (currentVideo) {
+      currentVideo.addEventListener('ended', handleVideoEnd);
+      currentVideo.play(); // Ensures videos autoplay on load
+    }
+
+    return () => {
+      if (currentVideo) {
+        currentVideo.removeEventListener('ended', handleVideoEnd);
+      }
+    };
+  }, [activeIndex]);
 
   const handleDotClick = (index) => {
     setActiveIndex(index);
   };
 
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 banner-container">
       <Row noGutters>
-        <Col xs={12}>
-          <Carousel 
-            activeIndex={activeIndex} 
-            onSelect={handleSelect} 
-            indicators={false} 
-            controls={false} 
-            interval={3000} 
-            className="carousel slide"
-          >
-            {images.map((image, index) => (
-              <Carousel.Item key={index}>
-                <div className="carousel-container">
-                  {/* Fullscreen Image with Parallax Effect */}
-                  <img 
-                    src={image.src} 
-                    alt={image.title} 
-                    style={{
-                      width: "100vw",
-                      height: "100vh",
-                      objectFit: "cover",
-                      transition: 'transform 1s ease',
-                      transform: activeIndex === index ? 'scale(1.1)' : 'scale(1)'
-                    }}
-                    className={`d-block carousel-image ${activeIndex === index ? 'animate-blur' : ''}`}
-                  />
-                  
-                  {/* Centered Title and Description */}
-                  <div 
-                    className={`carousel-item-content ${activeIndex === index ? 'active' : ''}`}
-                  >
-                    <h3 className="carousel-title">
-                      {image.title}
-                    </h3>
-                    <p className="carousel-description">
-                      {image.description}
-                    </p>
-                  </div>
-                </div>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-
-          {/* Dotted Indicators at Left Mid */}
-          <div className="carousel-dot-container">
-            {images.map((_, dotIndex) => (
-              <FaCircle
+        <Col xs={12} className="position-relative">
+          {videos.map((video, index) => (
+            <div
+              key={index}
+              className={`video-slide ${activeIndex === index ? 'active' : ''}`}
+              style={{ display: activeIndex === index ? 'block' : 'none' }}
+            >
+              <video
+                ref={activeIndex === index ? videoRef : null}
+                src={video.src}
+                autoPlay
+                muted
+                loop={false}
+                style={{
+                  width: '100vw',
+                  height: '100vh',
+                  objectFit: 'cover',
+                }}
+              />
+              <div
+                className={`video-content ${
+                  activeIndex === index ? 'fade-in' : ''
+                }`}
+              >
+                <h3 className="video-title">{video.title}</h3>
+                <p className="video-description">{video.description}</p>
+              </div>
+            </div>
+          ))}
+          <div className="dot-container">
+            {videos.map((_, dotIndex) => (
+              <FaCircleDot
                 key={dotIndex}
                 onClick={() => handleDotClick(dotIndex)}
-                size={activeIndex === dotIndex ? 14 : 10}
-                className={`carousel-dot ${activeIndex === dotIndex ? 'active' : 'passive'}`}
+                size={activeIndex === dotIndex ? 24 : 18}
+                className={`dot ${activeIndex === dotIndex ? 'active' : ''}`}
               />
             ))}
           </div>

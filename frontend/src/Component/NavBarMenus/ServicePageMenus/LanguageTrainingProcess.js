@@ -28,7 +28,7 @@ const LanguageTrainingProcess = ({ onClose }) => (
     </Button>
 
     <h2 style={{ fontWeight: "700", color: "#007bff" }}>
-      <FaLanguage /> Language Training Process
+      <FaLanguage /> Language Coaching Process
     </h2>
     <p style={{ fontSize: "1.1rem", color: "#555", marginTop: "20px" }}>
       Achieve language proficiency with courses designed to meet your global communication needs.

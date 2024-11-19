@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaUser, FaSignInAlt } from "react-icons/fa";
-import { db, collection, getDocs } from "../../firebaseConfig";
+import axios from "axios";
 import "./OpeningPage.css";
 
 const OpeningPage = ({ onNavigate }) => {
@@ -10,30 +10,36 @@ const OpeningPage = ({ onNavigate }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Navigate to User Page
   const handleUserLogin = () => {
-    onNavigate("USER"); // Navigate as USER
+    onNavigate("USER");
   };
 
+  // Handle Admin Login
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const querySnapshot = await getDocs(collection(db, "admins"));
-      const admins = querySnapshot.docs.map((doc) => doc.data());
+      // Send login request to the backend
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        username,
+        password,
+      });
 
-      const admin = admins.find(
-        (admin) => admin.username === username && admin.password === password
-      );
-
-      if (admin) {
-        onNavigate("ADMIN", admin.username); // Pass admin's name
+      if (response.data.message === "Login successful") {
+        // Navigate to Admin Page with username
+        onNavigate("ADMIN", response.data.admin.username);
       } else {
-        setErrorMessage("Invalid credentials");
+        // Handle unexpected responses
+        setErrorMessage("Unexpected response from server.");
       }
     } catch (error) {
-      setErrorMessage("Error connecting to the database");
+      // Display error messages based on server response
+      setErrorMessage(
+        error.response?.data?.message || "Error connecting to the database"
+      );
     } finally {
       setLoading(false);
     }
@@ -41,55 +47,72 @@ const OpeningPage = ({ onNavigate }) => {
 
   return (
     <div className="opening-page">
-      <div className="page-content">
-        <h1 className="title">Welcome to Our Application</h1>
-        <p className="subheading">Select your role to continue:</p>
+      <div className="content-wrapper">
+        <div className="left-box">
+          <div className="page-content">
+            <h1 className="title">Welcome to Our Application</h1>
+            <p className="subheading">Select your role to continue:</p>
 
-        {!isAdminLogin ? (
-          <div className="button-container">
-            <button onClick={handleUserLogin} className="button user-button">
-              <FaUser className="button-icon" /> User Page
-            </button>
-            <button
-              onClick={() => setIsAdminLogin(true)}
-              className="button admin-button"
-            >
-              <FaSignInAlt className="button-icon" /> Admin Login
-            </button>
+            {/* Render User or Admin login options */}
+            {!isAdminLogin ? (
+              <div className="button-container">
+                <button onClick={handleUserLogin} className="button user-button">
+                  <FaUser className="button-icon" /> User Page
+                </button>
+                <button
+                  onClick={() => setIsAdminLogin(true)}
+                  className="button admin-button"
+                >
+                  <FaSignInAlt className="button-icon" /> Admin Login
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleAdminLogin} className="admin-login-form">
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="input-container">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                <button type="submit" disabled={loading}>
+                  {loading ? "Logging in..." : "Login"}
+                </button>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+                <button
+                  type="button"
+                  onClick={() => setIsAdminLogin(false)}
+                  className="back-button"
+                >
+                  Back
+                </button>
+              </form>
+            )}
           </div>
-        ) : (
-          <form onSubmit={handleAdminLogin} className="admin-login-form">
-            <div className="input-container">
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-container">
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
-            </button>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <button
-              type="button"
-              onClick={() => setIsAdminLogin(false)}
-              className="back-button"
-            >
-              Back
-            </button>
-          </form>
-        )}
+        </div>
+        
+        <div className="right-box">
+          <div className="company-logo">
+            <img
+              src="/path/to/your/logo.png" // Replace with the actual path to the logo
+              alt="Company Logo"
+              width="400"
+              height="400"
+            />
+          </div>
+          <p className="consultancy-name">J99 Recruitment Services Pvt. Ltd</p>
+        </div>
       </div>
     </div>
   );

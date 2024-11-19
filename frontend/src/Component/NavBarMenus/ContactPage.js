@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit, FaUserAlt } from 'react-icons/fa';
 import ContactImage from '../../Asset/Contact.jpg'; // Adjust path as needed
-import { db } from '../../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import axios from 'axios'; // Import axios for API requests
 import './ContactPage.css'; // Import external CSS
 
-// Country Data
 const studyCountries = [
   { name: 'Germany', code: 'GER' },
   { name: 'Poland', code: 'POL' },
@@ -51,13 +49,12 @@ const ContactPage = () => {
   const [selectedType, setSelectedType] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
-  const [errors, setErrors] = useState({}); // State to store validation errors
+  const [errors, setErrors] = useState({});
 
   // Regex patterns for validation
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
-  // Handle form field change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     if (e.target.name === 'type') {
@@ -65,13 +62,11 @@ const ContactPage = () => {
     }
   };
 
-  // Handle country change
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
     setFormData({ ...formData, destination: e.target.value });
   };
 
-  // Validate the form inputs
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name) newErrors.name = 'Name is required';
@@ -80,19 +75,19 @@ const ContactPage = () => {
     if (!formData.type) newErrors.type = 'Please select a type';
     if (!formData.message) newErrors.message = 'Message is required';
     if (!formData.destination) newErrors.destination = 'Please select a destination';
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) return; // Prevent submission if validation fails
+
+    if (!validateForm()) return;
 
     try {
-      await addDoc(collection(db, 'contacts'), formData);
+      // Send data to the backend
+      await axios.post('http://localhost:5000/contacts', formData);
       setStatusMessage('Message sent successfully!');
       setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '' });
       setSelectedType('');
@@ -184,43 +179,47 @@ const ContactPage = () => {
               {errors.email && <div className="error-message">{errors.email}</div>}
             </Form.Group>
             <Form.Group className="form-group">
-              <Form.Label><FaEdit /> Type</Form.Label>
+              <Form.Label><FaUserAlt /> Type</Form.Label>
               <Form.Control
                 as="select"
                 name="type"
                 onChange={handleChange}
                 value={formData.type}
                 required
-                className="form-control"
               >
                 <option value="">Select Type</option>
-                <option value="study">Study Abroad</option>
-                <option value="work">Work Abroad</option>
+                <option value="study">Study</option>
+                <option value="work">Work</option>
                 <option value="learning">Language Learning</option>
               </Form.Control>
               {errors.type && <div className="error-message">{errors.type}</div>}
             </Form.Group>
-            {selectedType && renderCountries()}
-            <br />
+            {renderCountries()}
             <Form.Group className="form-group">
-              <Form.Label><FaUserAlt /> Message</Form.Label>
+              <Form.Label><FaEdit /> Message</Form.Label>
               <Form.Control
                 as="textarea"
-                rows="1"
                 name="message"
                 onChange={handleChange}
                 value={formData.message}
+                rows={3}
                 required
                 className="form-control"
               />
               {errors.message && <div className="error-message">{errors.message}</div>}
             </Form.Group>
-            <Button type="submit" className="submit-btn">Send Message</Button>
+            <Button
+              variant="primary"
+              type="submit"
+              className="submit-btn"
+            >
+              Send Message
+            </Button>
+            {statusMessage && <div className="status-message">{statusMessage}</div>}
           </Form>
-          {statusMessage && <p className="status-message">{statusMessage}</p>}
         </Col>
         <Col md={6} className="contact-image-col">
-          <img src={ContactImage} alt="Contact" className="contact-img" />
+          <img src={ContactImage} alt="Contact" className="contact-image" />
         </Col>
       </Row>
     </Container>

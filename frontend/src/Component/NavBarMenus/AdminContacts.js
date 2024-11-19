@@ -1,29 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../../firebaseConfig'; // Adjust as per your project structure
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import {
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-  TextField,
-  Grid,
-  Paper,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  IconButton,
-} from '@mui/material';
-import WarningIcon from '@mui/icons-material/Warning';
-import './AdminContacts.css'; // Import the external CSS file for styling
-
-// Data for dropdown options
-const types = ['Study', 'Work', 'Learning'];
+import axios from 'axios';
+import './AdminContacts.css'; // Ensure this file is included with animations and styles
 
 const studyCountries = [
   { name: 'Germany', code: 'GER' },
@@ -51,260 +28,210 @@ const workCountries = [
   { name: 'Luxembourg', code: 'LUX' },
 ];
 
-const languageLearning = [
+const learningLanguage = [
   { name: 'German', code: 'GER' },
-  { name: 'Spanish', code: 'SPA' },
-  { name: 'French', code: 'FRE' },
+  { name: 'English', code: 'ENG' },
 ];
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
-  const [newContact, setNewContact] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    type: '',
-    destination: '',
-  });
-  const [availableDestinations, setAvailableDestinations] = useState([]);
-  const [error, setError] = useState(null);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [type, setType] = useState('');
+  const [message, setMessage] = useState('');
+  const [destination, setDestination] = useState('');
+  const [editingContactId, setEditingContactId] = useState(null);
 
-  // Regular expressions for email and phone validation
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const phoneRegex = /^[0-9]{10}$/;
+  const API_BASE_URL = 'http://localhost:5000/contacts'; // Ensure this aligns with your server's contacts route
 
-  // Fetch contacts from Firestore
   useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const contactsCollection = collection(db, 'contacts');
-        const snapshot = await getDocs(contactsCollection);
-        const contactList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setContacts(contactList);
-      } catch (error) {
-        setError('Error fetching contacts');
-      }
-    };
-
     fetchContacts();
   }, []);
 
-  // Handle type selection and set destinations
-  const handleTypeChange = (type) => {
-    setNewContact({ ...newContact, type, destination: '' });
+  const fetchContacts = async () => {
+    try {
+      const response = await axios.get(API_BASE_URL);
+      console.log('API Response:', response.data); // Check the API response
+      setContacts(Array.isArray(response.data) ? response.data : []); // Ensure contacts is an array
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+    }
+  };
+  
 
+  const getDestinations = () => {
     switch (type) {
-      case 'Study':
-        setAvailableDestinations(studyCountries);
-        break;
-      case 'Work':
-        setAvailableDestinations(workCountries);
-        break;
-      case 'Learning':
-        setAvailableDestinations(languageLearning);
-        break;
+      case 'Study Abroad':
+        return studyCountries;
+      case 'Work Abroad':
+        return workCountries;
+      case 'Learning Language':
+        return learningLanguage;
       default:
-        setAvailableDestinations([]);
+        return [];
     }
   };
 
-  // Validate the form fields
-  const validateForm = () => {
-    if (!newContact.name || !newContact.email || !newContact.phone || !newContact.type || !newContact.destination) {
-      setError('All fields are required.');
-      return false;
-    }
-
-    if (!emailRegex.test(newContact.email)) {
-      setError('Please enter a valid email address.');
-      return false;
-    }
-
-    if (!phoneRegex.test(newContact.phone)) {
-      setError('Please enter a valid phone number (10 digits).');
-      return false;
-    }
-
-    setError(null);
-    return true;
-  };
-
-  // Add a new contact
-  const handleAddContact = async () => {
-    if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const contactData = { name, phone, email, type, message, destination };
 
     try {
-      const contactsCollection = collection(db, 'contacts');
-      const docRef = await addDoc(contactsCollection, newContact);
-      setContacts([...contacts, { id: docRef.id, ...newContact }]);
-      setNewContact({ name: '', email: '', phone: '', type: '', destination: '' });
-      setAvailableDestinations([]);
+      if (editingContactId) {
+        // Update contact
+        await axios.put(`${API_BASE_URL}/${editingContactId}`, contactData);
+      } else {
+        // Add new contact
+        await axios.post(API_BASE_URL, contactData);
+      }
+
+      // Reset form and fetch updated contacts
+      resetForm();
+      fetchContacts(); // Refresh contacts
     } catch (error) {
-      setError('Error adding contact');
+      console.error('Error saving contact:', error);
     }
   };
 
-  // Edit a contact
-  const handleEditContact = async (id) => {
-    if (!validateForm()) return;
-
-    try {
-      const contactRef = doc(db, 'contacts', id);
-      await updateDoc(contactRef, newContact);
-      setContacts(
-        contacts.map((contact) => (contact.id === id ? { ...contact, ...newContact } : contact))
-      );
-      setNewContact({ name: '', email: '', phone: '', type: '', destination: '' });
-      setAvailableDestinations([]);
-    } catch (error) {
-      setError('Error editing contact');
-    }
+  const resetForm = () => {
+    setName('');
+    setPhone('');
+    setEmail('');
+    setType('');
+    setMessage('');
+    setDestination('');
+    setEditingContactId(null);
   };
 
-  // Delete a contact
-  const handleDeleteContact = async (id) => {
+  const handleEdit = (contact) => {
+    setName(contact.name);
+    setPhone(contact.phone);
+    setEmail(contact.email);
+    setType(contact.type);
+    setMessage(contact.message);
+    setDestination(contact.destination);
+    setEditingContactId(contact._id);
+  };
+
+  const handleDelete = async (id) => {
     try {
-      const contactRef = doc(db, 'contacts', id);
-      await deleteDoc(contactRef);
-      setContacts(contacts.filter((contact) => contact.id !== id));
+      await axios.delete(`${API_BASE_URL}/${id}`);
+      fetchContacts(); // Refresh contacts after deletion
     } catch (error) {
-      setError('Error deleting contact');
+      console.error('Error deleting contact:', error);
     }
   };
 
   return (
-    <div className="admin-contacts-container">
-      <Typography variant="h4" sx={{ marginBottom: '20px', textAlign: 'center' }} className="heading">
-        Admin Contacts
-      </Typography>
+    <div className="admin-container">
+      <h1 className="title">Admin Contact Management</h1>
 
-      {/* Add/Edit Contact Form */}
-      <Grid container spacing={2} sx={{ marginBottom: '20px' }} className="form-container">
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Name"
-            value={newContact.name}
-            onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
-            className="input-field"
-            error={error ? true : false}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Email"
-            value={newContact.email}
-            onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
-            className="input-field"
-            error={error ? true : false}
-            helperText={error && !emailRegex.test(newContact.email) ? 'Invalid email format' : ''}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label="Phone"
-            value={newContact.phone}
-            onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
-            className="input-field"
-            error={error ? true : false}
-            helperText={error && !phoneRegex.test(newContact.phone) ? 'Phone number must be 10 digits' : ''}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl fullWidth className="input-field">
-            <InputLabel>Type</InputLabel>
-            <Select
-              value={newContact.type}
-              onChange={(e) => handleTypeChange(e.target.value)}
-              className="select-box"
-              error={error ? true : false}
-            >
-              {types.map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl fullWidth className="input-field">
-            <InputLabel>Destination</InputLabel>
-            <Select
-              value={newContact.destination}
-              onChange={(e) =>
-                setNewContact({ ...newContact, destination: e.target.value })
-              }
-              disabled={!availableDestinations.length}
-              className="select-box"
-              error={error ? true : false}
-            >
-              {availableDestinations.map((destination) => (
-                <MenuItem key={destination.code} value={destination.name}>
-                  {destination.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddContact}
-            disabled={error || !newContact.name || !newContact.email || !newContact.phone || !newContact.type || !newContact.destination}
-            sx={{ marginTop: '20px' }}
-          >
-            Add Contact
-          </Button>
-        </Grid>
-      </Grid>
+      <form onSubmit={handleSubmit} className="admin-form">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="input-field"
+        />
+        <input
+          type="text"
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+          className="input-field"
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="input-field"
+        />
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          required
+          className="input-field"
+        >
+          <option value="">Select Type</option>
+          <option value="Study Abroad">Study Abroad</option>
+          <option value="Work Abroad">Work Abroad</option>
+          <option value="Learning Language">Learning Language</option>
+        </select>
+        <select
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+          required
+          disabled={!type}
+          className="input-field"
+        >
+          <option value="">Select Destination</option>
+          {getDestinations().map((country) => (
+            <option key={country.code} value={country.name}>
+              {country.name}
+            </option>
+          ))}
+        </select>
+        <textarea
+          placeholder="Message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+          className="input-field"
+        ></textarea>
+        <button type="submit" className="submit-btn">
+          {editingContactId ? 'Update Contact' : 'Add Contact'}
+        </button>
+      </form>
 
-      {/* Error Message */}
-      {error && (
-        <div className="error-message">
-          <IconButton color="error">
-            <WarningIcon color="error" />
-          </IconButton>
-          <Typography color="error">{error}</Typography>
-        </div>
-      )}
-
-      {/* Contacts Table */}
-      <TableContainer component={Paper} sx={{ marginTop: '30px' }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Destination</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {contacts.map((contact) => (
-              <TableRow key={contact.id}>
-                <TableCell>{contact.name}</TableCell>
-                <TableCell>{contact.email}</TableCell>
-                <TableCell>{contact.phone}</TableCell>
-                <TableCell>{contact.type}</TableCell>
-                <TableCell>{contact.destination}</TableCell>
-                <TableCell>
-                  <Button onClick={() => handleEditContact(contact.id)}>Edit</Button>
-                  <Button onClick={() => handleDeleteContact(contact.id)}>Delete</Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <h2>Contacts</h2>
+      <table className="contacts-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Destination</th>
+            <th>Message</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {contacts.length > 0 ? (
+            contacts.map((contact) => (
+              <tr key={contact._id} className="table-row">
+                <td>{contact.name}</td>
+                <td>{contact.phone}</td>
+                <td>{contact.email}</td>
+                <td>{contact.type}</td>
+                <td>{contact.destination}</td>
+                <td>{contact.message}</td>
+                <td>
+                  <button onClick={() => handleEdit(contact)} className="edit-btn">
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(contact._id)}
+                    className="delete-btn"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7">No contacts available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

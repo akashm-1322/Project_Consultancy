@@ -71,7 +71,7 @@ const CountrySection = ({ title, countries }) => (
 
 const CountryPage = () => {
   return (
-    <div className="country-page">
+    <div className="country-page p-2">
       <div className="banner">
         <h1 className="banner-title">Explore Global Opportunities</h1>
         <p className="banner-subtitle">Connect to your future in work, study, and languages.</p>
