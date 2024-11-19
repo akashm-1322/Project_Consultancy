@@ -54,6 +54,25 @@ let MainDB, ContactsDB, Admin, Contact;
   }
 })();
 
+let Comment;
+
+(async () => {
+  try {
+    // Add the Comment schema to the MainDB connection
+    const CommentSchema = require('./Models/Comment');
+    Comment = MainDB.model('Comment', CommentSchema);
+
+    // Initialize routes
+    const commentRoutes = require('./Routes/CommentRoutes')(Comment); // Pass Comment model
+
+    app.use('/comments', commentRoutes);
+  } catch (error) {
+    console.error('Error setting up comments:', error);
+    process.exit(1);
+  }
+})();
+
+
 // Route to fetch all contacts (fallback check)
 app.get("/contacts", async (req, res) => {
   try {
