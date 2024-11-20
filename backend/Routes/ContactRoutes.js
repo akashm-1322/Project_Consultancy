@@ -15,10 +15,10 @@ module.exports = (Contact) => {
 
   // Add a new contact
   router.post("/", async (req, res) => {
-    const { name, phone, email, type, destination, message } = req.body;
+    const { name, phone, email, type, destination, message , dateofjoining} = req.body;
 
     try {
-      const newContact = new Contact({ name, phone, email, type, destination, message });
+      const newContact = new Contact({ name, phone, email, type, destination, message , dateofjoining});
       await newContact.save();
       res.status(201).json(newContact);
     } catch (error) {
@@ -29,12 +29,12 @@ module.exports = (Contact) => {
   // Update a contact
   router.put("/:id", async (req, res) => {
     const { id } = req.params;
-    const { name, phone, email, type, destination, message } = req.body;
+    const { name, phone, email, type, destination, message , dateofjoining} = req.body;
 
     try {
       const updatedContact = await Contact.findByIdAndUpdate(
         id,
-        { name, phone, email, type, destination, message },
+        { name, phone, email, type, destination, message ,dateofjoining},
         { new: true }
       );
       res.status(200).json(updatedContact);

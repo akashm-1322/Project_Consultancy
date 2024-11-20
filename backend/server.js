@@ -122,6 +122,24 @@ async function createAdmin(username, password) {
   await admin.save();
 }
 
+app.post('/contacts', (req, res) => {
+  const { name, email, phone, type, message, destination, dateofjoining } = req.body;
+  const newContact = new Contact({
+    name,
+    email,
+    phone,
+    type,
+    message,
+    destination,
+    dateofjoining,
+  });
+
+  newContact.save()
+    .then(contact => res.json(contact))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
 // Serve static frontend files
 const frontendPath = path.join(__dirname, "../frontend/build"); // Adjust path to your React build
 app.use(express.static(frontendPath));

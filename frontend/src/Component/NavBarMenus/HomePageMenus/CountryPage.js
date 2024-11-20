@@ -19,33 +19,36 @@ import cze from "../../../Asset/czech_flag.png";
 import hun from "../../../Asset/hungary_flag.png";
 import ire from "../../../Asset/ireland_flag.png";
 import lux from "../../../Asset/luxemburg_flag.png";
+import sin from "../../../Asset/sin_flag.png"
 
 import './CountryPage.css'; // Import the new CSS file
 
 const studyCountries = [
-  { name: 'Germany', code: 'GER', plus: <FaPlus />, shape: ger, visitors: 1200 },
-  { name: 'Poland', code: 'POL', plus: <FaPlus />, shape: pol, visitors: 800 },
-  { name: 'Switzerland', code: 'SWE', plus: <FaPlus />, shape: swi, visitors: 950 },
+  { name: 'Germany', code: 'GER', plus: <FaPlus />, shape: ger},
+  { name: 'Poland', code: 'POL', plus: <FaPlus />, shape: pol},
+  { name: 'Switzerland', code: 'SWE', plus: <FaPlus />, shape: swi},
+  { name: 'Singapore' , code: 'SIN', plus: <FaPlus/>, shape: sin}
 ];
 
 const workCountries = [
-  { name: 'Dubai', code: 'DUB', plus: <FaPlus />, shape: uae, visitors: 1500 },
-  { name: 'Saudi Arabia', code: 'SAU', plus: <FaPlus />, shape: uae, visitors: 1100 },
-  { name: 'Kuwait', code: 'KUW', plus: <FaPlus />, shape: kuw, visitors: 950 },
-  { name: 'Qatar', code: 'QAT', plus: <FaPlus />, shape: qat, visitors: 1400 },
-  { name: 'Australia', code: 'AUS', plus: <FaPlus />, shape: aus, visitors: 1300 },
-  { name: 'Canada', code: 'CAN', plus: <FaPlus />, shape: can, visitors: 1600 },
-  { name: 'Serbia', code: 'SER', plus: <FaPlus />, shape: ser, visitors: 700 },
-  { name: 'Albania', code: 'ALB', plus: <FaPlus />, shape: alb, visitors: 650 },
-  { name: 'Greece', code: 'GRE', plus: <FaPlus />, shape: gre, visitors: 750 },
-  { name: 'Croatia', code: 'CRO', plus: <FaPlus />, shape: cro, visitors: 850 },
-  { name: 'Slovakia', code: 'SLO', plus: <FaPlus />, shape: slo, visitors: 500 },
-  { name: 'Italy', code: 'ITA', plus: <FaPlus />, shape: ita, visitors: 1000 },
-  { name: 'Czech Republic', code: 'CZ', plus: <FaPlus />, shape: cze, visitors: 600 },
-  { name: 'United Kingdom', code: 'UK', plus: <FaPlus />, shape: uk, visitors: 1450 },
-  { name: 'Hungary', code: 'HUN', plus: <FaPlus />, shape: hun, visitors: 520 },
-  { name: 'Ireland', code: 'IRE', plus: <FaPlus />, shape: ire, visitors: 460 },
-  { name: 'Luxembourg', code: 'LUX', plus: <FaPlus />, shape: lux, visitors: 400 },
+  { name: 'Dubai', code: 'DUB', plus: <FaPlus />, shape: uae},
+  { name: 'Saudi Arabia', code: 'SAU', plus: <FaPlus />, shape: uae},
+  { name: 'Kuwait', code: 'KUW', plus: <FaPlus />, shape: kuw},
+  { name: 'Qatar', code: 'QAT', plus: <FaPlus />, shape: qat},
+  { name: 'Australia', code: 'AUS', plus: <FaPlus />, shape: aus},
+  { name: 'Canada', code: 'CAN', plus: <FaPlus />, shape: can},
+  { name: 'Serbia', code: 'SER', plus: <FaPlus />, shape: ser},
+  { name: 'Albania', code: 'ALB', plus: <FaPlus />, shape: alb},
+  { name: 'Greece', code: 'GRE', plus: <FaPlus />, shape: gre},
+  { name: 'Croatia', code: 'CRO', plus: <FaPlus />, shape: cro},
+  { name: 'Slovakia', code: 'SLO', plus: <FaPlus />, shape: slo},
+  { name: 'Italy', code: 'ITA', plus: <FaPlus />, shape: ita},
+  { name: 'Czech Republic', code: 'CZ', plus: <FaPlus />, shape: cze},
+  { name: 'United Kingdom', code: 'UK', plus: <FaPlus />, shape: uk},
+  { name: 'Hungary', code: 'HUN', plus: <FaPlus />, shape: hun},
+  { name: 'Ireland', code: 'IRE', plus: <FaPlus />, shape: ire},
+  { name: 'Luxembourg', code: 'LUX', plus: <FaPlus />, shape: lux},
+  { name: 'Singapore' , code: 'SIN', plus: <FaPlus/>, shape: sin}
 ];
 
 const CountryStrip = ({ country }) => (

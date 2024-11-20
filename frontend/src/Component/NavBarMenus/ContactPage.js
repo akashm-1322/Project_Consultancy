@@ -9,6 +9,7 @@ const studyCountries = [
   { name: 'Germany', code: 'GER' },
   { name: 'Poland', code: 'POL' },
   { name: 'Switzerland', code: 'SWE' },
+  { name: 'Singapore', code: 'SIN' }
 ];
 
 const workCountries = [
@@ -29,12 +30,14 @@ const workCountries = [
   { name: 'Hungary', code: 'HUN' },
   { name: 'Ireland', code: 'IRE' },
   { name: 'Luxembourg', code: 'LUX' },
+  { name: 'Singapore', code: 'SIN' }
 ];
 
 const languageLearning = [
   { name: 'German', code: 'GER' },
   { name: 'Spanish', code: 'SPA' },
   { name: 'French', code: 'FRE' },
+  { name: 'English', code: 'ENG' },
 ];
 
 const ContactPage = () => {
@@ -45,8 +48,8 @@ const ContactPage = () => {
     type: '',
     message: '',
     destination: '',
+    dateofjoining: ''
   });
-  const [selectedType, setSelectedType] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [errors, setErrors] = useState({});
@@ -57,9 +60,6 @@ const ContactPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (e.target.name === 'type') {
-      setSelectedType(e.target.value);
-    }
   };
 
   const handleCountryChange = (e) => {
@@ -75,6 +75,7 @@ const ContactPage = () => {
     if (!formData.type) newErrors.type = 'Please select a type';
     if (!formData.message) newErrors.message = 'Message is required';
     if (!formData.destination) newErrors.destination = 'Please select a destination';
+    if (!formData.dateofjoining) newErrors.dateofjoining = 'Please Enter a Valid Date of Your Joining';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
@@ -89,8 +90,7 @@ const ContactPage = () => {
       // Send data to the backend
       await axios.post('http://localhost:5000/contacts', formData);
       setStatusMessage('Message sent successfully!');
-      setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '' });
-      setSelectedType('');
+      setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '', dateofjoining: '' });
       setSelectedCountry('');
     } catch (error) {
       setStatusMessage('Error sending message. Please try again.');
@@ -100,14 +100,14 @@ const ContactPage = () => {
 
   const renderCountries = () => {
     let countries;
-    switch (selectedType) {
-      case 'study':
+    switch (formData.type) {
+      case 'Study Abroad':
         countries = studyCountries;
         break;
-      case 'work':
+      case 'Work/Travel Abroad':
         countries = workCountries;
         break;
-      case 'learning':
+      case 'Language Coaching':
         countries = languageLearning;
         break;
       default:
@@ -121,12 +121,12 @@ const ContactPage = () => {
           as="select"
           name="destination"
           onChange={handleCountryChange}
-          value={selectedCountry}
+          value={formData.destination}
           required
         >
           <option value="">Select Destination</option>
           {countries.map((country, index) => (
-            <option key={index} value={country.name}>
+            <option key={index} value={country.code}>
               {country.name}
             </option>
           ))}
@@ -142,43 +142,54 @@ const ContactPage = () => {
         <Col md={6} className="contact-form-col">
           <h3 className="contact-heading">Contact Us</h3>
           <Form onSubmit={handleSubmit} className="contact-form">
-            <Form.Group className="form-group">
+            <Form.Group>
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
                 onChange={handleChange}
                 value={formData.name}
+                placeholder='Enter your name'
                 required
-                className="form-control"
               />
               {errors.name && <div className="error-message">{errors.name}</div>}
             </Form.Group>
-            <Form.Group className="form-group">
+            <Form.Group>
               <Form.Label><FaPhoneAlt /> Phone</Form.Label>
               <Form.Control
                 type="text"
                 name="phone"
                 onChange={handleChange}
                 value={formData.phone}
+                placeholder='Enter your phone number'
                 required
-                className="form-control"
               />
               {errors.phone && <div className="error-message">{errors.phone}</div>}
             </Form.Group>
-            <Form.Group className="form-group">
+            <Form.Group>
               <Form.Label><FaEnvelope /> Email</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
                 onChange={handleChange}
                 value={formData.email}
+                placeholder='Enter your email'
                 required
-                className="form-control"
               />
               {errors.email && <div className="error-message">{errors.email}</div>}
             </Form.Group>
-            <Form.Group className="form-group">
+            <Form.Group>
+              <Form.Label><FaEnvelope /> Date of Joining</Form.Label>
+              <Form.Control
+                type="date"
+                name="dateofjoining"
+                onChange={handleChange}
+                value={formData.dateofjoining}
+                required
+              />
+              {errors.dateofjoining && <div className="error-message">{errors.dateofjoining}</div>}
+            </Form.Group>
+            <Form.Group>
               <Form.Label><FaUserAlt /> Type</Form.Label>
               <Form.Control
                 as="select"
@@ -188,14 +199,14 @@ const ContactPage = () => {
                 required
               >
                 <option value="">Select Type</option>
-                <option value="study">Study</option>
-                <option value="work">Work</option>
-                <option value="learning">Language Learning</option>
+                <option value="Study Abroad">Study Abroad</option>
+                <option value="Work/Travel Abroad">Work or Travel Abroad</option>
+                <option value="Language Coaching">Language Coaching</option>
               </Form.Control>
               {errors.type && <div className="error-message">{errors.type}</div>}
             </Form.Group>
             {renderCountries()}
-            <Form.Group className="form-group">
+            <Form.Group>
               <Form.Label><FaEdit /> Message</Form.Label>
               <Form.Control
                 as="textarea"
@@ -204,17 +215,10 @@ const ContactPage = () => {
                 value={formData.message}
                 rows={3}
                 required
-                className="form-control"
               />
               {errors.message && <div className="error-message">{errors.message}</div>}
             </Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-              className="submit-btn"
-            >
-              Send Message
-            </Button>
+            <Button variant="primary" type="submit">Send Message</Button>
             {statusMessage && <div className="status-message">{statusMessage}</div>}
           </Form>
         </Col>

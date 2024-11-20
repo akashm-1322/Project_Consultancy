@@ -21,6 +21,18 @@ const OpeningPage = ({ onNavigate }) => {
     setLoading(true);
     setErrorMessage("");
 
+    // Password validation regex
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setErrorMessage(
+        "Use a strong password: At least one uppercase letter, one lowercase letter, one number, one special character, and minimum 8 characters."
+      );
+      setLoading(false);
+      return;
+    }
+
     try {
       // Send login request to the backend
       const response = await axios.post("http://localhost:5000/api/auth/login", {
@@ -101,7 +113,7 @@ const OpeningPage = ({ onNavigate }) => {
             )}
           </div>
         </div>
-        
+
         <div className="right-box">
           <div className="company-logo">
             <img

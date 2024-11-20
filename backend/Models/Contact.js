@@ -8,6 +8,7 @@ const ContactSchema = new mongoose.Schema({
   type: { type: String, required: true },
   destination: { type: String, required: true },
   message: { type: String, required: true },
+  dateofjoining: {type: String, required: true},
 });
 
 module.exports = ContactSchema;
