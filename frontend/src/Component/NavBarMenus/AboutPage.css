@@ -35,12 +35,13 @@
   /* Styling the overall About Page */
   .about-page {
     margin-top: 40px;
+    background: linear-gradient(90deg , rgb(239, 171, 220), rgb(221, 176, 245),rgb(171, 235, 214));
   }
   
   /* Box Layout for Each Section (Mission, Vision, Values) */
   .about-box {
     padding: 30px;
-    background-color: #f4f6f9;
+    background: linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176));
     border-radius: 12px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -79,9 +80,11 @@
     animation: slideIn 1s ease-out;
   }
   
+
   /* Card Styling for Team Members */
   .card {
     border-radius: 16px;
+    background: linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176));
   }
   
   .card img {

@@ -4,7 +4,7 @@
     width: 90%;
     max-width: 1200px;
     margin: 30px auto;
-    background: #fff;
+    background: linear-gradient(90deg , rgb(239, 171, 220), rgb(221, 176, 245),rgb(171, 235, 214));
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -101,7 +101,7 @@
   }
   
   tbody tr:nth-child(even) {
-    background: #f9f9f9;
+    background: linear-gradient(90deg , rgb(171, 235, 214) ,rgb(221, 176, 245), rgb(239, 171, 220));
   }
   
   tbody tr:hover {
@@ -174,5 +174,21 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  .custom-form-control {
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+                0 6px 20px rgba(0, 0, 0, 0.1);
+    border: none; /* Removes the default border */
+    border-radius: 5px; /* Optional: Gives rounded corners */
+    font-size: 16px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .custom-form-control:focus {
+    outline: none; /* Removes the default focus border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
+                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
   }
   

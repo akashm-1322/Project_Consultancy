@@ -117,7 +117,7 @@ const OpeningPage = ({ onNavigate }) => {
         <div className="right-box">
           <div className="company-logo">
             <img
-              src="/path/to/your/logo.png" // Replace with the actual path to the logo
+              src="/OpeningPageLogo.jpg" // Replace with the actual path to the logo
               alt="Company Logo"
               width="400"
               height="400"

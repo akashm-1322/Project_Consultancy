@@ -51,6 +51,10 @@ const workCountries = [
   { name: 'Singapore' , code: 'SIN', plus: <FaPlus/>, shape: sin}
 ];
 
+const learningLanguage = [
+  {name: 'German', code: 'GER' , plus:<FaPlus/> , shape: ger }
+]
+
 const CountryStrip = ({ country }) => (
   <div className="country-strip shadow-lg">
   
@@ -62,8 +66,8 @@ const CountryStrip = ({ country }) => (
 );
 
 const CountrySection = ({ title, countries }) => (
-  <div className="country-section">
-    <h2 className="section-title text-center">{title}</h2>
+  <div className="country-section ">
+    <h2 className="section-title text-center m-5">{title}</h2>
     <div className="country-list">
       {countries.map((country, index) => (
         <CountryStrip key={index} country={country} />
@@ -80,8 +84,9 @@ const CountryPage = () => {
         <p className="banner-subtitle">Connect to your future in work, study, and languages.</p>
       </div>
       <div className="content">
-        <CountrySection title="Study Destinations" countries={studyCountries} />
-        <CountrySection title="Work Destinations" countries={workCountries} />
+        <CountrySection    title="Study Destinations" countries={studyCountries} />
+        <CountrySection    title="Work Destinations" countries={workCountries} />
+        <CountrySection    title="Languages Coached" countries={learningLanguage} />
       </div>
     </div>
   );

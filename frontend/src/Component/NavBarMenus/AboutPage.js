@@ -82,7 +82,7 @@ const AboutPage = () => {
           animation: 'fadeIn 2s ease-in-out', // Animation for paragraph
         }}
       >
-        We are a company committed to driving innovation and creating value for our clients. Our team works tirelessly to deliver top-notch solutions that empower businesses and individuals. We believe in fostering collaboration and leveraging technology to improve lives and communities across the globe. Join us as we strive to lead in technological advancement and make a positive impact in the world.
+        We are an Organisation committed to driving innovation and creating value for our clients. Our team works tirelessly to deliver top-notch solutions that empower businesses and individuals. We believe in fostering collaboration and leveraging technology to improve lives and communities across the globe. Join us as we strive to lead in technological advancement and make a positive impact in the world.
       </Typography>
 
       {/* About Content with Animation */}
@@ -135,10 +135,11 @@ const AboutPage = () => {
           Meet the Team
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} justifyContent="center" className='team-box'>
           {teamMembers.map((member, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card
+              <Card 
+              style={{background: 'linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176))'}}
                 sx={{
                   maxWidth: 345,
                   textAlign: 'center',

@@ -89,7 +89,7 @@ const Testimonials = () => {
           </button>
         </div>
       </div>
-      <div className="comment-form">
+      <div className="comment-form" style={{ backgroundColor: randomColor }}>
         <h2>Add Your Comment</h2>
         <input
           type="text"

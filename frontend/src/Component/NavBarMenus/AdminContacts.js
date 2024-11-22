@@ -13,6 +13,7 @@ const AdminContacts = () => {
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   const [formData, setFormData] = useState({
     name: '',
@@ -56,18 +57,54 @@ const AdminContacts = () => {
   ];
   
   const languageLearning = [
-    { id: 1 , name: 'German', code: 'GER' },
-    { id: 2 , name: 'Spanish', code: 'SPA' },
-    { id: 3 , name: 'French', code: 'FRE' },
-    { id: 4 , name: 'English', code: 'ENG' },
+    { id: 1 , name: 'German', code: 'GER' }
   ];
   
+  const validateForm = () => {
+    const errors = {};
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const today = new Date();
+
+    if (!formData.name || !nameRegex.test(formData.name)) {
+      errors.name = 'Name is required and must contain only letters and spaces.';
+    }
+
+    if (!formData.email || !emailRegex.test(formData.email)) {
+      errors.email = 'Enter a valid email address.';
+    }
+
+    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+      errors.phone = 'Phone must be exactly 10 digits.';
+    }
+
+    if (!formData.type) {
+      errors.type = 'Type selection is required.';
+    }
+
+    if (!formData.dateofjoining) {
+      errors.dateofjoining = 'Date of joining is required.';
+    } else if (new Date(formData.dateofjoining) > today) {
+      errors.dateofjoining = 'Date of joining cannot be in the future.';
+    }
+
+    if (!formData.message) {
+      errors.message = 'Message cannot be empty.';
+    }
+
+    if (!formData.destination) {
+      errors.destination = 'Destination is required.';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const API_BASE_URL = 'http://localhost:5000/contacts';
 
   const fetchContacts = async () => {
     setLoading(true);
-    setError(null);
     try {
       const response = await axios.get(API_BASE_URL, {
         params: {
@@ -80,8 +117,7 @@ const AdminContacts = () => {
       setContacts(response.data || []);
       setTotalContacts(response.data.length || 0);
     } catch (error) {
-      console.log(error);
-      setError("Error fetching contacts. Please try again later.");
+      setError('Error fetching contacts. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -89,7 +125,7 @@ const AdminContacts = () => {
 
   useEffect(() => {
     fetchContacts();
-  }, [currentPage, sortConfig]); 
+  }, [currentPage, sortConfig]);
 
 
   const handleChange = (e) => {
@@ -100,6 +136,8 @@ const AdminContacts = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setLoading(true);
     setError(null);
     try {
@@ -117,10 +155,7 @@ const AdminContacts = () => {
         message: '',
         destination: '',
         dateofjoining: '',
-        studyCountry: '',
-        workCountry: '',
-        learningLanguage: '',
-      }); // Reset the form after submission
+      });
       fetchContacts();
     } catch (error) {
       setError('Error submitting form. Please try again.');
@@ -128,7 +163,6 @@ const AdminContacts = () => {
       setLoading(false);
     }
   };
-  
 
   const handleSortChange = (key) => {
     const direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
@@ -174,6 +208,7 @@ const AdminContacts = () => {
     placeholder="Name"
     value={formData.name}
     onChange={handleChange}
+    className="custom-form-control"
     required
   />
   <input
@@ -182,6 +217,7 @@ const AdminContacts = () => {
     placeholder="Email"
     value={formData.email}
     onChange={handleChange}
+    className="custom-form-control"
     required
   />
   <input
@@ -190,6 +226,7 @@ const AdminContacts = () => {
     placeholder="Phone"
     value={formData.phone}
     onChange={handleChange}
+    className="custom-form-control"
     required
   />
   <input
@@ -197,6 +234,7 @@ const AdminContacts = () => {
     name="dateofjoining"
     value={formData.dateofjoining}
     onChange={handleChange}
+    className="custom-form-control"
     required
   />
   <input
@@ -204,12 +242,14 @@ const AdminContacts = () => {
     name="message"
     value={formData.message}
     onChange={handleChange}
+    className="custom-form-control"
     required
   />
   <select
     name="type"
     value={formData.type}
     onChange={handleChange}
+    className="custom-form-control"
     required
   >
     <option value="">Select Type</option>
@@ -223,6 +263,7 @@ const AdminContacts = () => {
       name="destination"
       value={formData.destination}
       onChange={handleChange}
+      className="custom-form-control"
       required
     >
       <option value="">Select Study Country</option>
@@ -239,6 +280,7 @@ const AdminContacts = () => {
       name="destination"
       value={formData.destination}
       onChange={handleChange}
+      className="custom-form-control"
       required
     >
       <option value="">Select Work Country</option>
@@ -255,6 +297,7 @@ const AdminContacts = () => {
       name="destination"
       value={formData.destination}
       onChange={handleChange}
+      className="custom-form-control"
       required
     >
       <option value="">Select Language</option>

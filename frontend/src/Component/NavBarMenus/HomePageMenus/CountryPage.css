@@ -1,6 +1,6 @@
 /* Add a gradient background to the entire page */
 .country-page {
-    background: linear-gradient(60deg , rgb(196, 225, 9) , rgb(55, 97, 235) , rgb(14, 181, 55));
+    background: linear-gradient(90deg , rgb(242, 197, 133) , rgb(226, 247, 151) , rgb(153, 229, 237));
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     overflow: hidden;
@@ -20,7 +20,6 @@
   
   /* Banner Section with Parallax Effect */
   .banner {
-    background: linear-gradient(180deg , rgb(7, 208, 7) , rgb(104, 208, 14) , rgb(9, 201, 153));
     background-size: cover;
     padding: 80px 20px;
     color: white;
@@ -55,6 +54,7 @@
     justify-content: space-between;
     background-color: white;
     padding: 20px 40px;
+    background: linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176));
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 100%;
@@ -68,7 +68,8 @@
   
   .country-strip:hover {
     transform: scale(1.05);
-    background-color: #f0f8ff;
+    font-weight: 800;
+    color: #b502ec
   }
   
   /* Country Name Transitions */
@@ -85,7 +86,6 @@
   
   .country-strip:hover .country-name {
     transform: translateX(10px);
-    color: #007bff;
   }
   
   /* Country Flag with Animation */

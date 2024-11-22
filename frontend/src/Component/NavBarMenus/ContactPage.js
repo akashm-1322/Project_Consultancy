@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit, FaUserAlt } from 'react-icons/fa';
+import { IoManOutline } from "react-icons/io5";
 import ContactImage from '../../Asset/Contact.jpg'; // Adjust path as needed
 import axios from 'axios'; // Import axios for API requests
 import './ContactPage.css'; // Import external CSS
@@ -34,10 +35,7 @@ const workCountries = [
 ];
 
 const languageLearning = [
-  { name: 'German', code: 'GER' },
-  { name: 'Spanish', code: 'SPA' },
-  { name: 'French', code: 'FRE' },
-  { name: 'English', code: 'ENG' },
+  { name: 'German', code: 'GER' }
 ];
 
 const ContactPage = () => {
@@ -54,9 +52,6 @@ const ContactPage = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [errors, setErrors] = useState({});
 
-  // Regex patterns for validation
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const phoneRegex = /^[0-9]{10}$/;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -69,17 +64,65 @@ const ContactPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.name) newErrors.name = 'Name is required';
-    if (!formData.phone || !phoneRegex.test(formData.phone)) newErrors.phone = 'Please enter a valid phone number';
-    if (!formData.email || !emailRegex.test(formData.email)) newErrors.email = 'Please enter a valid email address';
-    if (!formData.type) newErrors.type = 'Please select a type';
-    if (!formData.message) newErrors.message = 'Message is required';
-    if (!formData.destination) newErrors.destination = 'Please select a destination';
-    if (!formData.dateofjoining) newErrors.dateofjoining = 'Please Enter a Valid Date of Your Joining';
+    const nameRegex = /^[a-zA-Z\s]*$/; // Ensure name contains only letters and spaces
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+    const phoneRegex = /^\d{10}$/; // Ensure phone is exactly 10 digits
+    const today = new Date(); // For validating date
+
+    // Validate name
+    if (!formData.name) {
+        newErrors.name = 'Name is required';
+    } else if (!nameRegex.test(formData.name)) {
+        newErrors.name = 'Name can only contain letters and spaces';
+    } else {
+        // Capitalize the first letter of each word
+        formData.name = formData.name
+            .split(' ')
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+
+    // Validate phone
+    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+        newErrors.phone = 'Please enter a valid phone number';
+    }
+
+    // Validate email
+    if (!formData.email || !emailRegex.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email address';
+    } else if (!formData.email.includes('@')) {
+        newErrors.email = 'Email must contain "@"';
+    }
+
+    // Validate type
+    if (!formData.type) {
+        newErrors.type = 'Please select a type';
+    }
+
+    // Validate message
+    if (!formData.message) {
+        newErrors.message = 'Message is required';
+    }
+
+    // Validate destination
+    if (!formData.destination) {
+        newErrors.destination = 'Please select a destination';
+    }
+
+    // Validate date of joining
+    if (!formData.dateofjoining) {
+        newErrors.dateofjoining = 'Please Enter a Valid Date of Your Joining';
+    } else {
+        const selectedDate = new Date(formData.dateofjoining);
+        if (selectedDate > today) {
+            newErrors.dateofjoining = 'Date of joining cannot be in the future';
+        }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
-  };
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -143,13 +186,14 @@ const ContactPage = () => {
           <h3 className="contact-heading">Contact Us</h3>
           <Form onSubmit={handleSubmit} className="contact-form">
             <Form.Group>
-              <Form.Label>Name</Form.Label>
+              <Form.Label><IoManOutline/> Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
                 onChange={handleChange}
                 value={formData.name}
                 placeholder='Enter your name'
+                className="custom-form-control"
                 required
               />
               {errors.name && <div className="error-message">{errors.name}</div>}
@@ -162,6 +206,7 @@ const ContactPage = () => {
                 onChange={handleChange}
                 value={formData.phone}
                 placeholder='Enter your phone number'
+                className="custom-form-control"
                 required
               />
               {errors.phone && <div className="error-message">{errors.phone}</div>}
@@ -174,6 +219,7 @@ const ContactPage = () => {
                 onChange={handleChange}
                 value={formData.email}
                 placeholder='Enter your email'
+                className="custom-form-control"
                 required
               />
               {errors.email && <div className="error-message">{errors.email}</div>}
@@ -185,6 +231,7 @@ const ContactPage = () => {
                 name="dateofjoining"
                 onChange={handleChange}
                 value={formData.dateofjoining}
+                className="custom-form-control"
                 required
               />
               {errors.dateofjoining && <div className="error-message">{errors.dateofjoining}</div>}
@@ -196,6 +243,7 @@ const ContactPage = () => {
                 name="type"
                 onChange={handleChange}
                 value={formData.type}
+                className="custom-form-control"
                 required
               >
                 <option value="">Select Type</option>
@@ -214,6 +262,7 @@ const ContactPage = () => {
                 onChange={handleChange}
                 value={formData.message}
                 rows={3}
+                className='custom-form-control'
                 required
               />
               {errors.message && <div className="error-message">{errors.message}</div>}

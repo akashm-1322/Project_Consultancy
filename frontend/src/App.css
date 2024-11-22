@@ -1,4 +1,10 @@
 /* App.css */
+
+body{
+  background: linear-gradient(90deg , rgb(242, 197, 133) , rgb(226, 247, 151) , rgb(153, 229, 237));
+}
+
+
 .app-wrapper {
   display: flex;
   flex-direction: column;
