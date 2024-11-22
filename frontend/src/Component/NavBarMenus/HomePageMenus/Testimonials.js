@@ -10,14 +10,14 @@ const Testimonials = () => {
   const [newComment, setNewComment] = useState({ name: '', message: '' });
 
   const colors = [
-    '#FFADAD',
-    '#FFD6A5',
-    '#FDFFB6',
-    '#CAFFBF',
-    '#9BF6FF',
-    '#A0C4FF',
-    '#BDB2FF',
-    '#FFC6FF',
+    '#e9d4d4',
+    '#e7e1d9',
+    '#ddded0',
+    '#d2e6ce',
+    '#d6e8ea',
+    '#d3dbe8',
+    '#d2cee4',
+    '#dfcddf',
   ];
 
   useEffect(() => {

@@ -76,7 +76,7 @@ const AboutPage = () => {
         variant="body1"
         sx={{
           textAlign: 'center',
-          color: '#555',
+          color: '#000',
           lineHeight: '1.6',
           mb: 4,
           animation: 'fadeIn 2s ease-in-out', // Animation for paragraph
@@ -107,7 +107,7 @@ const AboutPage = () => {
                 variant="body1"
                 sx={{
                   textAlign: 'center',
-                  color: '#555',
+                  color: '#000',
                   lineHeight: '1.6',
                   mb: 4,
                 }}
@@ -139,7 +139,7 @@ const AboutPage = () => {
           {teamMembers.map((member, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <Card 
-              style={{background: 'linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176))'}}
+              style={{background: 'linear-gradient(90deg , rgb(224, 209, 201), rgb(209, 197, 220),rgb(221, 221, 206))'}}
                 sx={{
                   maxWidth: 345,
                   textAlign: 'center',

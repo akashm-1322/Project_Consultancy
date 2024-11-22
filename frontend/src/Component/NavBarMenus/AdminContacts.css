@@ -4,7 +4,7 @@
     width: 90%;
     max-width: 1200px;
     margin: 30px auto;
-    background: linear-gradient(90deg , rgb(239, 171, 220), rgb(221, 176, 245),rgb(171, 235, 214));
+    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240),rgb(208, 230, 222));
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -13,7 +13,7 @@
   
   h1 {
     text-align: center;
-    color: #444;
+    color: #000;
     margin-bottom: 20px;
     font-size: 2.5rem;
   }
@@ -101,7 +101,7 @@
   }
   
   tbody tr:nth-child(even) {
-    background: linear-gradient(90deg , rgb(171, 235, 214) ,rgb(221, 176, 245), rgb(239, 171, 220));
+    background: linear-gradient(90deg , rgb(208, 230, 222), rgb(228, 205, 240),rgb(225, 188, 215));
   }
   
   tbody tr:hover {
@@ -150,7 +150,7 @@
   
   .pagination span {
     font-size: 1rem;
-    color: #444;
+    color: #000;
   }
   
   /* Animations */

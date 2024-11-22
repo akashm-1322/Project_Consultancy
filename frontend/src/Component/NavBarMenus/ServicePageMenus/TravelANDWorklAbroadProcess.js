@@ -6,7 +6,7 @@ const WorkAbroadProcess = ({ onClose }) => (
   <Container
     fluid
     style={{
-      background: "linear-gradient(90deg , rgb(240, 153, 211) , rgb(146, 179, 229) , rgb(145, 228, 178))",
+      background: "linear-gradient(90deg , rgb(226, 210, 221) , rgb(201, 210, 223) , rgb(199, 217, 206))",
       padding: "40px",
       marginTop: "20px",
       width: "100%",

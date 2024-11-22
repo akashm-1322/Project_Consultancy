@@ -27,7 +27,7 @@
   
   .service-card {
     border: none;
-    background: linear-gradient(90deg , rgb(239, 171, 220), rgb(221, 176, 245),rgb(171, 235, 214));
+    background: linear-gradient(90deg , rgb(223, 209, 219), rgb(221, 176, 245),rgb(211, 222, 218));
     overflow: hidden;
     border-radius: 15px;
   }
@@ -43,7 +43,7 @@
   
   .service-card .description {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #000;
   }
   
   .learn-more-btn {

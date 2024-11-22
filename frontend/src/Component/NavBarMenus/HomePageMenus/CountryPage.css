@@ -1,6 +1,6 @@
 /* Add a gradient background to the entire page */
 .country-page {
-    background: linear-gradient(90deg , rgb(242, 197, 133) , rgb(226, 247, 151) , rgb(153, 229, 237));
+    background: linear-gradient(90deg , rgb(224, 216, 206) , rgb(216, 220, 201) , rgb(210, 225, 226));
     background-size: 400% 400%;
     animation: gradientShift 15s ease infinite;
     overflow: hidden;
@@ -54,7 +54,7 @@
     justify-content: space-between;
     background-color: white;
     padding: 20px 40px;
-    background: linear-gradient(90deg , rgb(231, 178, 152), rgb(189, 154, 220),rgb(229, 230, 176));
+    background: linear-gradient(90deg , rgb(227, 216, 211), rgb(219, 211, 226),rgb(226, 226, 210));
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 100%;

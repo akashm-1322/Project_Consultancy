@@ -33,7 +33,7 @@
   
   /* Styles for the left form container */
   .contact-form-col {
-    background: linear-gradient(90deg , rgb(239, 171, 220), rgb(221, 176, 245),rgb(171, 235, 214));
+    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240),rgb(208, 230, 222));
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -48,7 +48,7 @@
   /* Form heading */
   .contact-heading {
     font-size: 2.5rem;
-    color: #333;
+    color: #000;
     margin-bottom: 20px;
     text-align: center;
     text-transform: uppercase;
@@ -79,7 +79,7 @@
   .contact-form .form-label {
     font-size: 1rem;
     margin-bottom: 5px;
-    color: #555;
+    color: #000;
   }
   
   /* Button styles */
@@ -109,7 +109,7 @@
   .status-message {
     margin-top: 20px;
     font-size: 1.2rem;
-    color: #333;
+    color: #000;
     text-align: center;
     animation: fadeIn 1s ease-out;
   }

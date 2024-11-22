@@ -65,9 +65,8 @@ const TopNavbar = ({ userRole, adminName, onLogout }) => {
     <AppBar
       position="sticky"
       sx={{
-        background: "linear-gradient(135deg, #6a11cb, #2575fc, #6a11cb)",
+        background: "linear-gradient(75deg, #d4d2d6, #84abf0, #a277d0 , #ef90e2)",
         backgroundSize: "300% 300%",
-        animation: `${gradientAnimation} 10s ease infinite`,
       }}
     >
       <Toolbar
@@ -79,12 +78,12 @@ const TopNavbar = ({ userRole, adminName, onLogout }) => {
       >
         <Box display="flex" alignItems="center">
           <IconButton sx={{ color: "#fff", animation: `${scaleAnimation} 1s ease-in-out` }}>
-            <img src="/logo.png" alt="logo" width="70" height="30" />
+            <img src="/j99_logo.png" alt="logo" width="100" height="70" />
           </IconButton>
           <Typography
             variant="h4"
             sx={{
-              color: "#fff",
+              color: "#047a04",
               fontWeight: "bold",
               textDecoration: "none",
               fontSize: "1.8rem",

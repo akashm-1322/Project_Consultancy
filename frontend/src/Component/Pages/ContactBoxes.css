@@ -72,6 +72,8 @@
   transform: translateX(-110%) scale(1);
 }
 
+
+
 .contact-box:hover .tooltip.left {
   transform: translateY(-50%) scale(1);
 }
