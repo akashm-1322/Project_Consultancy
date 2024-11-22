@@ -1,5 +1,5 @@
-import React from "react";
-import { FaPlus } from "react-icons/fa";
+import React , {useState} from "react";
+import { FaPlus , FaMinus} from "react-icons/fa";
 import aus from "../../../Asset/aus_flag.jpg";
 import uk from "../../../Asset/uk_flag.png";
 import ger from "../../../Asset/ger_flag.png";
@@ -55,18 +55,36 @@ const learningLanguage = [
   {name: 'German', code: 'GER' , plus:<FaPlus/> , shape: ger }
 ]
 
-const CountryStrip = ({ country }) => (
-  <div className="country-strip shadow-lg">
-  
-    <span className="country-code">{country.code}</span>
-    <span className="country-name">{country.name}</span>
-    <img className="country-flag" src={country.shape} alt={`${country.name} flag`} />
-    <span className="plus-icon">{country.plus}</span>
-  </div>
-);
+
+const CountryStrip = ({ country }) => {
+  const [showFields, setShowFields] = useState(false);
+
+  return (
+    <div className="country-strip shadow-lg">
+      <div className="country-header">
+        <span className="country-code">{country.code}</span>
+        <span className="country-name">{country.name}</span>
+        <img className="country-flag" src={country.shape} alt={`${country.name} flag`} />
+        <span className="plus-icon" onClick={() => setShowFields(!showFields)}>
+          {showFields ? <FaMinus /> : <FaPlus />}
+        </span>
+      </div>
+      {showFields && (
+        <div className="fields-container">
+          {country.fields.map((field, index) => (
+            <div key={index} className="field-card shadow">
+              <h4>{field.name}</h4>
+              <p>Vacancies: {field.vacancies}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const CountrySection = ({ title, countries }) => (
-  <div className="country-section ">
+  <div className="country-section">
     <h2 className="section-title text-center m-5">{title}</h2>
     <div className="country-list">
       {countries.map((country, index) => (
@@ -84,9 +102,9 @@ const CountryPage = () => {
         <p className="banner-subtitle">Connect to your future in work, study, and languages.</p>
       </div>
       <div className="content">
-        <CountrySection    title="Study Destinations" countries={studyCountries} />
-        <CountrySection    title="Work Destinations" countries={workCountries} />
-        <CountrySection    title="Languages Coached" countries={learningLanguage} />
+        <CountrySection title="Study Destinations" countries={studyCountries} />
+        <CountrySection title="Work Destinations" countries={workCountries} />
+        <CountrySection title="Coaching" countries={learningLanguage} />
       </div>
     </div>
   );

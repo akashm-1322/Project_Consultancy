@@ -3,6 +3,10 @@ import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
 import './AdminContacts.css';
 import { RiNumbersFill } from "react-icons/ri";
+import { MdAutoDelete } from "react-icons/md";
+import { FaUserEdit } from "react-icons/fa";
+import CountryComponent from './CountryComponent';
+import FieldComponent from './FieldComponent';
 
 const AdminContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -14,6 +18,16 @@ const AdminContacts = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  const [countries, setCountries] = useState([]);
+  const [fields, setFields] = useState([]);
+
+  useEffect(() => {
+    // Fetch countries and fields on component mount
+    axios.get('/countries').then((res) => setCountries(res.data));
+    console.log(countries);
+    axios.get('/fields').then((res) => setFields(res.data));
+    console.log(fields);
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -106,22 +120,25 @@ const AdminContacts = () => {
   const fetchContacts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(API_BASE_URL, {
-        params: {
-          page: currentPage,
-          limit: contactsPerPage,
-          sortKey: sortConfig.key,
-          sortOrder: sortConfig.direction,
-        },
-      });
-      setContacts(response.data || []);
-      setTotalContacts(response.data.length || 0);
+        const response = await axios.get('http://localhost:5000/contacts', {
+            params: {
+                page: currentPage,
+                limit: contactsPerPage,
+                sortKey: sortConfig.key,
+                sortOrder: sortConfig.direction,
+            },
+        });
+        // Adjust according to the response structure
+        setContacts(response.data.contacts || []); // Access contacts array
+        setTotalContacts(response.data.total || 0); // Access total count
+        console.log('API Response:', response.data);
     } catch (error) {
-      setError('Error fetching contacts. Please try again later.');
+        setError('Error fetching contacts. Please try again later.');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+
 
   useEffect(() => {
     fetchContacts();
@@ -194,6 +211,7 @@ const AdminContacts = () => {
   };
 
   return (
+    <div>
     <div className="admin-container">
       <h1>Admin Contact Management</h1>
       {error && <div className="error-message">{error}</div>}
@@ -329,7 +347,7 @@ const AdminContacts = () => {
               </tr>
             </thead>
             <tbody>
-              {contacts.length ? (
+            {contacts.length > 0 ? (
                 contacts.map((contact) => (
                   <tr key={contact._id} className="table-row">
                   <td>{contact.name}</td>
@@ -340,8 +358,8 @@ const AdminContacts = () => {
                   <td>{contact.destination}</td>
                   <td>{contact.dateofjoining}</td>
                     <td>
-                      <button onClick={() => handleEdit(contact)}>Edit</button>
-                      <button onClick={() => handleDelete(contact._id)}>Delete</button>
+                      <button classname="button-edit" onClick={() => handleEdit(contact)}><FaUserEdit/> Edit</button>
+                      <button classname="button-delete" onClick={() => handleDelete(contact._id)}><MdAutoDelete/> Delete</button>
                     </td>
                   </tr>
                 ))
@@ -366,6 +384,27 @@ const AdminContacts = () => {
           </div>
         </>
       )}
+    </div>
+    <div className="admin-container">
+        <h1>Admin Contact Management</h1>
+        {error && <div className="error-message">{error}</div>}
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <>
+            <CountryComponent
+              countries={countries}
+              formData={formData}
+              setFormData={setFormData}
+            />
+            <FieldComponent
+              fields={fields}
+              formData={formData}
+              setFormData={setFormData}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
