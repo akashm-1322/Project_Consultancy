@@ -9,7 +9,9 @@ import ContactPage from "./Component/NavBarMenus/ContactPage";
 import AdminContacts from "./Component/NavBarMenus/AdminContacts";
 import Footer from "./Component/BasicComponents/Footer";
 import EndFooter from "./Component/BasicComponents/EndFooter";
-import ContactBoxes from "./Component/Pages/ContactBoxes"; // Import the new component
+import ContactBoxes from "./Component/Pages/ContactBoxes";
+import CountryComponent from "./Component/NavBarMenus/CountryComponent";
+import FieldComponent from "./Component/NavBarMenus/FieldComponent"; // Import the new component
 import "./App.css";
 
 const AppContent = () => {
@@ -91,8 +93,18 @@ const AppContent = () => {
               <Route path="/contact" element={<ContactPage />} />
               {/* Admin Route */}
               {userType === "ADMIN" && (
-                <Route path="/admincontacts" element={<AdminContacts />} />
-              )}
+              <Route
+              path="/admincontacts"
+              element={
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                <AdminContacts />
+                <CountryComponent />
+                <FieldComponent />
+                </div>
+              }
+              />
+            )}
+
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>

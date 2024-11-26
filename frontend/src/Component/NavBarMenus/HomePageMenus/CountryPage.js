@@ -1,111 +1,155 @@
-import React , {useState} from "react";
-import { FaPlus , FaMinus} from "react-icons/fa";
-import aus from "../../../Asset/aus_flag.jpg";
-import uk from "../../../Asset/uk_flag.png";
-import ger from "../../../Asset/ger_flag.png";
-import pol from "../../../Asset/pol_flag.png";
-import swi from "../../../Asset/swi_flag.png";
-import uae from "../../../Asset/uae_flag.png";
-import kuw from "../../../Asset/kuw_flag.png";
-import qat from "../../../Asset/qatar_flag.png";
-import can from "../../../Asset/canada_flag.png";
-import ser from "../../../Asset/serbia_flag.png";
-import alb from "../../../Asset/albania_flag.png";
-import gre from "../../../Asset/greece_flag.png";
-import cro from "../../../Asset/croatia_flag.png";
-import slo from "../../../Asset/slovakia.png";
-import ita from "../../../Asset/italy_flag.png";
-import cze from "../../../Asset/czech_flag.png";
-import hun from "../../../Asset/hungary_flag.png";
-import ire from "../../../Asset/ireland_flag.png";
-import lux from "../../../Asset/luxemburg_flag.png";
-import sin from "../../../Asset/sin_flag.png"
-
-import './CountryPage.css'; // Import the new CSS file
-
-const studyCountries = [
-  { name: 'Germany', code: 'GER', plus: <FaPlus />, shape: ger},
-  { name: 'Poland', code: 'POL', plus: <FaPlus />, shape: pol},
-  { name: 'Switzerland', code: 'SWE', plus: <FaPlus />, shape: swi},
-  { name: 'Singapore' , code: 'SIN', plus: <FaPlus/>, shape: sin}
-];
-
-const workCountries = [
-  { name: 'Dubai', code: 'DUB', plus: <FaPlus />, shape: uae},
-  { name: 'Saudi Arabia', code: 'SAU', plus: <FaPlus />, shape: uae},
-  { name: 'Kuwait', code: 'KUW', plus: <FaPlus />, shape: kuw},
-  { name: 'Qatar', code: 'QAT', plus: <FaPlus />, shape: qat},
-  { name: 'Australia', code: 'AUS', plus: <FaPlus />, shape: aus},
-  { name: 'Canada', code: 'CAN', plus: <FaPlus />, shape: can},
-  { name: 'Serbia', code: 'SER', plus: <FaPlus />, shape: ser},
-  { name: 'Albania', code: 'ALB', plus: <FaPlus />, shape: alb},
-  { name: 'Greece', code: 'GRE', plus: <FaPlus />, shape: gre},
-  { name: 'Croatia', code: 'CRO', plus: <FaPlus />, shape: cro},
-  { name: 'Slovakia', code: 'SLO', plus: <FaPlus />, shape: slo},
-  { name: 'Italy', code: 'ITA', plus: <FaPlus />, shape: ita},
-  { name: 'Czech Republic', code: 'CZ', plus: <FaPlus />, shape: cze},
-  { name: 'United Kingdom', code: 'UK', plus: <FaPlus />, shape: uk},
-  { name: 'Hungary', code: 'HUN', plus: <FaPlus />, shape: hun},
-  { name: 'Ireland', code: 'IRE', plus: <FaPlus />, shape: ire},
-  { name: 'Luxembourg', code: 'LUX', plus: <FaPlus />, shape: lux},
-  { name: 'Singapore' , code: 'SIN', plus: <FaPlus/>, shape: sin}
-];
-
-const learningLanguage = [
-  {name: 'German', code: 'GER' , plus:<FaPlus/> , shape: ger }
-]
-
-
-const CountryStrip = ({ country }) => {
-  const [showFields, setShowFields] = useState(false);
-
-  return (
-    <div className="country-strip shadow-lg">
-      <div className="country-header">
-        <span className="country-code">{country.code}</span>
-        <span className="country-name">{country.name}</span>
-        <img className="country-flag" src={country.shape} alt={`${country.name} flag`} />
-        <span className="plus-icon" onClick={() => setShowFields(!showFields)}>
-          {showFields ? <FaMinus /> : <FaPlus />}
-        </span>
-      </div>
-      {showFields && (
-        <div className="fields-container">
-          {country.fields.map((field, index) => (
-            <div key={index} className="field-card shadow">
-              <h4>{field.name}</h4>
-              <p>Vacancies: {field.vacancies}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CountrySection = ({ title, countries }) => (
-  <div className="country-section">
-    <h2 className="section-title text-center m-5">{title}</h2>
-    <div className="country-list">
-      {countries.map((country, index) => (
-        <CountryStrip key={index} country={country} />
-      ))}
-    </div>
-  </div>
-);
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./CountryPage.css";
 
 const CountryPage = () => {
+  const [countries, setCountries] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [expandedCountries, setExpandedCountries] = useState([]);
+
+  // Fetch data from the backend
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch all countries
+        const countriesResponse = await axios.get(
+          "http://localhost:5000/api/countries"
+        );
+        if (countriesResponse.data.countries) {
+          setCountries(countriesResponse.data.countries);
+        } else {
+          console.error("Invalid countries data:", countriesResponse.data);
+        }
+
+        // Fetch all fields
+        const fieldsResponse = await axios.get(
+          "http://localhost:5000/api/field"
+        );
+        if (fieldsResponse.data.fields) {
+          setFields(fieldsResponse.data.fields);
+        } else {
+          console.error("Invalid fields data:", fieldsResponse.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Toggle the visibility of fields for a country
+  const toggleCountryFields = (countryName) => {
+    setExpandedCountries((prev) =>
+      prev.includes(countryName)
+        ? prev.filter((name) => name !== countryName)
+        : [...prev, countryName]
+    );
+  };
+
+  // Segregate countries by type
+  const segregateCountriesByType = (type) => {
+    return countries.filter((country) => country.type === type);
+  };
+
+  // Calculate total vacancies for a specific country
+  const calculateTotalVacancies = (countryName) => {
+    const countryFields = fields.filter(
+      (field) => field.countryData === countryName
+    );
+    return countryFields.reduce((sum, field) => {
+      return (
+        sum +
+        (field.vacancies
+          ? field.vacancies.reduce((subSum, v) => subSum + v, 0)
+          : 0)
+      );
+    }, 0);
+  };
+
+  // Render fields under a specific country
+  const renderFields = (countryName) => {
+    const countryFields = fields.filter(
+      (field) => field.countryData === countryName
+    );
+
+    return (
+      <div className="fields-container">
+        {countryFields.length > 0 ? (
+          countryFields.map((field) => (
+            <div key={field._id} className="field-card">
+              {field.imageUrl && (
+                <img
+                  src={`http://localhost:5000${field.imageUrl}`}
+                  alt={`${field.countryData} field`}
+                />
+              )}
+              <table className="field-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Vacancies</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.isArray(field.names) && field.names.length > 0 ? (
+                    field.names.map((name, index) => (
+                      <tr key={index}>
+                        <td>{name}</td>
+                        <td>{field.vacancies[index]}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="2">No fields available.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          ))
+        ) : (
+          <p>No fields available for {countryName}.</p>
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div className="country-page p-2">
-      <div className="banner">
-        <h1 className="banner-title">Explore Global Opportunities</h1>
-        <p className="banner-subtitle">Connect to your future in work, study, and languages.</p>
-      </div>
-      <div className="content">
-        <CountrySection title="Study Destinations" countries={studyCountries} />
-        <CountrySection title="Work Destinations" countries={workCountries} />
-        <CountrySection title="Coaching" countries={learningLanguage} />
-      </div>
+    <div className="countries-container">
+      {["Study Abroad", "Work Abroad", "Language Coaching", "Domestic Placements"].map(
+        (type) => (
+          <div key={type} className="type-section">
+            <h2>{type}</h2>
+            {segregateCountriesByType(type).map((country) => (
+              <div key={country.id} className="country-strip">
+                <div className="country-header">
+                  <img
+                    src={`http://localhost:5000${country.shapeImage}`}
+                    alt={`${country.name} flag`}
+                    className="country-flag"
+                  />
+                  <div>
+                    <h3>
+                      {country.name} ({country.code})
+                    </h3>
+                    <p>
+                      Total Vacancies: {calculateTotalVacancies(country.name)}
+                    </p>
+                  </div>
+                  <button onClick={() => toggleCountryFields(country.name)}>
+                    {expandedCountries.includes(country.name)
+                      ? "Hide Fields"
+                      : "Show Fields"}
+                  </button>
+                </div>
+                {expandedCountries.includes(country.name) &&
+                  renderFields(country.name)}
+              </div>
+            ))}
+          </div>
+        )
+      )}
     </div>
   );
 };

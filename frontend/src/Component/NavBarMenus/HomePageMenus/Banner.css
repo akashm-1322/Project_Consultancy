@@ -42,7 +42,7 @@
   /* Dots styling */
   .dot-container {
     position: absolute;
-    left: 1%;
+    left: 3%;
     top: 50%;
     transform: translateY(-50%);
     display: flex;

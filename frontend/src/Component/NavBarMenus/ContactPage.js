@@ -48,7 +48,6 @@ const ContactPage = () => {
     destination: '',
     dateofjoining: ''
   });
-  const [selectedCountry, setSelectedCountry] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
   const [errors, setErrors] = useState({});
 
@@ -58,7 +57,6 @@ const ContactPage = () => {
   };
 
   const handleCountryChange = (e) => {
-    setSelectedCountry(e.target.value);
     setFormData({ ...formData, destination: e.target.value });
   };
 
@@ -134,7 +132,6 @@ const ContactPage = () => {
       await axios.post('http://localhost:5000/contacts', formData);
       setStatusMessage('Message sent successfully!');
       setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '', dateofjoining: '' });
-      setSelectedCountry('');
     } catch (error) {
       setStatusMessage('Error sending message. Please try again.');
       console.error(error);

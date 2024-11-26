@@ -5,44 +5,44 @@ import { AiOutlineUser } from 'react-icons/ai';
 import './Testimonials.css';
 
 const Testimonials = () => {
-  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [newComment, setNewComment] = useState({ name: '', message: '' });
-
+  const [bgColor, setBgColor] = useState('#e9d4d4');  // Initial background color
+  
+  // List of background colors
   const colors = [
-    '#e9d4d4',
-    '#e7e1d9',
-    '#ddded0',
-    '#d2e6ce',
-    '#d6e8ea',
-    '#d3dbe8',
-    '#d2cee4',
-    '#dfcddf',
+    '#e9d4d4', '#e7e1d9', '#ddded0', '#d2e6ce', 
+    '#d6e8ea', '#d3dbe8', '#d2cee4', '#dfcddf',
   ];
 
-  useEffect(() => {
-    fetchComments();
-  }, []);
+
+  const API_URI_COMMENT = 'http://localhost:5000/api/comment';
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get('/comments'); // Replace with your backend API endpoint
-      setComments(response.data);
+      const response = await axios.get(API_URI_COMMENT);
+      setComment(response.data.comments);
     } catch (error) {
       console.error('Error fetching comments:', error);
     }
   };
 
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? comments.length - 1 : prevIndex - 1
+      prevIndex === 0 ? comment.length - 1 : prevIndex - 1
     );
   };
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === comments.length - 1 ? 0 : prevIndex + 1
+      prevIndex === comment.length - 1 ? 0 : prevIndex + 1
     );
+    changeBackground();  // Change background color when moving to next comment
   };
 
   const handleInputChange = (e) => {
@@ -56,40 +56,49 @@ const Testimonials = () => {
     if (!newComment.name || !newComment.message) return;
 
     try {
-      const response = await axios.post('/comments', newComment); // Replace with your backend API endpoint
-      setComments((prevComments) => [response.data, ...prevComments]);
+      const response = await axios.post('/', newComment);
+      setComment((prevComments) => [response.data.comments, ...prevComments]);
       setNewComment({ name: '', message: '' });
     } catch (error) {
       console.error('Error submitting comment:', error);
     }
   };
 
-  if (comments.length === 0) {
+  const changeBackground = () => {
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setBgColor(randomColor);
+  };
+
+  // Ensure comments are available before rendering
+  if (comment.length === 0) {
     return <p>Loading comments...</p>;
   }
 
-  const randomColor =
-    colors[Math.floor(Math.random() * colors.length)];
-
   return (
-    <div className="testimonials-page">
+    <div className="testimonials-page" style={{ backgroundColor: bgColor }}>
       <h1 className="heading">Comments</h1>
-      <div className="comment-container" style={{ backgroundColor: randomColor }}>
-        <div className="comment-content">
-          <AiOutlineUser className="user-icon" />
-          <h3>{comments[currentIndex].name}</h3>
-          <p>{comments[currentIndex].message}</p>
+      
+      {/* Display the current comment based on currentIndex */}
+      {comment.length > 0 && (
+        <div className="comment-container">
+          <div className="comment-content">
+            <AiOutlineUser className="user-icon" />
+            <h3>{comment[currentIndex].name}</h3>
+            <p>{comment[currentIndex].message}</p>
+          </div>
         </div>
-        <div className="navigation">
-          <button onClick={handlePrevious}>
-            <FaChevronLeft />
-          </button>
-          <button onClick={handleNext}>
-            <FaChevronRight />
-          </button>
-        </div>
+      )}
+      
+      <div className="navigation">
+        <button onClick={handlePrevious}>
+          <FaChevronLeft />
+        </button>
+        <button onClick={handleNext}>
+          <FaChevronRight />
+        </button>
       </div>
-      <div className="comment-form" style={{ backgroundColor: randomColor }}>
+
+      <div className="comment-form" style={{ backgroundColor: bgColor }}>
         <h2>Add Your Comment</h2>
         <input
           type="text"

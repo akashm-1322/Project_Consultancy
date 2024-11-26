@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container, Col } from 'react-bootstrap';
-import { FaFacebook, FaInstagram, FaWhatsapp, FaTwitter, FaArrowUp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp, FaArrowUp } from "react-icons/fa";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
-import { SiGmail } from "react-icons/si";
 
 const Footer = () => {
   const scrollToTop = () => {

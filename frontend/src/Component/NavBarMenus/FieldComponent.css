@@ -1,24 +1,24 @@
-/* AdminContacts.css */
-  
-  .admin-container {
+/* General Container Styling */
+.field-container {
     width: 90%;
     max-width: 1200px;
     margin: 30px auto;
-    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240),rgb(208, 230, 222));
+    background: linear-gradient(90deg, rgb(225, 188, 215), rgb(228, 205, 240), rgb(208, 230, 222));
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
     animation: fadeIn 1s ease-in-out;
   }
   
-  .admin-container h1 {
+  /* Heading Styling */
+  .field-container h1 {
     text-align: center;
     color: #000;
     margin-bottom: 20px;
     font-size: 2.5rem;
   }
   
-  /* Error and Loading */
+  /* Error Message Styling */
   .error-message {
     color: #f44336;
     background: #ffe6e6;
@@ -34,32 +34,24 @@
     color: #007bff;
     font-size: 1.2rem;
   }
-  
+
+
   /* Form Styling */
-  .admin-form {
+  .field-form {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
   }
   
-  .admin-form input,
-  .admin-form select,
-  .admin-form button {
+  .field-form input {
     padding: 10px;
-    border: 1px solid #ddd;
+    font-size: 16px;
     border-radius: 5px;
-    font-size: 1rem;
+    border: 1px solid #ccc;
   }
   
-  .admin-form input:focus,
-  .admin-form select:focus {
-    outline: none;
-    border-color: #fda085;
-    box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
-  }
-  
-  .admin-form button {
+   .field-form button {
     padding: 10px 20px;
     background-color: #007bff;
     color: black;
@@ -69,32 +61,48 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
-  .admin-form button:hover {
-    background-color: #d5e3a8;
+  .dynamic-field-group button:hover {
+    background-color: rgb(173, 122, 123);
     transform: scale(1.05);
+  }
+
+  .field-form input,
+  .field-form select,
+  .field-form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .field-form input:focus,
+  .field-form select:focus {
+    outline: none;
+    border-color: #fda085;
+    box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
   }
   
   /* Table Styling */
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    animation: slideUp 1s ease;
+    margin-top: 20px;
   }
   
-  thead {
-    background: #fda085;
-    color: #fff;
+  table,
+  th,
+  td {
+    border: 1px solid #ccc;
   }
   
   th,
   td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
   }
   
   th {
+    background-color: #f1f1f1;
     cursor: pointer;
   }
   
@@ -111,14 +119,14 @@
     transform: scale(1.01);
     transition: all 0.3s ease;
   }
-
-  .table-row{
+  
+  .table-row-f{
     display:flex;
     flex-direction: column;
     gap: 5px;
   }
   
-  .table-row button {
+  .table-row-f button {
     background: #fda085;
     color: #fff;
     border: none;
@@ -129,40 +137,40 @@
     transition: all 0.3s ease;
   }
   
-  .table-row button:hover {
+  .table-row-f button:hover {
     background: #f6d365;
     transform: scale(1.1);
   }
+
+  /* Action Button Styling */
+  button {
+    margin: 0 5px;
+  }
   
-  /* Pagination */
-  .pagination {
+  button:hover {
+    background-color: #ff5050;
+  }
+  
+  /* Pagination Styling */
+  .pagination-f {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    margin-top: 20px;
   }
   
-  .pagination button {
-    background: #fda085;
+  .pagination-f button {
+    padding: 10px 15px;
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
     border-radius: 5px;
+    margin: 0 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
   }
   
-  .pagination button:hover {
-    background: #f6d365;
-  }
-  
-  .pagination span {
-    font-size: 1rem;
-    color: #000;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
+   /* Animations */
+   @keyframes fadeIn {
     from {
       opacity: 0;
       transform: translateY(-10px);
@@ -198,11 +206,14 @@
     outline: none; /* Removes the default focus border */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
                 0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
-  }
+  } 
 
-  button:focus,
-  input:focus {
-  outline: 2px solid #fda085;
-  outline-offset: 2px;
+    button:focus,
+    input:focus {
+    outline: 2px solid #fda085;
+    outline-offset: 2px;
 }
-  
+
+ul{
+    list-style-type: none;
+}
