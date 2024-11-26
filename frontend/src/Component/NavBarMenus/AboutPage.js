@@ -24,25 +24,20 @@ const aboutContent = [
 // Team Members Data
 const teamMembers = [
   {
-    name: "John Doe",
+    name: "Vinoth Kumar.V",
     designation: "CEO & Founder",
-    photo: "https://via.placeholder.com/150",
+    photo: "/team/j99_team_2.jpg",
   },
   {
-    name: "Jane Smith",
-    designation: "CTO",
-    photo: "https://via.placeholder.com/150",
+    name: "Sreedhar.S ",
+    designation: "MD",
+    photo: "/team/j99_team1.jpg",
   },
   {
-    name: "Mark Johnson",
-    designation: "Lead Developer",
-    photo: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Emma Williams",
-    designation: "Product Manager",
-    photo: "https://via.placeholder.com/150",
-  },
+    name: "Silvester.M",
+    designation: "Marketing Lead",
+    photo: "/team/j99_team_3.jpg",
+  }
 ];
 
 const AboutPage = () => {
@@ -135,45 +130,27 @@ const AboutPage = () => {
           Meet the Team
         </Typography>
 
-        <Grid container spacing={4} justifyContent="center" className='team-box'>
-          {teamMembers.map((member, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card 
-              style={{background: 'linear-gradient(90deg , rgb(224, 209, 201), rgb(209, 197, 220),rgb(221, 221, 206))'}}
-                sx={{
-                  maxWidth: 345,
-                  textAlign: 'center',
-                  boxShadow: '0px 10px 15px rgba(0, 0, 0, 0.1)',
-                  borderRadius: '16px',
-                  padding: '20px',
-                  transition: 'transform 0.3s ease-in-out',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                  },
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  alt={member.name}
-                  height="150"
-                  image={member.photo}
-                  sx={{
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    marginBottom: '16px',
-                  }}
-                />
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#3f51b5' }}>
-                    {member.name}
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#777' }}>
-                    {member.designation}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
+        <Grid container spacing={0} justifyContent="center" className='team-box'>
+      {teamMembers.map((member, index) => (
+        <Grid item xs={12} sm={4} key={index} className="team-grid-item">
+          <Card className="team-card">
+            <CardMedia
+              component="img"
+              alt={member.name}
+              image={member.photo}
+              className="team-card-media"
+            />
+            <CardContent className="team-card-content">
+              <Typography variant="h6" className="team-card-name">
+                {member.name}
+              </Typography>
+              <Typography variant="body2" className="team-card-designation">
+                {member.designation}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
         </Grid>
       </section>
     </Container>

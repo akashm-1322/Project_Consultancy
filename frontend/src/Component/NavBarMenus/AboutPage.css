@@ -88,10 +88,7 @@
   }
   
   .card img {
-    border-radius: 50%;
     object-fit: cover;
-    width: 120px;
-    height: 120px;
     margin-bottom: 16px;
   }
   
@@ -102,5 +99,62 @@
   .card:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  }
+  
+
+  .team-box {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .team-grid-item {
+    margin: 0;
+    padding: 0;
+    flex-basis: calc(33.333% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+  .team-card {
+    height: 100%;
+    margin: 3px;
+    padding: 3px;
+    background: linear-gradient(90deg, rgb(224, 209, 201), rgb(209, 197, 220), rgb(221, 221, 206));
+    box-shadow: 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .team-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .team-card-media {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Makes the image container a square */
+    margin: 0 auto;
+    object-fit: cover;
+    object-position: top; /* Focuses on the top part of the image */
+    border: 3px solid black;
+    border-radius: 50%; /* Makes the image circular */
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .team-card-content {
+    text-align: center;
+  }
+  
+  .team-card-name {
+    font-weight: bold;
+    color: #3f51b5;
+  }
+  
+  .team-card-designation {
+    color: #777;
   }
   
