@@ -1,17 +1,25 @@
 const Admin = require('../Models/Admin');
-const jwt = require('jsonwebtoken');
 
-exports.login = async (req, res) => {
-  const { username, password } = req.body;
+// Create Admin
+const createAdmin = async (req, res) => {
   try {
-    const admin = await Admin.findOne({ username });
-    if (!admin) return res.status(400).json({ message: 'Admin not found' });
-    if (admin.password !== password) return res.status(400).json({ message: 'Invalid password' });
-
-    const token = jwt.sign({ id: admin._id, username: admin.username }, process.env.JWT_SECRET_KEY, { expiresIn: '100h' });
-
-    res.json({ message: 'Login successful', admin, token });
+    const { username, password } = req.body;
+    const admin = new Admin({ username, password });
+    await admin.save();
+    res.status(201).json({ message: 'Admin created successfully', admin });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error creating admin', error: error.message });
   }
 };
+
+// Get Admins
+const getAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.find();
+    res.status(200).json({ admins });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admins', error: error.message });
+  }
+};
+
+module.exports = { createAdmin, getAdmins };

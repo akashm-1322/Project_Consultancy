@@ -1,27 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-// Function to connect to the Main Database
 const connectMainDB = async () => {
   try {
-    const mainDB = await mongoose.createConnection("mongodb://localhost:27017/adminAdmin");
-    console.log("Main database connected successfully");
-    return mainDB;
+    const mainDBUri = process.env.MAIN_DB_URI;
+    console.log('Connecting to Main DB:', mainDBUri);
+    await mongoose.connect(mainDBUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to Main DB');
   } catch (err) {
-    console.error("Main database connection failed:", err.message);
-    process.exit(1); // Exit with failure
+    console.error('Error connecting to Main DB:', err.message);
   }
 };
 
-// Function to connect to the Contacts Database
-const connectContactsDB = async () => {
-  try {
-    const contactsDB = await mongoose.createConnection("mongodb://localhost:27017/adminContacts");
-    console.log("Contacts database connected successfully");
-    return contactsDB;
-  } catch (err) {
-    console.error("Contacts database connection failed:", err.message);
-    process.exit(1); // Exit with failure
-  }
-};
 
-module.exports = { connectMainDB, connectContactsDB };
+module.exports = { connectMainDB };

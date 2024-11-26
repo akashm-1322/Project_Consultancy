@@ -1,21 +1,25 @@
 const Comment = require('../Models/Comment');
 
-exports.getComments = async (req, res) => {
+// Create Comment
+const createComment = async (req, res) => {
   try {
-    const comments = await Comment.find();
-    res.json(comments);
+    const { name, message } = req.body;
+    const comment = new Comment({ name, message });
+    await comment.save();
+    res.status(201).json({ message: 'Comment added successfully', comment });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching comments' });
+    res.status(500).json({ message: 'Error creating comment', error: error.message });
   }
 };
 
-exports.createComment = async (req, res) => {
-  const { name, message } = req.body;
+// Get Comments
+const getComments = async (req, res) => {
   try {
-    const newComment = new Comment({ name, message });
-    await newComment.save();
-    res.status(201).json(newComment);
+    const comments = await Comment.find();
+    res.status(200).json({ comments });
   } catch (error) {
-    res.status(400).json({ message: 'Error creating comment' });
+    res.status(500).json({ message: 'Error fetching comments', error: error.message });
   }
 };
+
+module.exports = { createComment, getComments };
