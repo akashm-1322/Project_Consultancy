@@ -5,7 +5,6 @@ import LogoutIcon from "@mui/icons-material/Logout";  // Import the logout icon
 import { keyframes } from "@mui/system";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 
-
 const scaleAnimation = keyframes`
   0% { transform: scale(1); }
   50% { transform: scale(1.1); }
@@ -60,7 +59,7 @@ const TopNavbar = ({ userRole, adminName, onLogout }) => {
     <AppBar
       position="sticky"
       sx={{
-        background: "linear-gradient(75deg, #d4d2d6, #84abf0, #a277d0 , #ef90e2)",
+        background: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
         backgroundSize: "300% 300%",
       }}
     >
@@ -72,13 +71,13 @@ const TopNavbar = ({ userRole, adminName, onLogout }) => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <IconButton sx={{ color: "#fff", animation: `${scaleAnimation} 1s ease-in-out` }}>
-            <img src="/j99_logo.png" alt="logo" width="100" height="70" />
-          </IconButton>
+        <div className="logo-container ml-2">
+        <img src="/j99_logo.png" alt="logo" width="80" height="50" />
+        </div>
           <Typography
             variant="h4"
             sx={{
-              color: "#047a04",
+              color: "rgba(3, 161, 90, 0.975)",
               fontWeight: "bold",
               textDecoration: "none",
               fontSize: "1.8rem",
@@ -122,14 +121,14 @@ const iconStyles = {
   alignItems: "center",
   borderRadius: "50%",
   backgroundColor: "#fff",
-  color: "#6a11cb",
+  color: "#000",
   fontWeight: "bold",
   fontSize: "1rem",
   boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
 };
 
 const userTextStyles = {
-  color: "#fff",
+  color: "#000",
   fontWeight: "bold",
   fontSize: "1.1rem",
 };
@@ -145,7 +144,7 @@ const contactBoxStyles = {
 
 const contactTextStyles = {
   marginLeft: "8px",
-  color: "#3e3e3e",
+  color: "#000",
   fontSize: "1rem",
   fontWeight: "600",
 };

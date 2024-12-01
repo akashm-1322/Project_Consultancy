@@ -1,175 +1,158 @@
-/* General Container Styling */
-.countries-container {
+/* General Body Styles */
+
+/* Country Page */
+.country-page {
   padding: 20px;
-  background: linear-gradient(135deg, #e3f2fd, #90caf9);
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1.5s ease-in-out;
-  overflow: hidden;
-  position: relative;
 }
 
-/* Section Styling */
+.country-page h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #038151;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin-bottom: 30px;
+}
+
+/* Type Section */
 .type-section {
   margin-bottom: 40px;
-  animation: fadeInSection 1.5s ease-in-out;
 }
 
 .type-section h2 {
   font-size: 2rem;
-  color: #0d47a1;
+  color: #038151;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-  border-bottom: 2px solid #0d47a1;
-  padding-bottom: 5px;
+  border-left: 5px solid #038151;
+  padding-left: 10px;
 }
 
 /* Country Strip */
 .country-strip {
-  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  margin-bottom: 15px;
-  padding: 15px;
-  background: linear-gradient(120deg, #ffffff, #f1f8e9);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transform: translateY(0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
 }
 
 .country-strip:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Country Header */
 .country-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  padding: 20px;
 }
 
-.country-flag {
-  width: 60px;
-  height: 40px;
-  object-fit: cover;
-  border: 2px solid #0d47a1;
-  border-radius: 5px;
-  margin-right: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.country-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+  border: 3px solid #038151;
 }
 
-.country-flag:hover {
-  transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.country-header h3 {
+.country-details h3 {
+  margin: 0;
   font-size: 1.5rem;
-  color: #1b5e20;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  color: #038151;
 }
 
-.country-header p {
+.total-vacancies {
+  margin: 5px 0 0;
   font-size: 1rem;
-  color: #4caf50;
-  margin: 5px 0;
+  color: #555;
 }
 
-.country-header button {
-  padding: 8px 15px;
-  background-color: #1976d2;
+.toggle-button {
+  margin-left: auto;
+  padding: 10px 15px;
+  font-size: 1rem;
   color: white;
+  background: #038151;
   border: none;
   border-radius: 5px;
-  font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.country-header button:hover {
-  background-color: #0d47a1;
+.toggle-button:hover {
+  background: rgba(3, 161, 90, 0.8);
 }
 
-/* Fields Container */
-.fields-container {
+/* Matching Cards */
+.matching-cards {
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-top: 15px;
-  animation: slideIn 1.5s ease-in-out;
 }
 
-/* Field Card */
-.field-card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 15px;
-  background: linear-gradient(120deg, #ffffff, #e3f2fd);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transform: scale(1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Individual Card */
+.card {
   position: relative;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  height: 700px;
-  width: 30%;
-}
-
-.field-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.field-card img {
-  max-height: 450px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  margin-bottom: 10px;
+  margin : 10px;
 }
 
-.field-card h4 {
+.cards-container{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+  text-align: center;
+}
+
+.card-content h3 {
   font-size: 1.2rem;
-  color: #0d47a1;
-  margin: 0 0 5px;
+  margin: 0 0 10px;
+  color: #038151;
 }
 
-.field-card p {
-  font-size: 1rem;
-  color: #4caf50;
-  margin: 0;
-}
-
-/* Table Styling for Fields */
 .field-table {
-  width: 95%;
-  margin: 5px auto;
+  width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 .field-table th,
 .field-table td {
-  text-align: center;
-  font-size: 0.9rem;
+  border: 1px solid #ddd;
   padding: 8px;
 }
 
 .field-table th {
-  background-color: #0d47a1;
+  background: #038151;
   color: white;
-}
-
-.field-table tr:nth-child(even) {
-  background-color: #f1f8e9;
-}
-
-.field-table tr:hover {
-  background-color: #d0e4f2;
+  font-size: 0.9rem;
 }
 
 /* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -177,43 +160,27 @@
   }
 }
 
-@keyframes fadeInSection {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.country-strip {
+  animation: fadeIn 0.5s ease-in;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
+.card {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .country-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+
+  .toggle-button {
+    margin-left: 0;
+    margin-top: 10px;
   }
-}
 
-/* Array Data Styling */
-ol {
-  list-style: decimal inside;
-  padding: 0;
-}
-
-.field-details {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 5px;
-  padding: 8px 10px;
-  margin: 5px 0;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.field-details:hover {
-  transform: scale(1.02);
-  background-color: #e3f2fd;
+  .matching-cards {
+    flex-direction: column;
+  }
 }

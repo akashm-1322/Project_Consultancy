@@ -7,8 +7,8 @@ const EndFooter = () => {
   return (
     <div
       style={{
-        background: 'linear-gradient(135deg, #333, #555)',  // Same gradient as Footer
-        color: 'white',
+        background: 'linear-gradient(135deg, #000, #222)',  // Same gradient as Footer
+        color: '#fff',
         textAlign: 'center',
         fontSize: '14px',
         padding: '20px 0',

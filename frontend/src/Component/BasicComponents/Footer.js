@@ -14,7 +14,7 @@ const Footer = () => {
       className="text-white py-4"
       style={{
         position: 'relative',
-        background: 'linear-gradient(135deg, #333, #555)',  // Same gradient as EndFooter
+        background: 'linear-gradient(135deg, #111, #333)',  // Same gradient as EndFooter
         fontFamily: "'Roboto', sans-serif", // Custom font
         transition: 'background 0.5s ease',
       }}
@@ -41,7 +41,7 @@ const Footer = () => {
       <a href="https://www.facebook.com/share/1K84SaGgB8/" target="_blank" rel="noopener noreferrer">
         <FaFacebook
           style={{
-            color: '#3b5998',
+            color: '#0867f5',
             fontSize: '32px',
             borderRadius: '50%',
             transition: 'transform 0.3s',
@@ -53,7 +53,7 @@ const Footer = () => {
       <a href="https://www.instagram.com/j99recurimentservices/profilecard/?igsh=MXd2azUwMXA3cGkzMg==" target="_blank" rel="noopener noreferrer">
         <FaInstagram
           style={{
-            color: '#e1306c',
+            color: '#e53909',
             fontSize: '32px',
             borderRadius: '50%',
             transition: 'transform 0.3s',
@@ -65,7 +65,7 @@ const Footer = () => {
       <a href="https://wa.me/+919884945606" target="_blank" rel="noopener noreferrer">
         <FaWhatsapp
           style={{
-            color: '#25d366',
+            color: '#04f661',
             fontSize: '32px',
             borderRadius: '50%',
             transition: 'transform 0.3s',
@@ -84,7 +84,7 @@ const Footer = () => {
             bottom: '20px',
             right: '20px',
             backgroundColor: '#1da1f2',
-            color: 'white',
+            color: '#000',
             padding: '15px',
             borderRadius: '8px',
             cursor: 'pointer',

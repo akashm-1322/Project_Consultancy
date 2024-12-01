@@ -10,7 +10,7 @@
 
 .heading {
   font-size: 36px;
-  color: #333;
+  color: #000;
   margin-bottom: 20px;
   animation: fadeIn 1.5s ease-in-out;
 }
@@ -59,7 +59,7 @@
 
 .navigation button {
   background-color: #333;
-  color: white;
+  color: #000;
   border: none;
   border-radius: 50%;
   width: 50px;

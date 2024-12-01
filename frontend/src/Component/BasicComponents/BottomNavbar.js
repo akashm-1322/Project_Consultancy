@@ -33,12 +33,12 @@ const BottomNavbar = ({ isAdmin }) => {
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: 'black',
+        backgroundColor: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
         boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
         height: '60px',
         width: '100%',
         overflow: 'hidden',
-        zIndex: 1201,
+        zIndex: 1,
       }}
     >
       <Toolbar
@@ -94,7 +94,7 @@ const BottomNavbar = ({ isAdmin }) => {
             color="inherit"
             onClick={handleMenuOpen}
             sx={{
-              color: '#fff',
+              color: '#000',
               '&:hover': {
                 transform: 'scale(1.1)',
                 transition: 'transform 0.3s ease',
@@ -148,7 +148,7 @@ const BottomNavbar = ({ isAdmin }) => {
 
 // Styled Button for Desktop Menu with hover animation
 const StyledButton = styled(Button)(({ theme }) => ({
-  color: '#fff',
+  color: '#000',
   fontWeight: '700',
   fontSize: '1.2rem',
   fontFamily: 'Roboto, sans-serif',

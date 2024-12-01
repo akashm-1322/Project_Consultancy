@@ -6,7 +6,7 @@ const StudyAbroadProcess = ({ onClose }) => (
   <Container
     fluid
     style={{
-      background: "linear-gradient(90deg , rgb(226, 210, 221) , rgb(201, 210, 223) , rgb(199, 217, 206))",
+      background: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
       padding: "40px",
       marginTop: "20px",
       width: "100%",
@@ -16,27 +16,28 @@ const StudyAbroadProcess = ({ onClose }) => (
     }}
   >
     <Button
-      variant="outline-primary"
       onClick={onClose}
       className="mb-4"
       style={{
         fontWeight: "bold",
         borderRadius: "20px",
+        border: "2px 2px black",
+        color: "#000"
       }}
     >
       <FaArrowLeft /> Back to Services
     </Button>
 
-    <h2 style={{ fontWeight: "700", color: "#007bff" }}>
+    <h2 style={{ fontWeight: "700", color: "#000" }}>
       <FaUserGraduate /> Study Abroad Process
     </h2>
-    <p style={{ fontSize: "1.1rem", color: "#555", marginTop: "20px" }}>
+    <p style={{ fontSize: "1.1rem", color: "#000", marginTop: "20px" }}>
       Embarking on your study abroad journey is an exciting step toward building
       a bright future. We provide comprehensive guidance to make this process
       smooth and stress-free!
     </p>
 
-    <h4 style={{ color: "#333", marginTop: "30px" }}>Steps to Study Abroad</h4>
+    <h4 style={{ color: "#000", marginTop: "30px" }}>Steps to Study Abroad</h4>
     <ul style={{ listStyleType: "none", padding: 0, color: "#555", fontSize: "1.05rem" }}>
       <li style={{ margin: "15px 0" }}><FaGlobe /> <b>Personalized Counseling</b> – Understanding your goals and choosing the right programs.</li>
       <li style={{ margin: "15px 0" }}><FaUserGraduate /> <b>University Selection</b> – Shortlisting programs aligned with your aspirations.</li>

@@ -1,219 +1,158 @@
-/* General Container Styling */
-.field-container {
+  
+  /* Field Container */
+  .field-container {
     width: 90%;
     max-width: 1200px;
-    margin: 30px auto;
-    background: linear-gradient(90deg, rgb(225, 188, 215), rgb(228, 205, 240), rgb(208, 230, 222));
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
     padding: 20px;
-    animation: fadeIn 1s ease-in-out;
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease-in-out;
   }
   
-  /* Heading Styling */
-  .field-container h1 {
-    text-align: center;
-    color: #000;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-  }
-  
-  /* Error Message Styling */
-  .error-message {
-    color: #f44336;
-    background: #ffe6e6;
-    border: 1px solid #f44336;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .loading {
-    text-align: center;
-    color: #007bff;
-    font-size: 1.2rem;
-  }
-
-
-  /* Form Styling */
+  /* Form Styles */
   .field-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 15px;
-    margin-bottom: 20px;
   }
   
-  .field-form input {
+  .custom-form-control {
     padding: 10px;
+    margin: 20px;
     font-size: 16px;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
   }
   
-   .field-form button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: black;
-    border: none;
-    border-radius: 5px;
+  .custom-form-control:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  button {
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: #000;
+    border-radius: 4px;
+    transition: all 0.3s ease;
   }
   
-  .dynamic-field-group button:hover {
-    background-color: rgb(173, 122, 123);
-    transform: scale(1.05);
+  button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
   }
-
-  .field-form input,
-  .field-form select,
-  .field-form button {
+  
+  .error-message {
+    color: #ff4d4f;
+    background-color: #fff3f3;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
+    border: 1px solid #ff4d4f;
+    border-radius: 4px;
   }
   
-  .field-form input:focus,
-  .field-form select:focus {
-    outline: none;
-    border-color: #fda085;
-    box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
-  }
-  
-  /* Table Styling */
+  /* Table Styles */
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
   }
   
-  table,
-  th,
-  td {
-    border: 1px solid #ccc;
+  table th, table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
   }
   
-  th,
-  td {
-    padding: 12px;
-    text-align: center;
+  table th {
+    background-color: #f4f4f4;
+    cursor: pointer;
   }
   
-  th {
+  table tr:hover {
     background-color: #f1f1f1;
-    cursor: pointer;
   }
   
-  th:hover {
-    background: #f6d365;
+  img {
+    border-radius: 4px;
+    object-fit: cover;
   }
   
-  tbody tr:nth-child(even) {
-    background: linear-gradient(90deg , rgb(208, 230, 222), rgb(228, 205, 240),rgb(225, 188, 215));
+  /* Action Buttons */
+  button svg {
+    vertical-align: middle;
   }
   
-  tbody tr:hover {
-    background: #fdf2e9;
-    transform: scale(1.01);
-    transition: all 0.3s ease;
+  button:nth-of-type(1) {
+    background-color: #28a745;
   }
   
-  .table-row-f{
-    display:flex;
-    flex-direction: column;
-    gap: 5px;
+  button:nth-of-type(1):hover {
+    background-color: #218838;
   }
   
-  .table-row-f button {
-    background: #fda085;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: all 0.3s ease;
+  button:nth-of-type(2) {
+    background-color: #dc3545;
   }
   
-  .table-row-f button:hover {
-    background: #f6d365;
-    transform: scale(1.1);
-  }
-
-  /* Action Button Styling */
-  button {
-    margin: 0 5px;
+  button:nth-of-type(2):hover {
+    background-color: #c82333;
   }
   
-  button:hover {
-    background-color: #ff5050;
-  }
-  
-  /* Pagination Styling */
-  .pagination-f {
+  /* Pagination */
+  .pagination {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+    gap: 10px;
   }
   
-  .pagination-f button {
-    padding: 10px 15px;
+  .pagination button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pagination button:hover {
     background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 0 5px;
-    cursor: pointer;
+    color: #000;
   }
-  
-   /* Animations */
-   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .custom-form-control {
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-                0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Optional: Gives rounded corners */
-    font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .custom-form-control:focus {
-    outline: none; /* Removes the default focus border */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
-  } 
 
-    button:focus,
-    input:focus {
-    outline: 2px solid #fda085;
-    outline-offset: 2px;
-}
-
-ul{
+  ul{
     list-style-type: none;
-}
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .field-container {
+      padding: 15px;
+    }
+  
+    .field-form {
+      gap: 10px;
+    }
+  
+    table th, table td {
+      padding: 8px;
+    }
+  }
+  

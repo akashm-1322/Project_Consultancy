@@ -35,14 +35,14 @@ const OpeningPage = ({ onNavigate }) => {
 
     try {
       // Send login request to the backend
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://localhost:5000/api/admin/login", {
         username,
         password,
       });
-
+    
       if (response.data.message === "Login successful") {
         // Navigate to Admin Page with username
-        onNavigate("ADMIN", response.data.admin.username);
+        onNavigate("ADMIN", response.data.username);
       } else {
         // Handle unexpected responses
         setErrorMessage("Unexpected response from server.");
@@ -55,6 +55,7 @@ const OpeningPage = ({ onNavigate }) => {
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (
@@ -82,6 +83,7 @@ const OpeningPage = ({ onNavigate }) => {
               <form onSubmit={handleAdminLogin} className="admin-login-form">
                 <div className="input-container">
                   <input
+                   className="custom-form-control-o"
                     type="text"
                     placeholder="Username"
                     value={username}
@@ -91,6 +93,7 @@ const OpeningPage = ({ onNavigate }) => {
                 </div>
                 <div className="input-container">
                   <input
+                    className="custom-form-control-o"
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -98,7 +101,7 @@ const OpeningPage = ({ onNavigate }) => {
                     required
                   />
                 </div>
-                <button type="submit" disabled={loading}>
+                <button className="custom-form-control-o" type="submit" disabled={loading}>
                   {loading ? "Logging in..." : "Login"}
                 </button>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}

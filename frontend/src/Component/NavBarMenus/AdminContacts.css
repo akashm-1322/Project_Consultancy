@@ -4,7 +4,7 @@
     width: 90%;
     max-width: 1200px;
     margin: 30px auto;
-    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240),rgb(208, 230, 222));
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -84,7 +84,7 @@
   
   thead {
     background: #fda085;
-    color: #fff;
+    color: #000;
   }
   
   th,
@@ -103,7 +103,7 @@
   }
   
   tbody tr:nth-child(even) {
-    background: linear-gradient(90deg , rgb(208, 230, 222), rgb(228, 205, 240),rgb(225, 188, 215));
+    background: linear-gradient(90deg , rgba(3, 161, 90, 0.975), #fff);
   }
   
   tbody tr:hover {
@@ -120,7 +120,7 @@
   
   .table-row button {
     background: #fda085;
-    color: #fff;
+    color: #000;
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
@@ -144,7 +144,7 @@
   
   .pagination button {
     background: #fda085;
-    color: white;
+    color: #000;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;

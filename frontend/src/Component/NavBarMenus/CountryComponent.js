@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CountryComponent.css';
-import { MdDelete } from "react-icons/md";
-import { FaUserEdit } from "react-icons/fa";
+import { MdDelete } from 'react-icons/md';
+import { FaUserEdit } from 'react-icons/fa';
 
 const CountryComponent = () => {
   const [countries, setCountries] = useState([]);
+  const [fields, setFields] = useState([]); // To store fields data
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const contactsPerPage = 10;
@@ -23,6 +24,7 @@ const CountryComponent = () => {
   const [sortKey, setSortKey] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
   const API_BASE_URL_COUN = 'http://localhost:5000/api/countries';
+  const API_BASE_URL_FIELDS = 'http://localhost:5000/api/field'; // Example endpoint for fields
 
   const fetchCountries = async () => {
     try {
@@ -37,9 +39,20 @@ const CountryComponent = () => {
     }
   };
 
+  const fetchFields = async () => {
+    try {
+      const response = await axios.get(API_BASE_URL_FIELDS);
+      setFields(response.data.fields);
+    } catch (error) {
+      console.error('Error fetching fields:', error);
+      setError('Failed to fetch fields.');
+    }
+  };
+
   useEffect(() => {
     fetchCountries();
-  }, [currentPage, sortDirection, sortKey ]);
+    fetchFields();
+  }, [currentPage, sortDirection, sortKey]);
 
   const validateForm = () => {
     const errors = {};
@@ -55,13 +68,11 @@ const CountryComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate the form
+
     if (!validateForm()) {
       return; // Stop if validation fails
     }
-  
-    // Create FormData instance for multipart/form-data
+
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.name);
     formDataToSend.append('code', formData.code);
@@ -70,51 +81,31 @@ const CountryComponent = () => {
     if (formData.shapeImage) {
       formDataToSend.append('shapeImage', formData.shapeImage);
     }
-  
+
     setLoading(true);
     setError(null);
-  
+
     try {
-      let response;
       if (editingCountryId) {
-        // Update existing country
-        response = await axios.put(
-          `${API_BASE_URL_COUN}/${editingCountryId}`,
-          formDataToSend,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
+        await axios.put(`${API_BASE_URL_COUN}/${editingCountryId}`, formDataToSend, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
       } else {
-        // Add new country
-        response = await axios.post(`${API_BASE_URL_COUN}`, formDataToSend, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+        await axios.post(`${API_BASE_URL_COUN}`, formDataToSend, {
+          headers: { 'Content-Type': 'multipart/form-data' },
         });
       }
-  
-      console.log('Success:', response.data);
-      setFormData({
-        name: '',
-        code: '',
-        type: '',
-        vacancies: 0,
-        shapeImage: null,
-      });
-      setEditingCountryId(null); // Reset editing state
-      await fetchCountries(); // Refresh the country list
+
+      setFormData({ name: '', code: '', type: '', vacancies: 0, shapeImage: null });
+      setEditingCountryId(null);
+      await fetchCountries();
     } catch (error) {
-      console.error('Error submitting data:', error.response?.data || error.message);
-      setError('Failed to submit the data. Please try again.');
+      const errorMessage = error.response?.data?.error || 'Failed to submit the data. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
-  
-
 
   const handleChange = (e) => {
     if (e.target.name === 'shapeImage') {
@@ -123,7 +114,6 @@ const CountryComponent = () => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
-
 
   const handleDelete = async (id) => {
     try {
@@ -143,14 +133,13 @@ const CountryComponent = () => {
         code: country.code,
         type: country.type,
         vacancies: country.vacancies,
-        shapeImage: null, // Set this to `null` because we are not handling the preloading of images in the input field
+        shapeImage: null,
       });
       setEditingCountryId(id);
     } else {
       setError('Country not found.');
     }
   };
-  
 
   const handleSortChange = (key) => {
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -161,12 +150,36 @@ const CountryComponent = () => {
     setCurrentPage(pageNumber);
   };
 
+  const getVacanciesFromFields = (countryName, countryType) => {
+    // Filter fields that match the country and fieldType
+    const matchedFields = Array.isArray(fields)
+      ? fields.filter(
+          (field) =>
+            field.countryData === countryName && field.fieldData === countryType
+        )
+      : [];
+    
+    if (matchedFields.length === 0) return 0;
+  
+    // Sum the vacancies across all matched fields
+    const totalVacancies = matchedFields.reduce((sum, field) => {
+      const vacancies = Array.isArray(field.vacancies)
+        ? field.vacancies.reduce((subSum, num) => subSum + num, 0) // Sum the numbers in the vacancies array
+        : 0;
+      return sum + vacancies; // Add this field's total vacancies to the overall sum
+    }, 0);
+  
+    return totalVacancies;
+  };
+  
+
   return (
     <div className="country-container">
       <h1>Country Management</h1>
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit} className="country-form">
         <input
+          className='custom-form-control'
           type="text"
           name="name"
           value={formData.name}
@@ -176,6 +189,7 @@ const CountryComponent = () => {
         />
         {formErrors.name && <span className="error">{formErrors.name}</span>}
         <input
+          className='custom-form-control'
           type="text"
           name="code"
           value={formData.code}
@@ -185,6 +199,7 @@ const CountryComponent = () => {
         />
         {formErrors.code && <span className="error">{formErrors.code}</span>}
         <input
+          className='custom-form-control'
           type="text"
           name="type"
           value={formData.type}
@@ -194,6 +209,7 @@ const CountryComponent = () => {
         />
         {formErrors.type && <span className="error">{formErrors.type}</span>}
         <input
+         className='custom-form-control'
           type="number"
           name="vacancies"
           value={formData.vacancies}
@@ -201,15 +217,12 @@ const CountryComponent = () => {
           placeholder="Vacancies"
           required
         />
-        {formErrors.vacancies && (
-          <span className="error">{formErrors.vacancies}</span>
-        )}
-        <input type="file" name="shapeImage" onChange={handleChange} />
+        {formErrors.vacancies && <span className="error">{formErrors.vacancies}</span>}
+        <input className='custom-form-control' type="file" name="shapeImage" onChange={handleChange} />
         <button type="submit">
           {editingCountryId ? 'Update Field' : 'Add Field'}
         </button>
       </form>
-
 
       <h2>Countries List</h2>
       {loading ? (
@@ -235,51 +248,53 @@ const CountryComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {(Array.isArray(countries) && countries.length > 0) ? (countries.map((country) => (
-              <tr key={country._id}>
-                <td>{country.name}</td>
-                <td>{country.code}</td>
-                <td>{country.type}</td>
-                <td>{country.vacancies}</td>
-                <td>
-                  {country.shapeImage && (
-                    <img
-                      src={`http://localhost:5000${country.shapeImage}`}
-                      alt={country.name}
-                      width="70"
-                      height="30"
-                    />
-                  )}
-                </td>
-                <td className='table-row-c'>
-                  <button onClick={() => handleEdit(country._id)}><FaUserEdit /></button>
-                  <button onClick={() => handleDelete(country._id)}><MdDelete /></button>
-                </td>
-              </tr>
-            ))) : (
+            {Array.isArray(countries) && countries.length > 0 ? (
+              countries.map((country) => (
+                <tr key={country._id}>
+                  <td>{country.name}</td>
+                  <td>{country.code}</td>
+                  <td>{country.type}</td>
+                  <td>{getVacanciesFromFields(country.name, country.type)}</td>
+                  <td>
+                    {country.shapeImage && (
+                      <img
+                        src={`http://localhost:5000${country.shapeImage}`}
+                        alt={country.name}
+                        width="70"
+                        height="30"
+                      />
+                    )}
+                  </td>
+                  <td>
+                    <button onClick={() => handleEdit(country._id)}>
+                      <FaUserEdit />
+                    </button>
+                    <button onClick={() => handleDelete(country._id)}>
+                      <MdDelete />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <td colSpan="6">No Countries Data available.</td>
+                <td colSpan="6">No countries found</td>
               </tr>
             )}
           </tbody>
         </table>
       )}
 
-
-
-
-        {/*Pagination*/}
-         <div className="pagination-c">
-        {Number.isFinite(total) && contactsPerPage > 0 ? (
-        [...Array(Math.ceil(total / contactsPerPage)).keys()].map((number) => (
-        <button key={number + 1} onClick={() => handlePageChange(number + 1)}>
-        {number + 1}
-      </button>
-    ))
-  ) : (
-    <p>No data available for pagination.</p>
-  )}
-</div>
+      <div className="pagination">
+        {Array.from({ length: Math.ceil(total / contactsPerPage) }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => handlePageChange(i + 1)}
+            className={currentPage === i + 1 ? 'active' : ''}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@
     width: 90%;
     max-width: 1200px;
     margin: 30px auto;
-    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240), rgb(208, 230, 222));
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
     border-radius: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -43,7 +43,23 @@
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    box-shadow: 5px black;
+  }
+
+  .custom-form-control-1 {
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+                0 6px 20px rgba(0, 0, 0, 0.1);
+    border: none; /* Removes the default border */
+    border-radius: 5px; /* Optional: Gives rounded corners */
+    font-size: 16px;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  .custom-form-control-1:focus {
+    outline: none; /* Removes the default focus border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
+                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
   }
   
   .country-form button {
@@ -52,6 +68,7 @@
     color: black;
     border: none;
     border-radius: 5px;
+    box-shadow: 5px black;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
@@ -65,7 +82,7 @@
   .country-form select,
   .country-form button {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
   }
@@ -93,7 +110,7 @@
   }
   
   th {
-    background: linear-gradient(180deg , rgb(183, 232, 209) , rgb(163, 135, 204) , rgb(189, 231, 121));
+    background: linear-gradient(90deg , rgba(141, 206, 177, 0.927));
     cursor: pointer;
     color: #000;
   }
@@ -103,7 +120,7 @@
   }
   
   tbody tr:nth-child(even) {
-    background: linear-gradient(90deg , rgb(208, 230, 222), rgb(228, 205, 240),rgb(225, 188, 215));
+    background: linear-gradient(90deg ,  rgba(3, 161, 90, 0.975) , #fff);
   }
   
   tbody tr:hover {
@@ -120,7 +137,7 @@
   
   .table-row-c button {
     background: #fda085;
-    color: #fff;
+    color: #000;
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
@@ -135,12 +152,25 @@
   }
   
   button {
-    margin: 0 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
   button:hover {
-    background-color: #ff5050;
+    background-color: rgb(173, 122, 123);
+    transform: scale(1.05);
   }
+  
+  button:focus {
+    outline: 2px solid #fda085;
+    outline-offset: 2px;
+  }
+  
   
   .pagination-c {
     display: flex;
@@ -152,7 +182,7 @@
   .pagination-c button {
     padding: 10px 15px;
     background-color: #007bff;
-    color: white;
+    color: #000;
     border: none;
     border-radius: 5px;
     margin: 0 5px;
@@ -183,22 +213,22 @@
   }
   
   .custom-form-control {
-    padding: 10px;
+    padding: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
                 0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Optional: Gives rounded corners */
+    border: none;
+    border-radius: 8px;
     font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out;
+    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
   }
   
   .custom-form-control:focus {
-    outline: none; /* Removes the default focus border */
+    outline: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
+                0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: scale(1.02);
   }
 
-    button:focus,
     input:focus {
   outline: 2px solid #fda085;
   outline-offset: 2px;

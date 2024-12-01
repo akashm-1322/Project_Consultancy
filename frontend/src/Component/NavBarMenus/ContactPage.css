@@ -33,7 +33,7 @@
   
   /* Styles for the left form container */
   .contact-form-col {
-    background: linear-gradient(90deg , rgb(225, 188, 215), rgb(228, 205, 240),rgb(208, 230, 222));
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -85,7 +85,7 @@
   /* Button styles */
   button[type="submit"] {
     background-color: #ff7e5f;
-    color: #fff;
+    color: #000;
     border: none;
     padding: 12px 20px;
     font-size: 1.1rem;

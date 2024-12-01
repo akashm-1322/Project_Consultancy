@@ -5,31 +5,18 @@ import "./CountryPage.css";
 const CountryPage = () => {
   const [countries, setCountries] = useState([]);
   const [fields, setFields] = useState([]);
-  const [expandedCountries, setExpandedCountries] = useState([]);
+  const [expandedCountry, setExpandedCountry] = useState(null);
 
-  // Fetch data from the backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch all countries
         const countriesResponse = await axios.get(
-          "http://localhost:5000/api/countries"
+          "http://localhost:5000/api/countries?all=true"
         );
-        if (countriesResponse.data.countries) {
-          setCountries(countriesResponse.data.countries);
-        } else {
-          console.error("Invalid countries data:", countriesResponse.data);
-        }
+        setCountries(countriesResponse.data.countries || []);
 
-        // Fetch all fields
-        const fieldsResponse = await axios.get(
-          "http://localhost:5000/api/field"
-        );
-        if (fieldsResponse.data.fields) {
-          setFields(fieldsResponse.data.fields);
-        } else {
-          console.error("Invalid fields data:", fieldsResponse.data);
-        }
+        const fieldsResponse = await axios.get("http://localhost:5000/api/field?all=true");
+        setFields(fieldsResponse.data.fields || []);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,118 +25,160 @@ const CountryPage = () => {
     fetchData();
   }, []);
 
-  // Toggle the visibility of fields for a country
-  const toggleCountryFields = (countryName) => {
-    setExpandedCountries((prev) =>
-      prev.includes(countryName)
-        ? prev.filter((name) => name !== countryName)
-        : [...prev, countryName]
-    );
+  const toggleCountryCards = (countryId) => {
+    setExpandedCountry((prev) => (prev === countryId ? null : countryId));
   };
 
-  // Segregate countries by type
-  const segregateCountriesByType = (type) => {
-    return countries.filter((country) => country.type === type);
+  const calculateTotalVacancies = (country) => {
+    // Calculate the total vacancies for a given country based on the fields
+    return fields
+      .filter(
+        (field) => field.countryData === country.name && field.fieldData === country.type
+      )
+      .reduce((sum, field) => sum + field.vacancies.reduce((a, b) => a + b, 0), 0);
   };
-
-  // Calculate total vacancies for a specific country
-  const calculateTotalVacancies = (countryName) => {
-    const countryFields = fields.filter(
-      (field) => field.countryData === countryName
-    );
-    return countryFields.reduce((sum, field) => {
-      return (
-        sum +
-        (field.vacancies
-          ? field.vacancies.reduce((subSum, v) => subSum + v, 0)
-          : 0)
+  
+  // Fetch data and update all countries' vacancies
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const countriesResponse = await axios.get(
+          "http://localhost:5000/api/countries?all=true"
+        );
+        const fetchedCountries = countriesResponse.data.countries || [];
+  
+        // Update each country's vacancies with the calculated total
+        const updatedCountries = fetchedCountries.map((country) => {
+          const totalVacancies = calculateTotalVacancies(country);
+          return { ...country, vacancies: totalVacancies }; // Set updated total vacancies
+        });
+  
+        // Update the countries state with the new vacancies
+        setCountries(updatedCountries);
+  
+        // Update the backend with the new vacancies for each country
+        updatedCountries.forEach((country) => {
+          updateCountryVacancies(country._id, country.vacancies);
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []); // Re-fetch when fields data changes
+  
+  const updateCountryVacancies = async (countryId, totalVacancies) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/api/countries/${countryId}`, 
+        { vacancies: totalVacancies }
       );
-    }, 0);
+      console.log('Updated Country:', response.data); // Check response
+    } catch (error) {
+      console.error('Error updating country vacancies:', error);
+    }
   };
+  
 
-  // Render fields under a specific country
-  const renderFields = (countryName) => {
-    const countryFields = fields.filter(
-      (field) => field.countryData === countryName
+  const renderMatchingCards = (country) => {
+    const matchingFields = fields.filter(
+      (field) =>
+        field.countryData === country.name && field.fieldData === country.type
     );
+
+    if (matchingFields.length === 0) {
+      return <p>No matching fields for this country.</p>;
+    }
 
     return (
-      <div className="fields-container">
-        {countryFields.length > 0 ? (
-          countryFields.map((field) => (
-            <div key={field._id} className="field-card">
-              {field.imageUrl && (
-                <img
-                  src={`http://localhost:5000${field.imageUrl}`}
-                  alt={`${field.countryData} field`}
-                />
-              )}
+      <div className="cards-container">
+        {matchingFields.map((field) => (
+          <div className="card" key={field._id}>
+            <div className="card-image">
+              <img
+                src={`http://localhost:5000${field.imageUrl}`}
+                alt={field.fieldData}
+              />
+            </div>
+            <div className="card-content">
+              <h3>{field.fieldData}</h3>
               <table className="field-table">
                 <thead>
                   <tr>
-                    <th>Name</th>
+                    <th>Names</th>
                     <th>Vacancies</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Array.isArray(field.names) && field.names.length > 0 ? (
-                    field.names.map((name, index) => (
-                      <tr key={index}>
-                        <td>{name}</td>
-                        <td>{field.vacancies[index]}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="2">No fields available.</td>
+                  {field.names.map((name, index) => (
+                    <tr key={index}>
+                      <td>{name}</td>
+                      <td>{field.vacancies[index]}</td>
                     </tr>
-                  )}
+                  ))}
                 </tbody>
               </table>
             </div>
-          ))
-        ) : (
-          <p>No fields available for {countryName}.</p>
-        )}
+          </div>
+        ))}
       </div>
     );
   };
 
-  return (
-    <div className="countries-container">
-      {["Study Abroad", "Work Abroad", "Language Coaching", "Domestic Placements"].map(
-        (type) => (
-          <div key={type} className="type-section">
-            <h2>{type}</h2>
-            {segregateCountriesByType(type).map((country) => (
-              <div key={country.id} className="country-strip">
+  const renderCountryStrips = () => {
+    const types = [
+      "Study Abroad",
+      "Work Abroad",
+      "Language Coaching",
+      "Domestic Placements",
+    ];
+
+    return types.map((type) => (
+      <div key={type} className="type-section">
+        <h2>{type}</h2>
+        {countries
+          .filter((country) => country.type === type)
+          .map((country) => {
+            const totalVacancies = calculateTotalVacancies(country);
+            return (
+              <div key={country._id} className="country-strip">
                 <div className="country-header">
                   <img
+                    className="country-image"
                     src={`http://localhost:5000${country.shapeImage}`}
-                    alt={`${country.name} flag`}
-                    className="country-flag"
+                    alt={country.name}
                   />
-                  <div>
-                    <h3>
-                      {country.name} ({country.code})
-                    </h3>
-                    <p>
-                      Total Vacancies: {calculateTotalVacancies(country.name)}
+                  <div className="country-details">
+                    <h3>{country.name} ({country.code})</h3>
+                    <p className="total-vacancies">
+                      Total Vacancies:{" "}
+                      <span className="animated-number">{totalVacancies}</span>
                     </p>
                   </div>
-                  <button onClick={() => toggleCountryFields(country.name)}>
-                    {expandedCountries.includes(country.name)
-                      ? "Hide Fields"
-                      : "Show Fields"}
+                  <button
+                    className="toggle-button"
+                    onClick={() => toggleCountryCards(country._id)}
+                  >
+                    {expandedCountry === country._id ? "Hide Cards" : "Show Cards"}
                   </button>
                 </div>
-                {expandedCountries.includes(country.name) &&
-                  renderFields(country.name)}
+                {expandedCountry === country._id && (
+                <div className="matching-cards">{renderMatchingCards(country)}</div>
+                )}
+
               </div>
-            ))}
-          </div>
-        )
-      )}
+            );
+          })}
+      </div>
+    ));
+  };
+
+
+  return (
+    <div className="country-page">
+      <h1>Country Fields</h1>
+      {renderCountryStrips()}
     </div>
   );
 };

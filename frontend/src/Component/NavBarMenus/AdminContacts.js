@@ -132,8 +132,9 @@ const AdminContacts = () => {
   const handleDelete = async (id) => {
     setLoading(true);
     try {
+
       await axios.delete(`${API_BASE_URL}/${id}`);
-      fetchContacts();
+      setContacts((prevContacts) => prevContacts.filter((contact) => contact._id !== id));
     } catch (error) {
       setError('Error deleting contact. Please try again.');
     } finally {

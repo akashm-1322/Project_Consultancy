@@ -129,7 +129,7 @@ const ContactPage = () => {
 
     try {
       // Send data to the backend
-      await axios.post('http://localhost:5000/contacts', formData);
+      await axios.post('http://localhost:5000/api/contact', formData);
       setStatusMessage('Message sent successfully!');
       setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '', dateofjoining: '' });
     } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Col, Row, Container, Button } from "react-bootstrap";
+import { Card, Col, Row, Container} from "react-bootstrap";
 import { FaPassport, FaBriefcase, FaUserGraduate, FaLanguage } from "react-icons/fa";
 import DomesticPlacements from "./ServicePageMenus/DomesticPlacements";
 import LanguageTrainingProcess from "./ServicePageMenus/LanguageTrainingProcess";
@@ -81,13 +81,13 @@ const ServiceCard = ({ service, onReadMore }) => (
       </motion.div>
       <Card.Title className="title">{service.title}</Card.Title>
       <Card.Text className="description">{service.description}</Card.Text>
-      <Button
+      <button
         variant="link"
         onClick={onReadMore}
         className="learn-more-btn"
       >
         Learn More
-      </Button>
+      </button>
     </Card.Body>
     <motion.div
       initial={{ scaleX: 0 }}

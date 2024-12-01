@@ -1,10 +1,32 @@
 /* App.css */
 
 body{
-  background: linear-gradient(90deg , rgb(230, 217, 199) , rgb(230, 237, 204) , rgb(192, 218, 221));
+  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
   font-weight: 500;
 }
 
+@keyframes scaleAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.logo-container {
+  background-color: #fff;
+  animation: scaleAnimation 1s ease-in-out;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Optional: for rounded background */
+  width: 100px;      /* Adjust as per requirement */
+  height: 70px;      /* Adjust as per requirement */
+}
 
 .app-wrapper {
   display: flex;
