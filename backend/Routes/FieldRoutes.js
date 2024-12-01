@@ -1,26 +1,30 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-const {createField , getFields , updateField , deleteField} = require('../Controllers/FieldControllers');
+const express = require("express");
+const multer = require("multer");
+const { 
+  createField, 
+  updateField, 
+  getFields, 
+  deleteField
+} = require("../Controllers/FieldControllers");
 
-// Multer configuration for file uploads
+const router = express.Router();
+
+// Multer setup for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}-${file.originalname}`;
-    cb(null, uniqueName);
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 const upload = multer({ storage });
 
-
-// Routes for managing fields
-router.post('/',upload.single('imageUrl'), createField);
-router.get('/', getFields);
-router.put('/:id', updateField);
-router.delete('/:id', deleteField);
+// Routes
+router.post("/", upload.single("imageUrl"), createField); // Add a new field
+router.put("/:id", upload.single("imageUrl"), updateField); // Update a field
+router.get("/", getFields); // Get all fields
+router.delete("/:id", deleteField); // Delete a field
 
 module.exports = router;

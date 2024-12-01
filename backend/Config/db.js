@@ -6,8 +6,6 @@ const connectMainDB = async () => {
     const mainDBUri = process.env.MAIN_DB_URI;
     console.log('Connecting to Main DB:', mainDBUri);
     await mongoose.connect(mainDBUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
     });
     console.log('Connected to Main DB');
   } catch (err) {

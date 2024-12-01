@@ -2,15 +2,20 @@ const Country = require('../Models/Country'); // Import the Country model
 const multer = require('multer');
 const upload = multer({ destination : './uploads' });
 
-// Create a new country
 exports.createCountries = async (req, res) => {
   try {
     const { name, code, type, vacancies } = req.body;
 
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded.' });
+    // Check if a country with the same name and type exists
+    const existingCountry = await Country.findOne({ name, type });
+
+    if (existingCountry) {
+      return res
+        .status(400)
+        .json({ error: 'Country with the same name and type already exists.' });
     }
 
+    // Create the new country entry
     const newCountry = new Country({
       name,
       code,
@@ -19,17 +24,23 @@ exports.createCountries = async (req, res) => {
       shapeImage: `/uploads/${req.file.filename}`, // Save file path
     });
 
+    // Save to the database
     const savedCountry = await newCountry.save();
-    res.status(201).json({ message: 'Country created successfully', country: savedCountry });
+    res
+      .status(201)
+      .json({ message: 'Country created successfully', country: savedCountry });
   } catch (error) {
     console.error('Error creating country:', error);
     res.status(500).json({ error: 'Failed to create country' });
   }
 };
 
+
+
+
 // Get all countries
 exports.getCountries = async (req, res) => {
-  const { page = 1, limit = 10, sortKey = 'name', sortDirection = 'asc' } = req.query;
+  const { page = 1, limit = 10, sortKey = 'name', sortDirection = 'asc', all = false } = req.query;
 
   const sortOptions = {};
   if (sortKey) {
@@ -37,14 +48,19 @@ exports.getCountries = async (req, res) => {
   }
 
   try {
-    // First, get the total count of documents (for pagination purposes)
-    const total = await Country.countDocuments();
+    let countries;
+    if (all === 'true') {
+      // Fetch all countries without pagination
+      countries = await Country.find().sort(sortOptions);
+    } else {
+      // Paginated fetch
+      countries = await Country.find()
+        .sort(sortOptions)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+    }
 
-    // Fetch countries with sorting and pagination
-    const countries = await Country.find()
-      .sort(sortOptions) // Apply sorting
-      .skip((page - 1) * limit) // Pagination: skip previous pages
-      .limit(Number(limit)); // Limit results to current page
+    const total = all === 'true' ? countries.length : await Country.countDocuments();
 
     res.status(200).json({ countries, total });
   } catch (error) {
@@ -66,12 +82,21 @@ exports.deleteCountry = async (req, res) => {
   }
 };
 
-// Controller to handle editing a country
+// Update an existing country
 exports.updateCountry = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, code, type, vacancies } = req.body;
     const shapeImage = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // Check if another country with the same name and type exists
+    const existingCountry = await Country.findOne({ name, _id: { $ne: id } });
+
+    if (existingCountry) {
+      if (existingCountry.type === type) {
+        return res.status(400).json({ error: 'Another country with the same name and type already exists.' });
+      }
+    }
 
     const updatedCountry = await Country.findByIdAndUpdate(
       id,
@@ -79,9 +104,9 @@ exports.updateCountry = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(updatedCountry);
+    res.status(200).json({ message: 'Country updated successfully', country: updatedCountry });
   } catch (error) {
-    console.error('Error updating field:', error);
-    res.status(500).json({ message: 'Error updating country', error });
+    console.error('Error updating country:', error);
+    res.status(500).json({ error: 'Failed to update country' });
   }
 };

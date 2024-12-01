@@ -1,10 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const FieldSchema = new mongoose.Schema({
-    names: { type: [String], required: true }, // Array of names
-    vacancies: { type: [Number], required: true }, // Array of corresponding vacancies
-    imageUrl: { type: String },
-    countryData: { type: String, required: true },
-})
+  names: {
+    type: [String],
+    required: true,
+  },
+  vacancies: {
+    type: [Number],
+    required: true,
+  },
+  countryData: {
+    type: String,
+    required: true,
+  },
+  fieldData: {
+    type: String,
+    required: true, // Set as required for creation but optional for updates
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+  },
+}, {
+  timestamps: true,
+});
 
-module.exports = mongoose.model('Field', FieldSchema);
+module.exports = mongoose.model("Field", FieldSchema);
