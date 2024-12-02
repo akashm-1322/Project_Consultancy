@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useCallback} from "react";
 import axios from "axios";
 import "./FieldComponent.css";
 import { MdDelete } from "react-icons/md";
-import { FaUserEdit } from "react-icons/fa";
+import { FaSort, FaUserEdit } from "react-icons/fa";
 
 const FieldComponent = () => {
   const [fields, setFields] = useState([]);
@@ -11,7 +11,6 @@ const FieldComponent = () => {
   const [itemsPerPage] = useState(10);
   const [error, setError] = useState(null);
   const [editingFieldId, setEditingFieldId] = useState(null);
-  const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     names: [""],
@@ -24,7 +23,7 @@ const FieldComponent = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const API_BASE_URL_FIELD = "http://localhost:5000/api/field";
 
-  const fetchFields = async () => {
+  const fetchFields = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_BASE_URL_FIELD}?page=${currentPage}&limit=${itemsPerPage}&sortKey=${sortKey}&sortDirection=${sortDirection}`
@@ -35,11 +34,11 @@ const FieldComponent = () => {
       console.error("Error fetching fields:", error);
       setError("Error fetching fields.");
     }
-  };
+  } ,  [API_BASE_URL_FIELD, currentPage, itemsPerPage , sortDirection , sortKey]);
 
   useEffect(() => {
     fetchFields();
-  }, [currentPage, sortDirection, sortKey]);
+  }, [currentPage, sortDirection, sortKey, currentPage , itemsPerPage , fetchFields]);
 
   const validateForm = () => {
     const errors = {};
@@ -57,7 +56,6 @@ const FieldComponent = () => {
       errors.countryData = "Country data is required.";
     if (!formData.fieldData)
       errors.fieldData = "Field data is required.";
-    setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
@@ -111,9 +109,8 @@ const FieldComponent = () => {
 
     setLoading(true);
     setError(null); 
-
+    let response;
     try {
-      let response;
       if (editingFieldId) {
         response = await axios.put(`${API_BASE_URL_FIELD}/${editingFieldId}`, formDataToSend, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -133,7 +130,7 @@ const FieldComponent = () => {
       setEditingFieldId(null);
       await fetchFields();
     } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Failed to submit the data. Please try again.';
+      const errorMessage = response?.data?.error || 'Failed to submit the data. Please try again.';
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -237,10 +234,10 @@ const FieldComponent = () => {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSortChange("name")}>Name</th>
-              <th onClick={() => handleSortChange("vacancies")}>Vacancies</th>
-              <th onClick={() => handleSortChange("countryData")}>Country Name {sortKey === 'countryData' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}</th>
-              <th onClick={() => handleSortChange("fieldData")}>Type {sortKey === 'fieldData' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}</th>
+              <th onClick={() => handleSortChange("name")}>Name <FaSort/></th>
+              <th onClick={() => handleSortChange("vacancies")}>Vacancies <FaSort/></th>
+              <th onClick={() => handleSortChange("countryData")}>Country Name <FaSort/></th>
+              <th onClick={() => handleSortChange("fieldData")}>Type <FaSort/></th>
               <th>Image</th>
               <th>Actions</th>
             </tr>

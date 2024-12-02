@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useCallback } from 'react';
 import axios from 'axios';
 import './CountryComponent.css';
 import { MdDelete } from 'react-icons/md';
-import { FaUserEdit } from 'react-icons/fa';
+import { FaUserEdit , FaSort } from 'react-icons/fa';
 
 const CountryComponent = () => {
   const [countries, setCountries] = useState([]);
@@ -26,7 +26,7 @@ const CountryComponent = () => {
   const API_BASE_URL_COUN = 'http://localhost:5000/api/countries';
   const API_BASE_URL_FIELDS = 'http://localhost:5000/api/field'; // Example endpoint for fields
 
-  const fetchCountries = async () => {
+  const fetchCountries = useCallback(async () => {
     try {
       const response = await axios.get(
         `${API_BASE_URL_COUN}?page=${currentPage}&limit=${contactsPerPage}&sortKey=${sortKey}&sortDirection=${sortDirection}`
@@ -34,12 +34,12 @@ const CountryComponent = () => {
       setCountries(response.data.countries);
       setTotal(response.data.total);
     } catch (error) {
-      console.error('Error fetching countries:', error);
-      setError('Failed to fetch countries.');
+      console.error("Error fetching countries:", error);
+      setError("Failed to fetch countries.");
     }
-  };
+  }, [API_BASE_URL_COUN, currentPage, contactsPerPage , sortDirection , sortKey]);
 
-  const fetchFields = async () => {
+  const fetchFields = useCallback(async () => {
     try {
       const response = await axios.get(API_BASE_URL_FIELDS);
       setFields(response.data.fields);
@@ -47,12 +47,12 @@ const CountryComponent = () => {
       console.error('Error fetching fields:', error);
       setError('Failed to fetch fields.');
     }
-  };
+  }, [API_BASE_URL_FIELDS]);
 
   useEffect(() => {
     fetchCountries();
     fetchFields();
-  }, [currentPage, sortDirection, sortKey]);
+  }, [currentPage, sortDirection, sortKey, currentPage , contactsPerPage ,fetchFields ,  fetchCountries]);
 
   const validateForm = () => {
     const errors = {};
@@ -231,21 +231,13 @@ const CountryComponent = () => {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSortChange('name')}>
-                Country Name {sortKey === 'name' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}
-              </th>
-              <th onClick={() => handleSortChange('code')}>
-                Country Code {sortKey === 'code' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}
-              </th>
-              <th onClick={() => handleSortChange('type')}>
-                Type {sortKey === 'type' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}
-              </th>
-              <th onClick={() => handleSortChange('vacancies')}>
-                Vacancies {sortKey === 'vacancies' ? (sortDirection === 'asc' ? '↑' : '↓') : ''}
-              </th>
-              <th>Shape Image</th>
-              <th>Actions</th>
-            </tr>
+            <th onClick={() => handleSortChange('name')}>Country Name <FaSort /></th>
+            <th onClick={() => handleSortChange('code')}>Country Code <FaSort /></th>
+            <th onClick={() => handleSortChange('type')}>Type <FaSort /></th>
+            <th onClick={() => handleSortChange('vacancies')}>Vacancies <FaSort /></th>
+            <th>Image Shape <FaSort /></th>
+            <th>Actions</th>
+          </tr>
           </thead>
           <tbody>
             {Array.isArray(countries) && countries.length > 0 ? (

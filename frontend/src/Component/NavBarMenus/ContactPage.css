@@ -14,6 +14,31 @@
     gap: 30px;
   }
 
+  /* Add this to your existing ContactPage.css */
+.custom-form-control {
+  width: 100%;
+  line-height: 1.5;
+}
+
+.custom-form-control[as="select"] {
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.custom-form-control[as="select"] {
+  max-height: 400px; /* Limit the height */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  -webkit-appearance: none; /* Remove default dropdown arrow */
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 1.75rem; /* Adjust the padding for the dropdown arrow */
+}
+
+.custom-form-control[as="select"] option {
+  padding: 10px;  /* Increase the size of each option */
+}
+
+
   .custom-form-control {
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 

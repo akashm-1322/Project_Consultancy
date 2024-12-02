@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  , useCallback} from 'react';
 import axios from 'axios';
 import { FaSort } from 'react-icons/fa';
 import { MdDelete } from "react-icons/md";
@@ -27,7 +27,7 @@ const AdminContacts = () => {
 
   const API_BASE_URL = 'http://localhost:5000/api/contact';
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -49,11 +49,12 @@ const AdminContacts = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL, currentPage, contactsPerPage, sortConfig]);
+
 
   useEffect(() => {
     fetchContacts();
-  }, [currentPage,sortConfig,currentPage]);
+  }, [currentPage, sortConfig, currentPage , contactsPerPage , fetchContacts]);
 
   const validateForm = () => {
     const errors = {};

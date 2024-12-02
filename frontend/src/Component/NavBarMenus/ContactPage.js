@@ -1,179 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit, FaUserAlt } from 'react-icons/fa';
 import { IoManOutline } from "react-icons/io5";
 import ContactImage from '../../Asset/Contact.jpg'; // Adjust path as needed
-import axios from 'axios'; // Import axios for API requests
+import axios from 'axios'; // For fetching country data
 import './ContactPage.css'; // Import external CSS
-
-const studyCountries = [
-  { name: 'Germany', code: 'GER' },
-  { name: 'Poland', code: 'POL' },
-  { name: 'Switzerland', code: 'SWE' },
-  { name: 'Singapore', code: 'SIN' }
-];
-
-const workCountries = [
-  { name: 'Dubai', code: 'DUB' },
-  { name: 'Saudi Arabia', code: 'SAU' },
-  { name: 'Kuwait', code: 'KUW' },
-  { name: 'Qatar', code: 'QAT' },
-  { name: 'Australia', code: 'AUS' },
-  { name: 'Canada', code: 'CAN' },
-  { name: 'Serbia', code: 'SER' },
-  { name: 'Albania', code: 'ALB' },
-  { name: 'Greece', code: 'GRE' },
-  { name: 'Croatia', code: 'CRO' },
-  { name: 'Slovakia', code: 'SLO' },
-  { name: 'Italy', code: 'ITA' },
-  { name: 'Czech Republic', code: 'CZE' },
-  { name: 'United Kingdom', code: 'UK' },
-  { name: 'Hungary', code: 'HUN' },
-  { name: 'Ireland', code: 'IRE' },
-  { name: 'Luxembourg', code: 'LUX' },
-  { name: 'Singapore', code: 'SIN' }
-];
-
-const languageLearning = [
-  { name: 'German', code: 'GER' }
-];
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    type: '',
     message: '',
+    type: '', // Added type field
     destination: '',
     dateofjoining: ''
   });
+  const [countries, setCountries] = useState([]); // Store fetched countries
   const [statusMessage, setStatusMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [filteredDestinations, setFilteredDestinations] = useState([]); // Store filtered destinations
+  const [uniqueTypes, setUniqueTypes] = useState([]); // Store unique country types
 
+  const API_URL_CON = 'http://localhost:5000/api/countries?all=true';
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(API_URL_CON); // Replace with actual endpoint
+        console.log(response.data.countries);  // Log countries to verify
+        setCountries(response.data.countries); // Assuming response contains an array of country objects
+        const types = [...new Set(response.data.countries.map((country) => country.type))]; // Extract unique types
+        setUniqueTypes(types); // Store unique types
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    };
+    fetchCountries();
+  }, []);
+  
+
+  // Handle type change and filter destinations
+  const handleTypeChange = (e) => {
+    const selectedType = e.target.value;
+    setFormData({ ...formData, type: selectedType, destination: '' }); // Reset destination when type changes
+    const destinations = countries
+      .filter((country) => country.type === selectedType) // Filter countries based on selected type
+      .map((country) => country.name); // Get the destination names
+    setFilteredDestinations(destinations);
+    console.log(destinations); // Log filtered destinations
+  };  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCountryChange = (e) => {
-    setFormData({ ...formData, destination: e.target.value });
-  };
-
   const validateForm = () => {
     const newErrors = {};
-    const nameRegex = /^[a-zA-Z\s]*$/; // Ensure name contains only letters and spaces
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
-    const phoneRegex = /^\d{10}$/; // Ensure phone is exactly 10 digits
-    const today = new Date(); // For validating date
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    const today = new Date();
 
-    // Validate name
-    if (!formData.name) {
-        newErrors.name = 'Name is required';
-    } else if (!nameRegex.test(formData.name)) {
-        newErrors.name = 'Name can only contain letters and spaces';
-    } else {
-        // Capitalize the first letter of each word
-        formData.name = formData.name
-            .split(' ')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-            .join(' ');
+    if (!formData.name || !nameRegex.test(formData.name)) {
+      newErrors.name = 'Name can only contain letters and spaces.';
     }
-
-    // Validate phone
     if (!formData.phone || !phoneRegex.test(formData.phone)) {
-        newErrors.phone = 'Please enter a valid phone number';
+      newErrors.phone = 'Please enter a valid 10-digit phone number.';
     }
-
-    // Validate email
     if (!formData.email || !emailRegex.test(formData.email)) {
-        newErrors.email = 'Please enter a valid email address';
-    } else if (!formData.email.includes('@')) {
-        newErrors.email = 'Email must contain "@"';
+      newErrors.email = 'Please enter a valid email address.';
     }
-
-    // Validate type
-    if (!formData.type) {
-        newErrors.type = 'Please select a type';
-    }
-
-    // Validate message
     if (!formData.message) {
-        newErrors.message = 'Message is required';
+      newErrors.message = 'Message is required.';
     }
-
-    // Validate destination
+    if (!formData.type) {
+      newErrors.type = 'Please select a type.';
+    }
     if (!formData.destination) {
-        newErrors.destination = 'Please select a destination';
+      newErrors.destination = 'Please select a destination.';
     }
-
-    // Validate date of joining
     if (!formData.dateofjoining) {
-        newErrors.dateofjoining = 'Please Enter a Valid Date of Your Joining';
+      newErrors.dateofjoining = 'Please enter your date of joining.';
     } else {
-        const selectedDate = new Date(formData.dateofjoining);
-        if (selectedDate > today) {
-            newErrors.dateofjoining = 'Date of joining cannot be in the future';
-        }
+      const selectedDate = new Date(formData.dateofjoining);
+      if (selectedDate > today) {
+        newErrors.dateofjoining = 'Date of joining cannot be in the future.';
+      }
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
-};
-
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm()) return;
-
-    try {
-      // Send data to the backend
-      await axios.post('http://localhost:5000/api/contact', formData);
-      setStatusMessage('Message sent successfully!');
-      setFormData({ name: '', phone: '', email: '', type: '', message: '', destination: '', dateofjoining: '' });
-    } catch (error) {
-      setStatusMessage('Error sending message. Please try again.');
-      console.error(error);
-    }
-  };
-
-  const renderCountries = () => {
-    let countries;
-    switch (formData.type) {
-      case 'Study Abroad':
-        countries = studyCountries;
-        break;
-      case 'Work/Travel Abroad':
-        countries = workCountries;
-        break;
-      case 'Language Coaching':
-        countries = languageLearning;
-        break;
-      default:
-        return null;
-    }
-
-    return (
-      <Form.Group>
-        <Form.Label><FaMapMarkerAlt /> Destination</Form.Label>
-        <Form.Control
-          as="select"
-          name="destination"
-          onChange={handleCountryChange}
-          value={formData.destination}
-          required
-        >
-          <option value="">Select Destination</option>
-          {countries.map((country, index) => (
-            <option key={index} value={country.code}>
-              {country.name}
-            </option>
-          ))}
-        </Form.Control>
-        {errors.destination && <div className="error-message">{errors.destination}</div>}
-      </Form.Group>
-    );
+    setStatusMessage('Form submitted successfully!');
+    setFormData({ name: '', phone: '', email: '', message: '', type: '', destination: '', dateofjoining: '' });
   };
 
   return (
@@ -183,13 +107,13 @@ const ContactPage = () => {
           <h3 className="contact-heading">Contact Us</h3>
           <Form onSubmit={handleSubmit} className="contact-form">
             <Form.Group>
-              <Form.Label><IoManOutline/> Name</Form.Label>
+              <Form.Label><IoManOutline /> Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
                 onChange={handleChange}
                 value={formData.name}
-                placeholder='Enter your name'
+                placeholder="Enter your name"
                 className="custom-form-control"
                 required
               />
@@ -202,7 +126,7 @@ const ContactPage = () => {
                 name="phone"
                 onChange={handleChange}
                 value={formData.phone}
-                placeholder='Enter your phone number'
+                placeholder="Enter your phone number"
                 className="custom-form-control"
                 required
               />
@@ -215,7 +139,7 @@ const ContactPage = () => {
                 name="email"
                 onChange={handleChange}
                 value={formData.email}
-                placeholder='Enter your email'
+                placeholder="Enter your email"
                 className="custom-form-control"
                 required
               />
@@ -234,23 +158,43 @@ const ContactPage = () => {
               {errors.dateofjoining && <div className="error-message">{errors.dateofjoining}</div>}
             </Form.Group>
             <Form.Group>
-              <Form.Label><FaUserAlt /> Type</Form.Label>
+              <Form.Label><FaMapMarkerAlt /> Type</Form.Label>
               <Form.Control
                 as="select"
                 name="type"
-                onChange={handleChange}
+                onChange={handleTypeChange}
                 value={formData.type}
-                className="custom-form-control"
                 required
+                className="custom-form-control"
               >
                 <option value="">Select Type</option>
-                <option value="Study Abroad">Study Abroad</option>
-                <option value="Work/Travel Abroad">Work or Travel Abroad</option>
-                <option value="Language Coaching">Language Coaching</option>
+                {uniqueTypes.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
+                  </option>
+                ))}
               </Form.Control>
               {errors.type && <div className="error-message">{errors.type}</div>}
             </Form.Group>
-            {renderCountries()}
+            <Form.Group>
+              <Form.Label><FaMapMarkerAlt /> Destination</Form.Label>
+              <Form.Control
+                as="select"
+                name="destination"
+                onChange={handleChange}
+                value={formData.destination}
+                required
+                className="custom-form-control"
+              >
+                <option value="">Select Destination</option>
+                {filteredDestinations.map((destination, index) => (
+                  <option key={index} value={destination}>
+                    {destination}
+                  </option>
+                ))}
+              </Form.Control>
+              {errors.destination && <div className="error-message">{errors.destination}</div>}
+            </Form.Group>
             <Form.Group>
               <Form.Label><FaEdit /> Message</Form.Label>
               <Form.Control
@@ -259,7 +203,7 @@ const ContactPage = () => {
                 onChange={handleChange}
                 value={formData.message}
                 rows={3}
-                className='custom-form-control'
+                className="custom-form-control"
                 required
               />
               {errors.message && <div className="error-message">{errors.message}</div>}

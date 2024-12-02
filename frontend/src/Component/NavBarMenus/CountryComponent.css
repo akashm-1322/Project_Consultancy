@@ -110,7 +110,7 @@
   }
   
   th {
-    background: linear-gradient(90deg , rgba(141, 206, 177, 0.927));
+    background: #e3665d;
     cursor: pointer;
     color: #000;
   }

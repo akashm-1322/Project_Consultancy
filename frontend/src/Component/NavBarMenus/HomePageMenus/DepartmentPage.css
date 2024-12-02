@@ -1,0 +1,166 @@
+/* General container styling */
+.department-container {
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+    color: #000;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Animated background graphic */
+  .department-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(3, 161, 90, 0.975), transparent 70%);
+    animation: rotateBackground 10s linear infinite;
+    z-index: 0;
+  }
+  
+  /* Background rotation animation */
+  @keyframes rotateBackground {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Main heading */
+  .department-container h1 {
+    font-size: 3rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+    margin-bottom: 2rem;
+    animation: fadeIn 1.5s ease-out;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Department card styling */
+  .department-card {
+    background: rgba(3, 161, 90, 0.975);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 1.5rem;
+    width: 80%;
+    max-width: 600px;
+    margin: 1rem 0;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    z-index: 1;
+    animation: slideIn 0.8s ease-out;
+  }
+  
+  /* Hover effect for cards */
+  .department-card:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Slide-in animation */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Card heading */
+  .department-card h2 {
+    font-size: 1.8rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+  }
+  
+  /* Vacancy count */
+  .vacancy-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #00ff00;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* SubNames list */
+  .department-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+    color: #000;
+  }
+  
+  /* List items */
+  .department-card ul li {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 20px;
+    animation: popIn 1s ease-in-out;
+  }
+  
+  /* Pop-in animation */
+  @keyframes popIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Decorative bullet points */
+  .department-card ul li::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: #ff6347;
+    font-size: 1rem;
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Star spin animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* No data message */
+  .department-container > div {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    animation: fadeIn 1s ease-out;
+  }
+  
