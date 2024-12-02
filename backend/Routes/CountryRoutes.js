@@ -1,6 +1,8 @@
-const express = require('express');
-const multer = require('multer');
-const { createCountries, getCountries , deleteCountry , updateCountry , updateCountryVacancies } = require('../Controllers/CountryControllers');
+import express from 'express';
+import multer from 'multer';
+
+import CountryControllers from '../Controllers/CountryControllers.js';
+const { createCountries, getCountries , deleteCountry , updateCountry , updateCountryVacancies }  = CountryControllers
 
 const router = express.Router();
 
@@ -26,5 +28,7 @@ router.delete('/:id', deleteCountry);
 // PUT route for updating a country
 router.put('/:id', upload.single('shapeImage'), updateCountry);
 
+router.patch('/:id' , updateCountryVacancies);
 
-module.exports = router;
+
+export default router;

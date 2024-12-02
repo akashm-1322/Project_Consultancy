@@ -1,10 +1,11 @@
-const Field = require("../models/Field");
-const multer = require("multer")
-const path = require("path");
-const fs = require('fs')
+import Field from '../models/Field.js';  // Import the Field model
+import multer from 'multer';          // Import multer
+import path from 'path';              // Import path
+import fs from 'fs';                  // Import fs
+
 
 // Add a new field
-exports.createField = async (req, res) => {
+const createField = async (req, res) => {
   try {
     const { names, vacancies, countryData, fieldData } = req.body;
 
@@ -34,7 +35,7 @@ exports.createField = async (req, res) => {
 };
 
 // Update an existing field
-exports.updateField = async (req, res) => {
+const updateField = async (req, res) => {
   try {
     const { id } = req.params;
     const { names, vacancies, countryData, fieldData } = req.body;
@@ -64,7 +65,7 @@ exports.updateField = async (req, res) => {
 };
 
 // Get all fields
-exports.getFields = async (req, res) => {
+const getFields = async (req, res) => {
   const { page = 1, limit = 10, sortKey = 'name', sortDirection = 'asc', all = false } = req.query;
 
   const sortOptions = {};
@@ -96,7 +97,7 @@ exports.getFields = async (req, res) => {
 
 
 // Delete a field
-exports.deleteField = async (req, res) => {
+const deleteField = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -121,3 +122,6 @@ exports.deleteField = async (req, res) => {
     res.status(500).json({ message: "Error deleting field." });
   }
 };
+
+
+export default {getFields , createField , updateField , deleteField};

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 
 const FieldSchema = new mongoose.Schema({
   names: {
@@ -25,4 +25,5 @@ const FieldSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-module.exports = mongoose.model("Field", FieldSchema);
+const Field =  mongoose.model('Field', FieldSchema);
+export default Field;

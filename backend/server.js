@@ -1,13 +1,18 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const path = require('path');
-const multer = require('multer');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import path from 'path';
+import multer from 'multer';
+import { fileURLToPath } from 'url';
 
 // Load environment variables from .env
 dotenv.config();
+
+// Get the current directory from import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Create express app
 const app = express();
@@ -24,11 +29,12 @@ mongoose
   .catch((err) => console.error('Error connecting to database', err));
 
 // Import Routes
-const adminRoutes = require('./Routes/AdminRoutes');
-const commentRoutes = require('./Routes/CommentRoutes');
-const contactRoutes = require('./Routes/ContactRoutes');
-const countryRoutes = require('./Routes/CountryRoutes');
-const fieldRoutes = require('./Routes/FieldRoutes');
+import adminRoutes from './Routes/AdminRoutes.js';
+import commentRoutes from './Routes/CommentRoutes.js';
+import contactRoutes from './Routes/ContactRoutes.js';
+import countryRoutes from './Routes/CountryRoutes.js';
+import fieldRoutes from './Routes/FieldRoutes.js';
+import deptRoutes from './Routes/DepartmentRoutes.js';
 
 // Use routes
 app.use('/api/admin', adminRoutes);
@@ -36,6 +42,7 @@ app.use('/api/comment', commentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/countries', countryRoutes);
 app.use('/api/field', fieldRoutes);
+app.use('/api/department', deptRoutes);
 
 // Set up multer storage configuration
 const storage = multer.diskStorage({
@@ -46,7 +53,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
 
 // Serve static files from the React build
 app.use(express.static(path.join(__dirname, '../frontend/build')));

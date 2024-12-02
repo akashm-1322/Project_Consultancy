@@ -1,25 +1,24 @@
-// Importing Admin Model
-const Admin = require('../Models/Admin');
+import Admin from '../Models/Admin.js';
+import bcrypt from 'bcrypt';
 
 // Create Admin
 const createAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const admin = new Admin({ username, password });
+
+    // Check if username already exists
+    const existingAdmin = await Admin.findOne({ username });
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Create new admin
+    const admin = new Admin({ username, password }); // Password will be hashed automatically
     await admin.save();
-    res.status(201).json({ message: 'Admin created successfully', admin });
+
+    res.status(201).json({ message: 'Admin created successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error creating admin', error: error.message });
-  }
-};
-
-// Get Admins
-const getAdmins = async (req, res) => {
-  try {
-    const admins = await Admin.find();
-    res.status(200).json({ admins });
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching admins', error: error.message });
   }
 };
 
@@ -30,14 +29,14 @@ const loginAdmin = async (req, res) => {
 
     // Find admin with the given username
     const admin = await Admin.findOne({ username });
-
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
-    // Check password
-    if (admin.password !== password) {
-      return res.status(401).json({ message: 'Invalid password' });
+    // Compare hashed passwords
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
 
     // Successful login
@@ -47,5 +46,14 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-// Export all functions
-module.exports = { createAdmin, getAdmins, loginAdmin };
+// Get Admins (Optional: Add authorization to limit access)
+const getAdmins = async (req, res) => {
+  try {
+    const admins = await Admin.find({}, { password: 0 }); // Exclude passwords
+    res.status(200).json({ admins });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching admins', error: error.message });
+  }
+};
+
+export default {createAdmin, loginAdmin, getAdmins };

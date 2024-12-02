@@ -1,4 +1,4 @@
-const Comment = require('../Models/Comment');
+import Comment from '../Models/Comment.js';
 
 // Create Comment
 const createComment = async (req, res) => {
@@ -22,4 +22,4 @@ const getComments = async (req, res) => {
   }
 };
 
-module.exports = { createComment, getComments };
+export default { createComment, getComments };

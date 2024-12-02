@@ -1,11 +1,13 @@
-const express = require("express");
-const multer = require("multer");
+import express from 'express';
+import multer from 'multer';
+
+import FieldControllers from "../Controllers/FieldControllers.js";
 const { 
-  createField, 
-  updateField, 
-  getFields, 
-  deleteField
-} = require("../Controllers/FieldControllers");
+    createField, 
+    updateField, 
+    getFields, 
+    deleteField
+  } = FieldControllers;
 
 const router = express.Router();
 
@@ -27,4 +29,4 @@ router.put("/:id", upload.single("imageUrl"), updateField); // Update a field
 router.get("/", getFields); // Get all fields
 router.delete("/:id", deleteField); // Delete a field
 
-module.exports = router;
+export default router;

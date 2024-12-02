@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const countrySchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -8,4 +8,5 @@ const countrySchema = new mongoose.Schema({
   vacancies: { type: Number, required: true },
 });
 
-module.exports = mongoose.model('Country', countrySchema);
+const Country =  mongoose.model('Country', countrySchema);
+export default Country;

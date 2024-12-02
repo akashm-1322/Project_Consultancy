@@ -1,8 +1,12 @@
-const Country = require('../Models/Country'); // Import the Country model
-const multer = require('multer');
-const upload = multer({ destination : './uploads' });
+import Country from '../Models/Country.js'; // Import the Country model
+import multer from 'multer';             // Import multer
+import axios from 'axios';              // Import axios
 
-exports.createCountries = async (req, res) => {
+const upload = multer({ destination: './uploads' });
+
+
+
+const createCountries = async (req, res) => {
   try {
     const { name, code, type, vacancies } = req.body;
 
@@ -39,7 +43,7 @@ exports.createCountries = async (req, res) => {
 
 
 // Get all countries
-exports.getCountries = async (req, res) => {
+const getCountries = async (req, res) => {
   const { page = 1, limit = 10, sortKey = 'name', sortDirection = 'asc', all = false } = req.query;
 
   const sortOptions = {};
@@ -69,10 +73,34 @@ exports.getCountries = async (req, res) => {
   }
 };
 
+import fetch from 'node-fetch'; // If using Node.js and fetch is not natively available.
 
+const updateCountryVacancies =  async (req, res) => {
+  const { countryId } = req.params;
+  const { vacancies } = req.body;
+
+  try {
+    // Find the country by ID and update the vacancies field
+    const updatedCountry = await Country.findByIdAndUpdate(
+      countryId, 
+      { $set: { vacancies: vacancies } }, 
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedCountry) {
+      return res.status(404).json({ message: 'Country not found' });
+    }
+
+    // Return the updated country data
+    res.json(updatedCountry);
+  } catch (error) {
+    console.error('Error updating country:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 // Controller to handle deleting a country
-exports.deleteCountry = async (req, res) => {
+const deleteCountry = async (req, res) => {
   try {
     const { id } = req.params;
     await Country.findByIdAndDelete(id);
@@ -83,7 +111,7 @@ exports.deleteCountry = async (req, res) => {
 };
 
 // Update an existing country
-exports.updateCountry = async (req, res) => {
+const updateCountry = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, code, type, vacancies } = req.body;
@@ -110,3 +138,5 @@ exports.updateCountry = async (req, res) => {
     res.status(500).json({ error: 'Failed to update country' });
   }
 };
+
+export default {createCountries , getCountries , updateCountry , updateCountryVacancies , deleteCountry};

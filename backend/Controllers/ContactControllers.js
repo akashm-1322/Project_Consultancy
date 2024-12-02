@@ -1,5 +1,5 @@
-const Contact = require('../Models/Contact');
-const mongoose = require('mongoose');
+import Contact from '../Models/Contact.js';
+import mongoose from 'mongoose';
 
 // Create Contact
 const createContact = async (req, res) => {
@@ -81,4 +81,4 @@ const updateContact = async (req, res) => {
   }
 };
 
-module.exports = { createContact, getContacts, deleteContacts, updateContact };
+export default { createContact, getContacts, deleteContacts, updateContact };

@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { createAdmin, getAdmins , loginAdmin} = require('../Controllers/AdminControllers');
+import AdminControllers from '../Controllers/AdminControllers.js';
+const { createAdmin, getAdmins , loginAdmin} = AdminControllers;
 
 router.post('/', createAdmin);
 router.get('/', getAdmins);
 router.post('/login', loginAdmin); 
 
-module.exports = router;
+export default router;
