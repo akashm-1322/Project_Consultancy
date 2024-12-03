@@ -33,7 +33,7 @@ const BottomNavbar = ({ isAdmin }) => {
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
+        background: "linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff )",
         boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
         height: '60px',
         width: '100%',
@@ -155,7 +155,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
   padding: '10px 15px',
   '&:hover': {
     color: '#FF7F50', // Orange color
-    backgroundColor: 'transparent',
+    background: 'linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff)',
     transform: 'scale(1.05)', // Zoom-in effect on hover
     transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
   },
@@ -170,7 +170,7 @@ const StyledMenuButton = styled(Button)(({ theme }) => ({
   padding: '10px 15px',
   '&:hover': {
     color: '#FF7F50', // Orange color
-    backgroundColor: 'transparent',
+    background: 'linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff)',
     transform: 'scale(1.05)', // Zoom-in effect on hover
     transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
   },
