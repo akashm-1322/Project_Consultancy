@@ -21,7 +21,7 @@ const FieldComponent = () => {
   });
   const [sortKey, setSortKey] = useState("name");
   const [sortDirection, setSortDirection] = useState("asc");
-  const API_BASE_URL_FIELD = "http://localhost:5000/api/field";
+  const API_BASE_URL_FIELD = "http://localhost:5500/api/field";
 
   const fetchFields = useCallback(async () => {
     try {
@@ -178,7 +178,7 @@ const FieldComponent = () => {
         {formData.names.map((_, index) => (
           <div key={index} className="dynamic-field-group">
             <input
-            className='custom-form-control'
+            className='custom-form-control-f'
               type="text"
               name="names"
               value={formData.names[index]}
@@ -187,7 +187,7 @@ const FieldComponent = () => {
               required
             />
             <input
-            className='custom-form-control'
+            className='custom-form-control-f'
               type="number"
               name="vacancies"
               value={formData.vacancies[index]}
@@ -195,16 +195,16 @@ const FieldComponent = () => {
               placeholder="Vacancies"
               required
             />
-            <button className='custom-form-control' type="button" onClick={() => handleRemoveField(index)}>
+            <button className='field-form-button' type="button" onClick={() => handleRemoveField(index)}>
               Remove
             </button>
           </div>
         ))}
-        <button  className='custom-form-control' type="button" onClick={handleAddField}>
+        <button  className='field-form-button' type="button" onClick={handleAddField}>
           Add Field
         </button>
         <input
-         className='custom-form-control'
+         className='custom-form-control-f'
           type="text"
           name="countryData"
           value={formData.countryData}
@@ -213,7 +213,7 @@ const FieldComponent = () => {
           required
         />
         <input
-         className="custom-form-control"
+         className="custom-form-control-f"
           type="text"
           name="fieldData"
           value={formData.fieldData}
@@ -221,7 +221,7 @@ const FieldComponent = () => {
           placeholder="Field Type"
           required
         />
-        <input className="custom-form-control" type="file" name="imageUrl" onChange={handleChange} />
+        <input className="custom-form-control-f" type="file" name="imageUrl" onChange={handleChange} />
         <button type="submit">
           {editingFieldId ? "Update Field" : "Add Field"}
         </button>
@@ -265,7 +265,7 @@ const FieldComponent = () => {
                   <td>
                     {field.imageUrl && (
                       <img
-                        src={`http://localhost:5000${field.imageUrl}`}
+                        src={`http://localhost:5500${field.imageUrl}`}
                         alt={field._id} width="70" height="30"
                       />
                     )}

@@ -1,37 +1,29 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import './Endfooter.css'; // Import the CSS file
 
 const EndFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div
-      style={{
-        background: 'linear-gradient(135deg, #000, #222)',  // Same gradient as Footer
-        color: '#fff',
-        textAlign: 'center',
-        fontSize: '14px',
-        padding: '20px 0',
-        fontFamily: "'Roboto', sans-serif",  // Custom font for consistency
-        animation: 'fadeIn 2s ease forwards',
-        transition: 'background 0.5s ease',
-      }}
-    >
+    <div className="end-footer">
       <Container>
         <Row>
-          <Col>
-            <p>&copy; {currentYear} -   J99 Recruitment Services Pvt. Ltd. All Rights Reserved.</p>
+          <Col className="footer-section">
+            <p>&copy; {currentYear} - J99 Recruitment Services Pvt. Ltd. All Rights Reserved.</p>
           </Col>
-          <Col>
-            <p>Follow Us: 
-              <a href="https://www.facebook.com" style={{ color: 'white', marginLeft: '10px' }}>Facebook</a> |
-              <a href="https://www.twitter.com" style={{ color: 'white', marginLeft: '10px' }}>Twitter</a> |
-              <a href="https://www.instagram.com" style={{ color: 'white', marginLeft: '10px' }}>Instagram</a>
+          <Col className="footer-section">
+            <p>
+              Follow Us: 
+              <a href="https://www.facebook.com" className="footer-link">Facebook</a> |
+              <a href="https://www.twitter.com" className="footer-link">Twitter</a> |
+              <a href="https://www.instagram.com" className="footer-link">Instagram</a>
             </p>
           </Col>
-          <Col>
-            <p>Contact us: 
-              <a href="mailto:J99WorldTour@gmail.com" style={{ color: 'white', marginLeft: '10px' }}>J99Recruitmentservices@gmail.com</a>
+          <Col className="footer-section">
+            <p>
+              Contact us: 
+              <a href="mailto:J99WorldTour@gmail.com" className="footer-link">J99Recruitmentservices@gmail.com</a>
             </p>
           </Col>
         </Row>

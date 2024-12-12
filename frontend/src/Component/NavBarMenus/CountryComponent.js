@@ -23,8 +23,8 @@ const CountryComponent = () => {
   });
   const [sortKey, setSortKey] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
-  const API_BASE_URL_COUN = 'http://localhost:5000/api/countries';
-  const API_BASE_URL_FIELDS = 'http://localhost:5000/api/field'; // Example endpoint for fields
+  const API_BASE_URL_COUN = 'http://localhost:5500/api/countries';
+  const API_BASE_URL_FIELDS = 'http://localhost:5500/api/field'; // Example endpoint for fields
 
   const fetchCountries = useCallback(async () => {
     try {
@@ -179,7 +179,7 @@ const CountryComponent = () => {
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit} className="country-form">
         <input
-          className='custom-form-control'
+          className='custom-form-control-1'
           type="text"
           name="name"
           value={formData.name}
@@ -189,7 +189,7 @@ const CountryComponent = () => {
         />
         {formErrors.name && <span className="error">{formErrors.name}</span>}
         <input
-          className='custom-form-control'
+          className='custom-form-control-1'
           type="text"
           name="code"
           value={formData.code}
@@ -199,7 +199,7 @@ const CountryComponent = () => {
         />
         {formErrors.code && <span className="error">{formErrors.code}</span>}
         <input
-          className='custom-form-control'
+          className='custom-form-control-1'
           type="text"
           name="type"
           value={formData.type}
@@ -209,7 +209,7 @@ const CountryComponent = () => {
         />
         {formErrors.type && <span className="error">{formErrors.type}</span>}
         <input
-         className='custom-form-control'
+         className='custom-form-control-1'
           type="number"
           name="vacancies"
           value={formData.vacancies}
@@ -218,8 +218,8 @@ const CountryComponent = () => {
           required
         />
         {formErrors.vacancies && <span className="error">{formErrors.vacancies}</span>}
-        <input className='custom-form-control' type="file" name="shapeImage" onChange={handleChange} />
-        <button type="submit">
+        <input className='custom-form-control-1' type="file" name="shapeImage" onChange={handleChange} />
+        <button className="country-form-button" type="submit">
           {editingCountryId ? 'Update Field' : 'Add Field'}
         </button>
       </form>
@@ -250,7 +250,7 @@ const CountryComponent = () => {
                   <td>
                     {country.shapeImage && (
                       <img
-                        src={`http://localhost:5000${country.shapeImage}`}
+                        src={`http://localhost:5500${country.shapeImage}`}
                         alt={country.name}
                         width="70"
                         height="30"

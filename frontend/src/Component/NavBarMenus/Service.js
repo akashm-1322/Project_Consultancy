@@ -61,10 +61,14 @@ const Service = () => {
       </Row>
 
       {/* Conditionally render the correct process component */}
-      {selectedService === "Travel and Work Abroad" && <TravelAbroadProcess onClose={() => setSelectedService(null)} />}
-      {selectedService === "Study Abroad" && <StudyAbroadProcess onClose={() => setSelectedService(null)} />}
-      {selectedService === "Domestic Placements" && <DomesticPlacements onClose={() => setSelectedService(null)} />}
-      {selectedService === "Language Coaching" && <LanguageTrainingProcess onClose={() => setSelectedService(null)} />}
+      {selectedService === "Travel and Work Abroad" && 
+      <div className="travel-cont"><TravelAbroadProcess onClose={() => setSelectedService(null)} /></div>}
+      {selectedService === "Study Abroad" && 
+      <div className="study-cont"><StudyAbroadProcess onClose={() => setSelectedService(null)} /> </div>}
+      {selectedService === "Domestic Placements" && 
+      <div className="domestic-cont"><DomesticPlacements onClose={() => setSelectedService(null)} /></div>}
+      {selectedService === "Language Coaching" && 
+      <div className="language-cont"><LanguageTrainingProcess onClose={() => setSelectedService(null)} /></div>}
     </Container>
   );
 };

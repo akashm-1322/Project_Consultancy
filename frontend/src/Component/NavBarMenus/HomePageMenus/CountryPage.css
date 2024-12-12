@@ -87,6 +87,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
+  justify-content: space-between;
 }
 
 /* Individual Card */
@@ -98,13 +99,13 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  margin : 10px;
+  margin: 10px;
 }
 
-.cards-container{
+.cards-container {
   display: flex;
   flex-direction: row;
-  gap:10px;
+  gap: 10px;
 }
 
 .card:hover {
@@ -168,18 +169,174 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .country-page h1 {
+    font-size: 2.5rem;
+  }
+
+  .country-strip {
+    padding: 10px;
+  }
+
   .country-header {
     flex-direction: column;
     align-items: flex-start;
+    padding: 10px;
+  }
+
+  .country-image {
+    width: 70px;
+    height: 70px;
+    margin-right: 15px;
+  }
+
+  .country-details h3 {
+    font-size: 1.3rem;
+  }
+
+  .total-vacancies {
+    font-size: 0.9rem;
   }
 
   .toggle-button {
+    font-size: 0.9rem;
     margin-left: 0;
     margin-top: 10px;
   }
 
   .matching-cards {
     flex-direction: column;
+    gap: 20px;
+  }
+
+  .card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .card-image img {
+    height: 300px;
+  }
+
+  .card-content h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .country-page h1 {
+    font-size: 2rem;
+  }
+
+  .country-strip {
+    padding: 10px;
+  }
+
+  .country-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .country-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
+
+  .country-details h3 {
+    font-size: 1.1rem;
+  }
+
+  .total-vacancies {
+    font-size: 0.8rem;
+  }
+
+  .toggle-button {
+    font-size: 0.85rem;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .matching-cards {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .card-image img {
+    height: 250px;
+  }
+
+  .card-content h3 {
+    font-size: 0.9rem;
+  }
+
+  .field-table th,
+  .field-table td {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .country-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .country-strip {
+    padding: 8px;
+  }
+
+  .country-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px;
+  }
+
+  .country-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 8px;
+  }
+
+  .country-details h3 {
+    font-size: 1rem;
+  }
+
+  .total-vacancies {
+    font-size: 0.75rem;
+  }
+
+  .toggle-button {
+    font-size: 0.75rem;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .matching-cards {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .card-image img {
+    height: 200px;
+  }
+
+  .card-content h3 {
+    font-size: 0.85rem;
+  }
+
+  .field-table th,
+  .field-table td {
+    font-size: 0.7rem;
   }
 }

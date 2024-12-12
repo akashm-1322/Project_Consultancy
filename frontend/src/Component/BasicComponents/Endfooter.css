@@ -1,0 +1,70 @@
+/* General Footer Styling */
+.end-footer {
+    background: linear-gradient(135deg, #000, #222);
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    padding: 20px 0;
+    font-family: 'Roboto', sans-serif;
+    animation: fadeIn 2s ease forwards;
+    transition: background 0.5s ease;
+  }
+  
+  /* Footer Links */
+  .footer-link {
+    color: white;
+    margin-left: 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #03a15a; /* Highlight color on hover */
+  }
+  
+  /* Footer Section */
+  .footer-section {
+    margin-bottom: 15px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .footer-section {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .end-footer {
+      padding: 15px 0;
+    }
+  
+    .footer-section {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .end-footer {
+      padding: 10px 0;
+    }
+  
+    .footer-section {
+      font-size: 11px;
+    }
+  
+    .footer-link {
+      margin-left: 5px;
+    }
+  }
+  
+  /* Fade-In Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit, FaUserAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit} from 'react-icons/fa';
 import { IoManOutline } from "react-icons/io5";
 import ContactImage from '../../Asset/Contact.jpg'; // Adjust path as needed
 import axios from 'axios'; // For fetching country data
@@ -22,7 +22,7 @@ const ContactPage = () => {
   const [filteredDestinations, setFilteredDestinations] = useState([]); // Store filtered destinations
   const [uniqueTypes, setUniqueTypes] = useState([]); // Store unique country types
 
-  const API_URL_CON = 'http://localhost:5000/api/countries?all=true';
+  const API_URL_CON = 'http://localhost:5500/api/countries?all=true';
 
   useEffect(() => {
     const fetchCountries = async () => {

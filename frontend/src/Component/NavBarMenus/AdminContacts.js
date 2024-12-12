@@ -25,7 +25,7 @@ const AdminContacts = () => {
     dateofjoining: '',
   });
 
-  const API_BASE_URL = 'http://localhost:5000/api/contact';
+  const API_BASE_URL = 'http://localhost:5500/api/contact';
 
   const fetchContacts = useCallback(async () => {
     setLoading(true);

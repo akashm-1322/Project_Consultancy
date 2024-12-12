@@ -43,11 +43,36 @@
     .col-2 {
       flex: 1 0 45%;
     }
+
+    .certifications-container {
+      padding: 0 15px; /* Reduced padding for smaller screens */
+  }
+  .certification-card {
+      width: calc(50% - 10px); /* Two columns with more compact spacing */
+  }
   }
   
   @media (max-width: 480px) {
     .col-2 {
       flex: 1 0 100%;
     }
+
+    .certifications-container {
+      padding: 0 10px; /* Reduced padding for small screens */
+  }
+  .certification-card {
+      width: 100%; /* One column for mobile */
+  }
+  .certification-title {
+      font-size: 0.75rem; /* Adjust title size for smaller screens */
+  }
   }
   
+  /* Responsive Styles */
+
+/* For devices with screen widths <= 1024px (tablets, small screens) */
+@media (max-width: 1024px) {
+  .certification-card {
+      width: calc(50% - 20px); /* Two columns */
+  }
+}

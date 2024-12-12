@@ -1,39 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , Suspense , lazy} from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Component/BasicComponents/Navbar";
 import OpeningPage from "./Component/Pages/OpeningPage";
-import HomePage from "./Component/NavBarMenus/HomePage";
-import ServicesPage from "./Component/NavBarMenus/Service";
-import AboutPage from "./Component/NavBarMenus/AboutPage";
-import ContactPage from "./Component/NavBarMenus/ContactPage";
-import AdminContacts from "./Component/NavBarMenus/AdminContacts";
-import Footer from "./Component/BasicComponents/Footer";
-import EndFooter from "./Component/BasicComponents/EndFooter";
-import ContactBoxes from "./Component/Pages/ContactBoxes";
-import CountryComponent from "./Component/NavBarMenus/CountryComponent";
-import FieldComponent from "./Component/NavBarMenus/FieldComponent"; // Import the new component
 import "./App.css";
+
+// Lazy Loading 
+const HomePage = lazy(() => import("./Component/NavBarMenus/HomePage"));
+const ServicesPage = lazy(() => import("./Component/NavBarMenus/Service"));
+const AboutPage = lazy(() => import("./Component/NavBarMenus/AboutPage"));
+const ContactPage = lazy(() => import("./Component/NavBarMenus/ContactPage"));
+const AdminContacts = lazy(() => import("./Component/NavBarMenus/AdminContacts"));
+const Footer = lazy(() => import("./Component/BasicComponents/Footer"));
+const EndFooter = lazy(() => import("./Component/BasicComponents/EndFooter"));
+const ContactBoxes = lazy(() => import("./Component/Pages/ContactBoxes"));
+const CountryComponent = lazy(() => import("./Component/NavBarMenus/CountryComponent"));
+const FieldComponent = lazy(() => import("./Component/NavBarMenus/FieldComponent"));
+
 
 const AppContent = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(""); // "USER" or "ADMIN"
+  const [userType, setUserType] = useState(""); 
   const [loading, setLoading] = useState(true);
-  const [adminName, setAdminName] = useState(""); // Store the admin's name here
-  const [showContactBoxes, setShowContactBoxes] = useState(true); // State to control visibility of ContactBoxes
+  const [adminName, setAdminName] = useState(""); 
+  const [showContactBoxes, setShowContactBoxes] = useState(true); 
 
   const handleNavigate = (type, adminName = "") => {
     setIsLoggedIn(true);
-    setUserType(type); // Set "ADMIN" or "USER" directly
-    setAdminName(adminName); // Set the admin's name
+    setUserType(type); 
+    setAdminName(adminName); 
 
-    // Persist login state
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("userType", type);
     if (type === "ADMIN") localStorage.setItem("adminName", adminName);
   };
 
   const handleLogout = () => {
-    // Clear localStorage and reset states
     localStorage.clear();
     setIsLoggedIn(false);
     setUserType("");
@@ -49,31 +50,34 @@ const AppContent = () => {
       setUserType(storedUserType);
       if (storedUserType === "ADMIN") {
         const name = localStorage.getItem("adminName");
-        setAdminName(name); // Fetch the admin name from localStorage
+        setAdminName(name); 
       }
     }
     setLoading(false);
 
-    // Function to handle scroll and check the bottom position
     const handleScroll = () => {
       if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 600) {
-        setShowContactBoxes(false); // Hide contact boxes when bottom is less than or equal to 600px
+        setShowContactBoxes(false); 
       } else {
-        setShowContactBoxes(true); // Show contact boxes when it's not
+        setShowContactBoxes(true); 
       }
     };
 
-    // Attach scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-    // Clean up the event listener on unmount
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (loading) return <div>Loading...</div>; // Display loading state while data is being retrieved
+  if (loading) return <div>Loading...</div>;
 
   return (
     <>
+      <head>
+        <meta http-equiv="Cache-Control" content="no-store" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+      </head>
+      <Suspense fallback={<div>Loading...</div>}>
       {!isLoggedIn ? (
         <OpeningPage onNavigate={handleNavigate} />
       ) : (
@@ -84,14 +88,12 @@ const AppContent = () => {
             onLogout={handleLogout}
           />
           <div className="main-content">
-            {/* Conditionally render ContactBoxes based on the scroll position */}
             {showContactBoxes && <ContactBoxes />}
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              {/* Admin Route */}
               {userType === "ADMIN" && (
               <Route
               path="/admincontacts"
@@ -104,7 +106,6 @@ const AppContent = () => {
               }
               />
             )}
-
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
@@ -112,6 +113,7 @@ const AppContent = () => {
           <EndFooter />
         </div>
       )}
+      </Suspense>
     </>
   );
 };

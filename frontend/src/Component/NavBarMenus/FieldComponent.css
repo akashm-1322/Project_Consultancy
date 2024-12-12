@@ -1,158 +1,285 @@
-  
-  /* Field Container */
+/* Field Container */
+.field-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Form Styles */
+.field-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.custom-form-control-f {
+  padding: 10px;
+  margin: 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.custom-form-control-f:hover {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.field-form-button {
+  cursor: pointer;
+  padding: 10px 15px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: #000;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.field-form-button:hover {
+  background-color:  #d5e3a8;
+  transform: scale(1.05);
+}
+
+.error-message {
+  color: #ff4d4f;
+  background-color: #fff3f3;
+  padding: 10px;
+  border: 1px solid #ff4d4f;
+  border-radius: 4px;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background: #e3665d;
+  cursor: pointer;
+}
+
+tr:hover {
+  background: #f6d365;
+}
+
+img {
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Action Buttons */
+button svg {
+  vertical-align: middle;
+}
+
+button:nth-of-type(1) {
+  background-color: #28a745;
+}
+
+button:nth-of-type(1):hover {
+  background-color: #218838;
+}
+
+button:nth-of-type(2) {
+  background-color: #dc3545;
+}
+
+button:nth-of-type(2):hover {
+  background-color: #c82333;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pagination button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #007bff;
+  color: #000;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+
+/* For screens smaller than 1024px (e.g., tablets) */
+@media (max-width: 1024px) {
   .field-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    animation: fadeIn 0.5s ease-in-out;
+    padding: 15px;
   }
   
-  /* Form Styles */
   .field-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .custom-form-control {
-    padding: 10px;
-    margin: 20px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  
-  .custom-form-control:hover {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  button {
-    cursor: pointer;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    background-color: #007bff;
-    color: #000;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
-  }
-  
-  .error-message {
-    color: #ff4d4f;
-    background-color: #fff3f3;
-    padding: 10px;
-    border: 1px solid #ff4d4f;
-    border-radius: 4px;
-  }
-  
-  /* Table Styles */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  table th, td {
-    text-align: left;
-    padding: 10px;
-    border: 1px solid #ddd;
-  }
-  
-   th {
-    background: #e3665d;
-    cursor: pointer;
-  }
-  
-  tr:hover {
-    background: #f6d365;
-  }
-  
-  img {
-    border-radius: 4px;
-    object-fit: cover;
-  }
-  
-  /* Action Buttons */
-  button svg {
-    vertical-align: middle;
-  }
-  
-  button:nth-of-type(1) {
-    background-color: #28a745;
-  }
-  
-  button:nth-of-type(1):hover {
-    background-color: #218838;
-  }
-  
-  button:nth-of-type(2) {
-    background-color: #dc3545;
-  }
-  
-  button:nth-of-type(2):hover {
-    background-color: #c82333;
-  }
-  
-  /* Pagination */
-  .pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .pagination button {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .pagination button:hover {
-    background-color: #007bff;
-    color: #000;
+    gap: 12px;
   }
 
-  ul{
-    list-style-type: none;
+  .custom-form-control-f {
+    font-size: 15px;
+    padding: 8px;
+    margin: 15px;
+  }
+
+  .field-form-button {
+    font-size: 15px;
+    padding: 8px 12px;
+    margin: 8px;
+  }
+
+  table th, table td {
+    padding: 8px;
+  }
+
+  .pagination button {
+    padding: 7px 10px;
+  }
+}
+
+/* For screens smaller than 768px (e.g., phones in landscape) */
+@media (max-width: 768px) {
+  .field-container {
+    padding: 12px;
+  }
+
+  .field-form {
+    gap: 10px;
+  }
+
+  .custom-form-control-f {
+    font-size: 14px;
+    padding: 7px;
+    margin: 12px;
+  }
+
+  .field-form-button {
+    font-size: 14px;
+    padding: 7px 10px;
+    margin: 7px;
+  }
+
+  table th, table td {
+    padding: 6px;
+  }
+
+  .pagination button {
+    padding: 6px 9px;
+  }
+}
+
+/* For screens smaller than 500px (e.g., phones in portrait) */
+@media (max-width: 480px) {
+  .field-container {
+    padding: 10px;
+  }
+
+  .field-form {
+    gap: 8px;
+  }
+
+  .custom-form-control-f {
+    font-size: 13px;
+    padding: 6px;
+    margin: 10px;
+  }
+
+  .field-form-button {
+    font-size: 13px;
+    padding: 6px 9px;
+    margin: 6px;
+  }
+
+  table th, table td {
+    padding: 5px;
+  }
+
+  .pagination button {
+    padding: 5px 8px;
   }
   
-  /* Animation */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Adjust the form container for mobile screens */
+  .field-container {
+    width: 100%;
+    margin: 10px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .field-container {
-      padding: 15px;
-    }
-  
-    .field-form {
-      gap: 10px;
-    }
-  
-    table th, table td {
-      padding: 8px;
-    }
+
+  /* Reduce font sizes for table headers */
+  table th, table td {
+    font-size: 12px;
   }
-  
+
+  /* Adjust the pagination buttons for mobile screens */
+  .pagination button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+/* For large screens (>=1024px - desktops) */
+@media (min-width: 1024px) {
+  .field-container {
+    padding: 25px;
+  }
+
+  .field-form {
+    gap: 18px;
+  }
+
+  .custom-form-control-f {
+    font-size: 16px;
+    padding: 10px;
+    margin: 20px;
+  }
+
+  .field-form-button {
+    font-size: 16px;
+    padding: 10px 15px;
+    margin: 10px;
+  }
+
+  table th, table td {
+    padding: 12px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+  }
+}

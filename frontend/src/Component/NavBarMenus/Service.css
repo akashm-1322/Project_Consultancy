@@ -1,69 +1,197 @@
-/* Service.css */
+/* General Container Styling */
 .service-container {
-    padding: 40px;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .background-circle {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: rgba(108, 99, 255, 0.2);
-    border-radius: 50%;
-    filter: blur(100px);
-    z-index: 1;
-  }
-  
-  .background-circle.top-left {
-    top: -50px;
-    right: -100px;
-  }
-  
-  .background-circle.bottom-left {
-    bottom: -50px;
-    left: -100px;
-  }
-  
-  .service-card {
-    border: none;
-    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-    overflow: hidden;
-    border-radius: 15px;
-  }
-  
-  .service-card .icon {
-    font-size: 40px;
-    color: #6c63ff;
-  }
-  
-  .service-card .title {
-    margin-top: 20px;
-  }
-  
-  .service-card .description {
-    font-size: 0.9rem;
-    color: #000;
-  }
-  
-  .learn-more-btn {
-    text-decoration: none;
-    font-weight: bold;
-    color: #000;
-  }
-  
-  .bottom-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 5px;
-    background: #6c63ff;
-    width: 100%;
-    transform-origin: left;
+  position: relative;
+  padding: 3% 5%;
+  background: linear-gradient(to bottom right, #f4f4f9, #e8f5e9);
+  overflow-x: hidden;
+}
+
+/* Background Graphics */
+.background-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.2;
+  z-index: -1;
+}
+
+.background-circle.top-left {
+  width: 300px;
+  height: 300px;
+  top: -50px;
+  left: -50px;
+  background: rgba(3, 161, 90, 0.4);
+}
+
+.background-circle.bottom-left {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  left: -100px;
+  background: rgba(255, 205, 86, 0.3);
+}
+
+/* Service Cards */
+.service-card {
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-card .icon {
+  font-size: 3rem;
+  color: #03a15a;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .icon {
+  transform: rotate(15deg) scale(1.2);
+}
+
+.service-card .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.service-card .description {
+  font-size: 1rem;
+  color: #666;
+}
+
+.service-card .learn-more-btn {
+  background: #03a15a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.service-card .learn-more-btn:hover {
+  background: #028847;
+}
+
+/* Dynamic Read More Cards */
+.travel-cont,
+.study-cont,
+.domestic-cont,
+.language-cont {
+  margin-top: 20px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #ffffff, #f1f8e9);
+  border-radius: 12px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+.travel-cont,
+.study-cont,
+.domestic-cont,
+.language-cont .heading {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.travel-cont,
+.study-cont,
+.domestic-cont,
+.language-cont .description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Read More Button */
+.read-more-back-btn {
+  background: #ff6f61;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.read-more-back-btn:hover {
+  background: #d84315;
+}
+
+/* Responsive Design */
+
+/* Small devices */
+@media (max-width: 480px) {
+  .service-container {
+    padding: 5%;
   }
 
-  button{
-    background-color: #007bff;
-    color:#000;
+  .service-card {
+    padding: 15px;
   }
-  
+
+  .service-card .title {
+    font-size: 1.2rem;
+  }
+
+  .service-card .description {
+    font-size: 0.9rem;
+  }
+
+  .travel-cont,
+  .study-cont,
+  .domestic-cont,
+  .language-cont .heading {
+    font-size: 1.5rem;
+  }
+
+  .travel-cont,
+  .study-cont,
+  .domestic-cont,
+  .language-cont .description {
+    font-size: 0.9rem;
+  }
+}
+
+/* Medium devices */
+@media (max-width: 768px) {
+  .service-card {
+    margin-bottom: 15px;
+  }
+
+  .service-card .title {
+    font-size: 1.4rem;
+  }
+
+  .travel-cont,
+  .study-cont,
+  .domestic-cont,
+  .language-cont .heading {
+    font-size: 1.6rem;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

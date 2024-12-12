@@ -1,3 +1,4 @@
+/* Global Styles */
 .contact-boxes {
   position: fixed;
   bottom: 20px;
@@ -72,8 +73,6 @@
   transform: translateX(-110%) scale(1);
 }
 
-
-
 .contact-box:hover .tooltip.left {
   transform: translateY(-50%) scale(1);
 }
@@ -91,5 +90,127 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .contact-boxes {
+    bottom: 15px; /* Adjust bottom position */
+    right: 15px;  /* Adjust right position */
+  }
+
+  .contact-box {
+    padding: 12px; /* Reduce padding */
+    width: 50px; /* Make contact boxes smaller */
+    height: 50px; /* Make contact boxes smaller */
+  }
+
+  .contact-icon {
+    font-size: 30px; /* Adjust icon size */
+  }
+
+  .tooltip {
+    font-size: 12px; /* Adjust tooltip font size */
+    padding: 6px 10px; /* Adjust padding */
+  }
+
+  /* Tooltip positioning adjustments for smaller screens */
+  .tooltip.top {
+    bottom: 140%; /* Position above the icon */
+  }
+
+  .tooltip.left {
+    right: 140%; /* Position to the left of the icon */
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-boxes {
+    bottom: 10px; /* Further adjust bottom position */
+    right: 10px;  /* Further adjust right position */
+  }
+
+  .contact-box {
+    padding: 10px; /* Further reduce padding */
+    width: 45px; /* Slightly smaller contact box */
+    height: 45px; /* Slightly smaller contact box */
+  }
+
+  .contact-icon {
+    font-size: 28px; /* Slightly smaller icon size */
+  }
+
+  .tooltip {
+    font-size: 11px; /* Slightly smaller tooltip font size */
+    padding: 5px 8px; /* Slightly smaller padding */
+  }
+
+  /* Tooltip positioning adjustments */
+  .tooltip.top {
+    bottom: 130%;
+  }
+
+  .tooltip.left {
+    right: 130%;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-boxes {
+    bottom: 10px; /* Adjust bottom for very small devices */
+    right: 10px;  /* Adjust right for very small devices */
+    gap: 10px;    /* Reduce the gap between contact boxes */
+  }
+
+  .contact-box {
+    padding: 8px; /* Further reduce padding */
+    width: 40px; /* Smaller contact box */
+    height: 40px; /* Smaller contact box */
+  }
+
+  .contact-icon {
+    font-size: 24px; /* Smaller icon size */
+  }
+
+  .tooltip {
+    font-size: 10px; /* Smaller tooltip font size */
+    padding: 4px 6px; /* Smaller tooltip padding */
+  }
+
+  /* Tooltip positioning adjustments */
+  .tooltip.top {
+    bottom: 120%;
+  }
+
+  .tooltip.left {
+    right: 120%;
+  }
+
+  .contact-box:hover .contact-icon {
+    transform: scale(1.15); /* Slightly less scaling effect on very small screens */
+  }
+}
+
+/* For larger screens, keep the styles unchanged */
+@media (min-width: 1024px) {
+  .contact-boxes {
+    bottom: 20px; /* Keep original bottom position */
+    right: 20px;  /* Keep original right position */
+  }
+
+  .contact-box {
+    padding: 15px; /* Keep original padding */
+    width: 60px; /* Default contact box size */
+    height: 60px; /* Default contact box size */
+  }
+
+  .contact-icon {
+    font-size: 36px; /* Default icon size */
+  }
+
+  .tooltip {
+    font-size: 14px; /* Default tooltip font size */
+    padding: 8px 12px; /* Default tooltip padding */
   }
 }

@@ -1,190 +1,204 @@
-/* General body and container styles */
-
-  .contact-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 15px;
-    box-sizing: border-box;
-  }
-  
-  .contact-row {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 30px;
-  }
-
-  /* Add this to your existing ContactPage.css */
-.custom-form-control {
+/* General container and layout styles */
+.contact-container {
   width: 100%;
-  line-height: 1.5;
+  margin: 0 auto;
+  padding: 5% 3%;
+  box-sizing: border-box;
 }
 
-.custom-form-control[as="select"] {
-  scroll-behavior: smooth; /* Enables smooth scrolling */
-  animation: fadeIn 0.5s ease-in-out;
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5%;
 }
 
-.custom-form-control[as="select"] {
-  max-height: 400px; /* Limit the height */
-  overflow-y: auto;  /* Enable vertical scrolling */
-  -webkit-appearance: none; /* Remove default dropdown arrow */
-  -moz-appearance: none;
-  appearance: none;
-  padding-right: 1.75rem; /* Adjust the padding for the dropdown arrow */
+/* Form container styles */
+.contact-form-col {
+  background: linear-gradient(90deg, #ffffff, rgba(3, 161, 90, 0.975));
+  padding: 5%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  flex: 1 1 45%; /* Takes 45% of available space on larger screens */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.custom-form-control[as="select"] option {
-  padding: 10px;  /* Increase the size of each option */
+.contact-form-col:hover {
+  transform: scale(1.05); /* Smooth hover effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Form heading */
+.contact-heading {
+  font-size: 2rem;
+  color: #000;
+  margin-bottom: 2%;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeIn 1s ease-out;
+}
 
-  .custom-form-control {
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-                0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Optional: Gives rounded corners */
-    font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out;
+/* Form styling */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Spacing between form elements */
+}
+
+.contact-form .form-control {
+  padding: 3%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form .form-control:focus {
+  border-color: #03a15a;
+  box-shadow: 0 0 10px rgba(3, 161, 90, 0.3);
+}
+
+.contact-form .form-label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Button styles */
+button[type="submit"] {
+  background-color: #03a15a;
+  color: white;
+  border: none;
+  padding: 10px 5%;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #028c4c;
+  transform: translateY(-2px);
+}
+
+/* Right-side image container */
+.contact-image-col {
+  flex: 1 1 45%; /* Takes 45% of available space on larger screens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideIn 1s ease-out;
+}
+
+.contact-image {
+  max-width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+/* Animation for status message */
+.status-message {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #000;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .custom-form-control:focus {
-    outline: none; /* Removes the default focus border */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
+  to {
+    opacity: 1;
   }
-  
-  
-  /* Styles for the left form container */
-  .contact-form-col {
-    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    flex: 1 1 45%;
-    transition: transform 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
   }
-  
-  .contact-form-col:hover {
-    transform: scale(1.05); /* Smooth hover effect */
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
-  
-  /* Form heading */
-  .contact-heading {
-    font-size: 2.5rem;
-    color: #000;
-    margin-bottom: 20px;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    animation: fadeIn 1s ease-out;
+}
+
+/* Responsive Design */
+
+/* For devices smaller than 768px: stack elements vertically */
+@media (max-width: 768px) {
+
+  .contact-container{
+    padding-left: 12%;
+    padding-right: 12%;
+    margin-left: 3%;
+    margin-right: 3%;
   }
-  
-  /* Form styles */
-  .contact-form {
-    display: flex;
+
+  .contact-row {
     flex-direction: column;
-  }
-  
-  .contact-form .form-control {
-    margin-bottom: 15px;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .contact-form .form-control:focus {
-    border-color: #ff7e5f;
-    box-shadow: 0 0 5px rgba(255, 126, 95, 0.5);
-  }
-  
-  .contact-form .form-label {
-    font-size: 1rem;
-    margin-bottom: 5px;
-    color: #000;
-  }
-  
-  /* Button styles */
-  button[type="submit"] {
-    background-color: #ff7e5f;
-    color: #000;
-    border: none;
-    padding: 12px 20px;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #feb47b;
-  }
-  
-  /* Error message styling */
-  .error-message {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 5px;
-  }
-  
-  /* Animation for the form submission message */
-  .status-message {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: #000;
-    text-align: center;
-    animation: fadeIn 1s ease-out;
-  }
-  
-  /* Right side image styles */
-  .contact-image-col {
-    flex: 1 1 45%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    animation: slideIn 1s ease-out;
   }
-  
+
+  .contact-form-col, .contact-image-col {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+
+  .contact-heading {
+    font-size: 1.8rem;
+  }
+
+  button[type="submit"] {
+    padding: 10px 10%;
+    font-size: 1rem;
+  }
+}
+
+/* For devices smaller than 480px: further scale down */
+@media (max-width: 480px) {
+  .contact-container {
+    padding-left:12%;
+    padding-right: 12%;
+  }
+
+  .contact-heading {
+    font-size: 1.5rem;
+  }
+
+  .contact-form-col {
+    padding: 5%;
+  }
+
   .contact-image {
-    max-width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    max-width: 90%;
   }
-  
-  .contact-image:hover {
-    transform: scale(1.05); /* Hover effect */
+
+  .contact-form .form-control {
+    font-size: 0.9rem;
+    padding: 2%;
   }
-  
-  /* Animated input and form field focus effects */
-  @keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+
+  button[type="submit"] {
+    padding: 8px 8%;
+    font-size: 0.9rem;
   }
-  
-  @keyframes slideIn {
-    0% { transform: translateX(30px); opacity: 0; }
-    100% { transform: translateX(0); opacity: 1; }
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 768px) {
-    .contact-row {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .contact-form-col {
-      width: 100%;
-      margin-bottom: 30px;
-    }
-  
-    .contact-image-col {
-      width: 100%;
-      margin-top: 20px;
-    }
-  }
-  
+}

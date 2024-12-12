@@ -9,10 +9,10 @@ const DepartmentPage = () => {
     const fetchData = async () => {
       try {
         const departmentsResponse = await axios.get(
-          "http://localhost:5000/api/department"
+          "http://localhost:5500/api/department"
         );
         const fieldsResponse = await axios.get(
-          "http://localhost:5000/api/field?all=true"
+          "http://localhost:5500/api/field?all=true"
         );
 
         // Grouping departments by name and aggregating subNames

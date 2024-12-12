@@ -1,0 +1,154 @@
+/* LanguageTrainingProcess.css */
+
+/* Container Styling */
+.language-training-container {
+    padding: 20px;
+    background: linear-gradient(to right, #f0f4c3, #e8f5e9);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease;
+    max-width: 90%;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  /* Back Button */
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    background: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background: #d84315;
+  }
+  
+  .back-button svg {
+    margin-right: 8px;
+  }
+  
+  /* Heading Styles */
+  .heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #388e3c;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .heading svg {
+    margin-right: 10px;
+    font-size: 2.5rem;
+    color: #ff6f61;
+  }
+  
+  /* Description */
+  .description {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  
+  /* Subheading */
+  .subheading {
+    font-size: 1.5rem;
+    color: #028847;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  /* Training List */
+  .training-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .training-list li {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 3px solid #388e3c;
+    transition: transform 0.2s ease;
+  }
+  
+  .training-list li:hover {
+    transform: translateX(10px);
+  }
+  
+  .training-list svg {
+    margin-right: 10px;
+    font-size: 1.5rem;
+    color: #ff6f61;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .language-training-container {
+      padding: 15px;
+    }
+  
+    .heading {
+      font-size: 1.8rem;
+    }
+  
+    .description {
+      font-size: 1rem;
+    }
+  
+    .subheading {
+      font-size: 1.3rem;
+    }
+  
+    .training-list li {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .language-training-container {
+      padding: 10px;
+    }
+  
+    .heading {
+      font-size: 1.5rem;
+    }
+  
+    .description {
+      font-size: 0.9rem;
+    }
+  
+    .subheading {
+      font-size: 1.2rem;
+    }
+  
+    .training-list li {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

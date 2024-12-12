@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container, Grid, Typography, Card, CardContent, CardMedia } from '@mui/material';
 import './AboutPage.css';
 
 const aboutContent = [
@@ -43,60 +42,59 @@ const teamMembers = [
 
 const AboutPage = () => {
   return (
-    <Container className="about-page">
+    <div className="about-page">
       {/* About Us Title */}
-      <Typography variant="h4" className="about-title">
+      <h4 className="about-title">
         About Us
-      </Typography>
+      </h4>
 
       {/* About Section */}
-      <Grid container spacing={4} justifyContent="center">
+      <div className="about-card" justifyContent="center">
         {aboutContent.map((section, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
+          <div  className="about-card-container" item xs={12} sm={6} md={4} key={index}>
             <div className="about-box">
-              <Typography variant="h5" className="about-section-title">
+              <h4 className="about-section-title">
                 <span>{section.icon}</span> {section.title}
-              </Typography>
-              <Typography variant="body1" className="about-description">
+              </h4>
+              <h1 className="about-description">
                 {section.description}
-              </Typography>
+              </h1>
             </div>
-          </Grid>
+          </div>
         ))}
-      </Grid>
+      </div>
 
       {/* Meet the Team Section */}
       <section className="meet-the-team">
-        <Typography variant="h4" className="team-title">
+        <h4 className="about-title">
           Meet the Team
-        </Typography>
+        </h4>
 
-        <Grid container spacing={3} justifyContent="center" className='team-build'>
+        <div className='team-build'>
           {teamMembers.map((member, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <Card className="team-card">
+            <div item xs={12} sm={4} key={index}>
+              <div className="team-card">
                 <div className="team-photo-wrapper">
-                  <CardMedia
-                    component="img"
+                  <img
                     alt={member.name}
-                    image={member.photo}
+                    src={member.photo}
                     className="team-photo"
                   />
                 </div>
-                <CardContent>
-                  <Typography variant="h6" className="team-name">
+                <div>
+                  <h6 className="team-name">
                     {member.name}
-                  </Typography>
-                  <Typography variant="body2" className="team-designation">
+                  </h6>
+                  <h2 className="team-designation">
                     {member.designation}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+                  </h2>
+                </div>
+              </div>
+            </div>
           ))}
-        </Grid>
+        </div>
       </section>
-    </Container>
+    </div>
   );
 };
 

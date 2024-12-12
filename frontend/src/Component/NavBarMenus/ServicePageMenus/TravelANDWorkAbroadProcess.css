@@ -1,0 +1,152 @@
+/* Container Styling */
+.work-travel-container {
+    padding: 20px;
+    background: linear-gradient(to bottom, #ffffff, #f9fbe7);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  /* Back Button Styling */
+  .work-travel-button {
+    display: flex;
+    align-items: center;
+    background: #ff7043;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  
+  .work-travel-button:hover {
+    background: #e64a19;
+    transform: translateY(-2px);
+  }
+  
+  .work-travel-button svg {
+    margin-right: 8px;
+  }
+  
+  /* Title Styling */
+  .work-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .work-title svg {
+    font-size: 1.5rem;
+    color: #0288d1;
+  }
+  
+  /* Description Styling */
+  .work-description {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  /* Steps Title */
+  .work-steps {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  /* List Styling */
+  .work-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .work-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+  
+  .work-list li svg {
+    font-size: 1.5rem;
+    color: #03a15a;
+    flex-shrink: 0;
+  }
+  
+  .work-list li b {
+    font-weight: bold;
+    color: #444;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .work-travel-container {
+      padding: 15px;
+    }
+  
+    .work-title {
+      font-size: 1.8rem;
+    }
+  
+    .work-description {
+      font-size: 0.95rem;
+    }
+  
+    .work-steps {
+      font-size: 1.3rem;
+    }
+  
+    .work-list li {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .work-title {
+      font-size: 1.5rem;
+    }
+  
+    .work-description {
+      font-size: 0.85rem;
+    }
+  
+    .work-steps {
+      font-size: 1.2rem;
+    }
+  
+    .work-list li {
+      font-size: 0.85rem;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

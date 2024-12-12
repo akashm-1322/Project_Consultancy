@@ -34,125 +34,12 @@
   animation: fadeInUp 1s ease-in-out forwards;
 }
 
-/* Slide-in animation */
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Left section styles */
 .left-box {
   flex: 1;
   padding: 40px 20px;
   background: linear-gradient(90deg , #fff , rgba(141, 206, 177, 0.927));
   animation: pulseGlow 2s infinite;
-}
-
-/* Subtle glow animation */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(0, 255, 100, 0.5);
-  }
-}
-
-.page-content {
-  text-align: center;
-}
-
-.title {
-  font-size: 2.5rem;
-  color: #000;
-  margin-bottom: 20px;
-  position: relative;
-  animation: textBounce 1.5s infinite;
-}
-
-@keyframes textBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.subheading {
-  font-size: 1.2rem;
-  color: #000;
-  margin-bottom: 30px;
-  position: relative;
-  animation: fadeIn 2s ease-in-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Buttons */
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 15px 30px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #000;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.user-button {
-  background: linear-gradient(45deg, #4caf50, #81c784);
-}
-
-.admin-button {
-  background: linear-gradient(45deg, #f44336, #e57373);
-}
-
-.button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-45deg);
-  transition: left 0.3s ease;
-  z-index: 0;
-}
-
-.button:hover::after {
-  left: 100%;
-}
-
-.button:hover {
-  transform: scale(1.1);
-  opacity: 0.95;
 }
 
 /* Right Section Styles */
@@ -169,78 +56,47 @@
   animation: slideInRight 1s ease-in-out;
 }
 
-@keyframes slideInRight {
-  0% {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 .company-logo img {
   width: 200px;
   height: auto;
   margin-bottom: 20px;
 }
 
-@keyframes logoSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+/* Responsive Design for Mobile and Tablet */
 
-.consultancy-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #000;
-  position: relative;
-  animation: grow 1.5s infinite alternate;
-}
-
-@keyframes grow {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.1);
-  }
-}
-
-/* Responsive Design */
+/* For screens up to 768px (Tablets and smaller devices) */
 @media (max-width: 768px) {
   .content-wrapper {
     flex-direction: column;
+    width: 95%;
+    max-width: 100%;
+    padding: 10px;
   }
 
   .left-box,
   .right-box {
     flex: 1 1 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .button-container {
-    flex-direction: column;
-    gap: 10px;
+    padding: 20px;
   }
 
   .title {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    margin-bottom: 15px;
   }
 
   .subheading {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
   }
 
   .button {
-    font-size: 0.9rem;
-    padding: 10px 20px;
+    font-size: 1rem;
+    padding: 12px 25px;
   }
 
   .company-logo img {
@@ -252,17 +108,72 @@
   }
 }
 
+/* For screens up to 480px (Mobile devices) */
+@media (max-width: 480px) {
+  .content-wrapper {
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+  }
 
-/* Form Styles */
+  .left-box,
+  .right-box {
+    flex: 1 1 100%;
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .subheading {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .company-logo img {
+    width: 120px;
+  }
+
+  .consultancy-name {
+    font-size: 1.1rem;
+  }
+
+  /* Adjust form elements for mobile */
+  .input-field {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+    padding: 12px 25px;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+  }
+}
+
+/* Form Styles (Mobile and tablet-friendly) */
 .admin-login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   text-align: left;
-  animation: fadeIn 1s ease-in-out;
 }
 
-/* Input Fields */
 .input-container {
   position: relative;
 }
@@ -312,6 +223,23 @@
   box-shadow: none;
 }
 
+/* Back Button */
+.back-button {
+  background: linear-gradient(90deg, #ccc, #bbb);
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(90deg, #aaa, #999);
+  transform: scale(1.05);
+}
+
 /* Error Message */
 .error-message {
   color: red;
@@ -335,56 +263,25 @@
   }
 }
 
-/* Back Button */
-.back-button {
-  background: linear-gradient(90deg, #ccc, #bbb);
-  color: black;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* Button Animations */
+.button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-45deg);
+  transition: left 0.3s ease;
+  z-index: 0;
 }
 
-.back-button:hover {
-  background: linear-gradient(90deg, #aaa, #999);
-  transform: scale(1.05);
+.button:hover::after {
+  left: 100%;
 }
 
-/* Form Animations */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.custom-form-control-o {
-  padding: 10px;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-              0 6px 20px rgba(0, 0, 0, 0.1);
-  border: none; /* Removes the default border */
-  border-radius: 5px; /* Optional: Gives rounded corners */
-  font-size: 16px;
-  transition: box-shadow 0.3s ease-in-out;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-form-control-o:focus {
-  outline: none; /* Removes the default focus border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-              0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
-}
-
-button:focus,
-input:focus {
-outline: 2px solid #fda085;
-outline-offset: 2px;
+.button:hover {
+  transform: scale(1.1);
+  opacity: 0.95;
 }

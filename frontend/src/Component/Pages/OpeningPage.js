@@ -35,7 +35,7 @@ const OpeningPage = ({ onNavigate }) => {
 
     try {
       // Send login request to the backend
-      const response = await axios.post("http://localhost:5000/api/admin/login", {
+      const response = await axios.post("http://localhost:5500/api/admin/login", {
         username,
         password,
       });

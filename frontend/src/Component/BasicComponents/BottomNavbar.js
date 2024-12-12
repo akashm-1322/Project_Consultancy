@@ -4,10 +4,8 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Menu,
   Box,
   Button,
-  Fade,
   Tooltip,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,15 +16,18 @@ import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { styled } from '@mui/system';
 
 const BottomNavbar = ({ isAdmin }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Handle mobile menu toggle
-  const handleMenuOpen = (event) => {
+  /*const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };*/
+
+  const toggleMobileMenu = () => {
+    setMobileOpen((prev) => !prev);
   };
 
   return (
@@ -92,7 +93,7 @@ const BottomNavbar = ({ isAdmin }) => {
         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
           <IconButton
             color="inherit"
-            onClick={handleMenuOpen}
+            onClick={toggleMobileMenu}
             sx={{
               color: '#000',
               '&:hover': {
@@ -106,41 +107,39 @@ const BottomNavbar = ({ isAdmin }) => {
         </Box>
 
         {/* Mobile Dropdown Menu */}
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          TransitionComponent={Fade}
-          TransitionProps={{
-            timeout: 500,
-          }}
-        >
-          <StyledMenuButton onClick={handleMenuClose} component={Link} to="/" fullWidth>
-            Home
-          </StyledMenuButton>
-          <StyledMenuButton onClick={handleMenuClose} component={Link} to="/services" fullWidth>
-            Services
-          </StyledMenuButton>
-          <StyledMenuButton onClick={handleMenuClose} component={Link} to="/about" fullWidth>
-            About Us
-          </StyledMenuButton>
-          <StyledMenuButton onClick={handleMenuClose} component={Link} to="/contact" fullWidth>
-            Contact
-          </StyledMenuButton>
-          {isAdmin && (
-            <StyledMenuButton onClick={handleMenuClose} component={Link} to="/admincontacts" fullWidth>
-              Admin Contacts
+        {mobileOpen && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '60px',
+              left: 0,
+              width: '100%',
+              backgroundColor: 'white',
+              zIndex: 2,
+              boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/" startIcon={<HomeIcon />}>
+              Home
             </StyledMenuButton>
-          )}
-        </Menu>
+            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/services" startIcon={<FlightTakeoffIcon />}>
+              Services
+            </StyledMenuButton>
+            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/about" startIcon={<InfoIcon />}>
+              About Us
+            </StyledMenuButton>
+            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/contact" startIcon={<ContactMailIcon />}>
+              Contact
+            </StyledMenuButton>
+            {isAdmin && (
+              <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/admincontacts" startIcon={<ContactMailIcon />}>
+                Admin Contacts
+              </StyledMenuButton>
+            )}
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );
@@ -168,6 +167,7 @@ const StyledMenuButton = styled(Button)(({ theme }) => ({
   fontSize: '1rem',
   fontFamily: 'Roboto, sans-serif',
   padding: '10px 15px',
+  justifyContent: 'flex-start',
   '&:hover': {
     color: '#FF7F50', // Orange color
     background: 'linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff)',

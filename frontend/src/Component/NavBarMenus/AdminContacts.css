@@ -1,208 +1,331 @@
 /* AdminContacts.css */
+
+.admin-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.admin-container h1 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+/* Error and Loading */
+.error-message {
+  color: #f44336;
+  background: #ffe6e6;
+  border: 1px solid #f44336;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+/* Form Styling */
+.admin-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form-button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+  outline: none;
+  border-color: #fda085;
+  box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
+}
+
+.admin-form-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  margin: 10px;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-form-button:hover {
+  background-color: #d5e3a8;
+  transform: scale(1.05);
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  animation: slideUp 1s ease;
+}
+
+th {
+  background: #e3665d;
+  color: #000;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+}
+
+th:hover {
+  background: #f6d365;
+}
+
+tbody tr:nth-child(even) {
+  background: linear-gradient(90deg , rgba(3, 161, 90, 0.975), #fff);
+}
+
+tbody tr:hover {
+  background: #fdf2e9;
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
+
+.table-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.table-row button {
+  background: #fda085;
+  color: #000;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.table-row button:hover {
+  background: #f6d365;
+  transform: scale(1.1);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination button {
+  background: #fda085;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background: #f6d365;
+}
+
+.pagination span {
+  font-size: 1rem;
+  color: #000;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-form-control {
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+              0 6px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.custom-form-control:focus {
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3),
+              0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Button and Input Focus Styles */
+button:focus,
+input:focus {
+  outline: 2px solid #fda085;
+  outline-offset: 2px;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  /* Adjust grid for medium devices */
+  .admin-form {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
   
   .admin-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 30px auto;
-    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    animation: fadeIn 1s ease-in-out;
+    padding: 15px;
+    margin: 20px;
   }
   
   .admin-container h1 {
-    text-align: center;
-    color: #000;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
-  /* Error and Loading */
-  .error-message {
-    color: #f44336;
-    background: #ffe6e6;
-    border: 1px solid #f44336;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
+  .admin-form-button {
+    width: 100%;
   }
-  
-  .loading {
-    text-align: center;
-    color: #007bff;
-    font-size: 1.2rem;
+
+  table {
+    font-size: 0.9rem;
   }
-  
-  /* Form Styling */
+
+  .pagination button {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* For tablet and landscape devices */
   .admin-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: 1fr; /* Stack all form inputs */
+  }
+  
+  .admin-container {
+    width: 95%;
+    padding: 10px;
+  }
+  
+  .admin-container h1 {
+    font-size: 1.8rem;
+  }
+  
+  .admin-form-button {
+    padding: 12px 18px;
+    width: 100%;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  .pagination button {
+    padding: 7px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For mobile devices */
+  .admin-container {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .admin-container h1 {
+    font-size: 1.6rem;
   }
   
   .admin-form input,
   .admin-form select,
-  .admin-form button {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
+  .admin-form-button {
+    font-size: 0.9rem;
+    padding: 8px;
   }
-  
-  .admin-form input:focus,
-  .admin-form select:focus {
-    outline: none;
-    border-color: #fda085;
-    box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
-  }
-  
-  .admin-form button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .admin-form button:hover {
-    background-color: #d5e3a8;
-    transform: scale(1.05);
-  }
-  
-  /* Table Styling */
+
   table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    animation: slideUp 1s ease;
-  }
-  
-  th {
-    background: #e3665d;;
-    color: #000;
-  }
-  
-  th,
-  td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    cursor: pointer;
-  }
-  
-  th:hover {
-    background: #f6d365;
-  }
-  
-  tbody tr:nth-child(even) {
-    background: linear-gradient(90deg , rgba(3, 161, 90, 0.975), #fff);
-  }
-  
-  tbody tr:hover {
-    background: #fdf2e9;
-    transform: scale(1.01);
-    transition: all 0.3s ease;
+    font-size: 0.8rem;
   }
 
-  .table-row{
-    display:flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .table-row button {
-    background: #fda085;
-    color: #000;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: all 0.3s ease;
-  }
-  
-  .table-row button:hover {
-    background: #f6d365;
-    transform: scale(1.1);
-  }
-  
-  /* Pagination */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  
   .pagination button {
-    background: #fda085;
-    color: #000;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .pagination button:hover {
-    background: #f6d365;
-  }
-  
-  .pagination span {
-    font-size: 1rem;
-    color: #000;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .custom-form-control {
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-                0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Optional: Gives rounded corners */
-    font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .custom-form-control:focus {
-    outline: none; /* Removes the default focus border */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
+    padding: 6px 10px;
   }
 
-  button:focus,
-  input:focus {
-  outline: 2px solid #fda085;
-  outline-offset: 2px;
+  .table-row button {
+    padding: 4px 8px;
+  }
+
+  .pagination span {
+    font-size: 0.9rem;
+  }
+
+  .error-message,
+  .loading {
+    font-size: 0.9rem;
+  }
 }
-  
+
+@media (max-width: 360px) {
+  /* For very small mobile devices */
+  .admin-container h1 {
+    font-size: 1.4rem;
+  }
+
+  .admin-form {
+    gap: 8px;
+  }
+
+  .admin-form input,
+  .admin-form select,
+  .admin-form-button {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .pagination button {
+    padding: 5px 8px;
+  }
+}

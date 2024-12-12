@@ -144,3 +144,122 @@
     opacity: 1;
   }
 }
+
+/* Responsive Styles */
+
+/* For Devices Less than 1024px */
+@media (max-width: 1024px) {
+  .heading {
+    font-size: 30px;
+  }
+
+  .comment-container {
+    padding: 25px 15px;
+  }
+
+  .comment-content h3 {
+    font-size: 20px;
+  }
+
+  .comment-content p {
+    font-size: 16px;
+  }
+
+  .navigation button {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .comment-form h2 {
+    font-size: 20px;
+  }
+
+  .comment-form input,
+  .comment-form textarea {
+    font-size: 14px;
+  }
+
+  .comment-form button {
+    font-size: 14px;
+  }
+}
+
+/* For Devices Less than 768px */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  .comment-container {
+    padding: 20px 10px;
+  }
+
+  .comment-content h3 {
+    font-size: 18px;
+  }
+
+  .comment-content p {
+    font-size: 15px;
+  }
+
+  .navigation button {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .comment-form h2 {
+    font-size: 18px;
+  }
+
+  .comment-form input,
+  .comment-form textarea {
+    font-size: 14px;
+  }
+
+  .comment-form button {
+    font-size: 14px;
+  }
+}
+
+/* For Devices Less than 500px */
+@media (max-width: 480px) {
+  .heading {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .comment-container {
+    padding: 15px 8px;
+  }
+
+  .comment-content h3 {
+    font-size: 16px;
+  }
+
+  .comment-content p {
+    font-size: 14px;
+  }
+
+  .navigation button {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .comment-form h2 {
+    font-size: 16px;
+  }
+
+  .comment-form input,
+  .comment-form textarea {
+    font-size: 14px;
+  }
+
+  .comment-form button {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+}

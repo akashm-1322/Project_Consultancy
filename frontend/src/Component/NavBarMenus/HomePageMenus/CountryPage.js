@@ -13,9 +13,9 @@ const CountryPage = () => {
       try {
         // Fetch countries and fields data only once on component mount
         const countriesResponse = await axios.get(
-          "http://localhost:5000/api/countries?all=true"
+          "http://localhost:5500/api/countries?all=true"
         );
-        const fieldsResponse = await axios.get("http://localhost:5000/api/field?all=true");
+        const fieldsResponse = await axios.get("http://localhost:5500/api/field?all=true");
 
         setCountries(countriesResponse.data.countries || []);
         setFields(fieldsResponse.data.fields || []);
@@ -58,7 +58,7 @@ const CountryPage = () => {
 
         if (countryToUpdate.vacancies !== totalVacancies) {
           const response = await axios.patch(
-            `http://localhost:5000/api/countries/${countryId}`,
+            `http://localhost:5500/api/countries/${countryId}`,
             { vacancies: totalVacancies }
           );
           console.log("Updated Country:", response.data);
@@ -110,7 +110,7 @@ const CountryPage = () => {
           <div className="card" key={field._id}>
             <div className="card-image">
               <img
-                src={`http://localhost:5000${field.imageUrl}`}
+                src={`http://localhost:5500${field.imageUrl}`}
                 alt={field.fieldData}
               />
             </div>
@@ -161,7 +161,7 @@ const CountryPage = () => {
                 <div className="country-header">
                   <img
                     className="country-image"
-                    src={`http://localhost:5000${country.shapeImage}`}
+                    src={`http://localhost:5500${country.shapeImage}`}
                     alt={country.name}
                   />
                   <div className="country-details">

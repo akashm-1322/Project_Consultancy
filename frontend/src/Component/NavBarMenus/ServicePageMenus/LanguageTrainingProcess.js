@@ -1,44 +1,26 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { FaArrowLeft, FaLanguage, FaUserGraduate, FaGlobe } from 'react-icons/fa';
+import './LanguageTrainingProcess.css'
 
 const LanguageTrainingProcess = ({ onClose }) => (
-  <Container
-    fluid
-    style={{
-      background: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
-      padding: "40px",
-      marginTop: "20px",
-      width: "100%",
-      textAlign: "center",
-      borderRadius: "8px",
-      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)"
-    }}
-  >
-    <Button
-      variant="outline-primary"
-      onClick={onClose}
-      className="mb-4"
-      style={{
-        fontWeight: "bold",
-        borderRadius: "20px",
-      }}
-    >
+  <Container fluid className="language-training-container">
+    <Button onClick={onClose} className="back-button">
       <FaArrowLeft /> Back to Services
     </Button>
 
-    <h2 style={{ fontWeight: "700", color: "#000" }}>
+    <h2 className="heading">
       <FaLanguage /> Language Coaching Process
     </h2>
-    <p style={{ fontSize: "1.1rem", color: "#000", marginTop: "20px" }}>
+    <p className="description">
       Achieve language proficiency with courses designed to meet your global communication needs.
     </p>
 
-    <h4 style={{ color: "#000", marginTop: "30px" }}>Training Programs</h4>
-    <ul style={{ listStyleType: "none", padding: 0, color: "#000", fontSize: "1.05rem" }}>
-      <li style={{ margin: "15px 0" }}><FaLanguage /> <b>Language Courses</b> – From beginner to advanced proficiency.</li>
-      <li style={{ margin: "15px 0" }}><FaUserGraduate /> <b>Certification Prep</b> – Prepare for language exams like IELTS or TOEFL.</li>
-      <li style={{ margin: "15px 0" }}><FaGlobe /> <b>Cross-cultural Communication</b> – Training for effective communication across cultures.</li>
+    <h4 className="subheading">Training Programs</h4>
+    <ul className="training-list">
+      <li><FaLanguage /> <b>Language Courses</b> – From beginner to advanced proficiency.</li>
+      <li><FaUserGraduate /> <b>Certification Prep</b> – Prepare for language exams like IELTS or TOEFL.</li>
+      <li><FaGlobe /> <b>Cross-cultural Communication</b> – Training for effective communication across cultures.</li>
     </ul>
   </Container>
 );

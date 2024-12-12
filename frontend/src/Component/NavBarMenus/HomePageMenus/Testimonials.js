@@ -17,7 +17,7 @@ const Testimonials = () => {
   ];
 
 
-  const API_URI_COMMENT = 'http://localhost:5000/api/comment';
+  const API_URI_COMMENT = 'http://localhost:5500/api/comment';
 
   const fetchComments = async () => {
     try {

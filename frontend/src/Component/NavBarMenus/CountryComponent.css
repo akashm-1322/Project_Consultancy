@@ -1,235 +1,313 @@
+/* Global Styles */
 .country-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 30px auto;
-    background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    animation: fadeIn 1s ease-in-out;
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.country-container h1 {
+  text-align: center;
+  color: #000;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+.error-message {
+  color: #f44336;
+  background: #ffe6e6;
+  border: 1px solid #f44336;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+/* Form layout */
+.country-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.country-form input,
+.country-form select,
+.country-form button {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.country-form input:focus,
+.country-form select:focus {
+  outline: none;
+  border-color: #fda085;
+  box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
+}
+
+.custom-form-control-1 {
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+              0 6px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.custom-form-control-1:focus {
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
+              0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.country-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px black;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.country-form button:hover {
+  background-color: rgb(173, 122, 123);
+  transform: scale(1.05);
+}
+
+.country-form-button {
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: #007bff;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.country-form-button:hover {
+  background-color: #d5e3a8;
+  transform: scale(1.05);
+}
+
+.country-form-button:focus {
+  outline: 2px solid #fda085;
+  outline-offset: 2px;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background: #e3665d;
+  cursor: pointer;
+  color: #000;
+}
+
+th:hover {
+  background: #f6d365;
+}
+
+tbody tr:nth-child(even) {
+  background: linear-gradient(90deg ,  rgba(3, 161, 90, 0.975) , #fff);
+}
+
+tbody tr:hover {
+  background: #fdf2e9;
+  transform: scale(1.01);
+  transition: all 0.3s ease;
+}
+
+/* Table Row Control */
+.table-row-c {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.table-row-c button {
+  background: #fda085;
+  color: #000;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+}
+
+.table-row-c button:hover {
+  background: #f6d365;
+  transform: scale(1.1);
+}
+
+/* Pagination */
+.pagination-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-c button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-form-control {
+  padding: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
+              0 6px 20px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.custom-form-control:focus {
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
+              0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+}
+
+/* Focus outline for input fields */
+input:focus {
+  outline: 2px solid #fda085;
+  outline-offset: 2px;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .country-container {
+    width: 95%;
+    padding: 15px;
+  }
+
   .country-container h1 {
-    text-align: center;
-    color: #000;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-  }
-  
-  .error-message {
-    color: #f44336;
-    background: #ffe6e6;
-    border: 1px solid #f44336;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    text-align: center;
+    font-size: 2rem;
   }
 
-  .loading {
-    text-align: center;
-    color: #007bff;
-    font-size: 1.2rem;
-  }
-  
   .country-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .country-form input {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    box-shadow: 5px black;
-  }
-
-  .custom-form-control-1 {
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-                0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none; /* Removes the default border */
-    border-radius: 5px; /* Optional: Gives rounded corners */
-    font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-  
-  .custom-form-control-1:focus {
-    outline: none; /* Removes the default focus border */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15); /* Stronger shadow on focus */
-  }
-  
-  .country-form button {
-    padding: 10px 20px;
-    background-color: #007bff;;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 5px black;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .country-form button:hover {
-    background-color: rgb(173, 122, 123);
-    transform: scale(1.05);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
   }
 
   .country-form input,
   .country-form select,
   .country-form button {
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .country-form input:focus,
-  .country-form select:focus {
-    outline: none;
-    border-color: #fda085;
-    box-shadow: 0 0 5px rgba(253, 160, 133, 0.5);
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  table, th, td {
-    border: 1px solid #ccc;
-  }
-  
-  th, td {
-    padding: 12px;
-    text-align: center;
-  }
-  
-  th {
-    background: #e3665d;
-    cursor: pointer;
-    color: #000;
-  }
-  
-  th:hover {
-    background: #f6d365;
-  }
-  
-  tbody tr:nth-child(even) {
-    background: linear-gradient(90deg ,  rgba(3, 161, 90, 0.975) , #fff);
-  }
-  
-  tbody tr:hover {
-    background: #fdf2e9;
-    transform: scale(1.01);
-    transition: all 0.3s ease;
-  }
-  
-  .table-row-c {
-    display:flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .table-row-c button {
-    background: #fda085;
-    color: #000;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: all 0.3s ease;
-  }
-  
-  .table-row-c  button:hover {
-    background: #f6d365;
-    transform: scale(1.1);
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: rgb(173, 122, 123);
-    transform: scale(1.05);
-  }
-  
-  button:focus {
-    outline: 2px solid #fda085;
-    outline-offset: 2px;
-  }
-  
-  
-  .pagination-c {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .pagination-c button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .custom-form-control {
-    padding: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 
-                0 6px 20px rgba(0, 0, 0, 0.1);
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
-  }
-  
-  .custom-form-control:focus {
-    outline: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 
-                0 8px 24px rgba(0, 0, 0, 0.15);
-    transform: scale(1.02);
+    font-size: 0.9rem;
   }
 
-    input:focus {
-  outline: 2px solid #fda085;
-  outline-offset: 2px;
+  .pagination-c button {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .country-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .country-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .country-form {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+  }
+
+  .country-form input,
+  .country-form select,
+  .country-form button {
+    font-size: 0.85rem;
+  }
+
+  .pagination-c button {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .country-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .country-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .country-form {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .country-form input,
+  .country-form select,
+  .country-form button {
+    font-size: 0.8rem;
+  }
+
+  .pagination-c button {
+    padding: 6px 10px;
+  }
 }
