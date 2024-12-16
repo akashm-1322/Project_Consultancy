@@ -1,179 +1,108 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Box,
-  Button,
-  Tooltip,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import InfoIcon from '@mui/icons-material/Info';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
-import { styled } from '@mui/system';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { AppBar, Toolbar, IconButton, Typography, Stack, Box, useTheme, useMediaQuery } from "@mui/material";
+import { IoMenuSharp } from "react-icons/io5";
+import { FaHome, FaUsers } from "react-icons/fa";
+import { MdContactEmergency, MdFlightTakeoff } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
+import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 const BottomNavbar = ({ isAdmin }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  /*const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };*/
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // For screens < 768px
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md")); // For screens < 1024px
 
   const toggleMobileMenu = () => {
     setMobileOpen((prev) => !prev);
   };
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        background: "linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff )",
-        boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
-        height: '60px',
-        width: '100%',
-        overflow: 'hidden',
-        zIndex: 1,
-      }}
-    >
-      <Toolbar
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          padding: 0,
-        }}
+    <AppBar position="relative" sx={{ bottom: 0, left: 0, right: 0, background: "linear-gradient(90deg, #ffffff, #03a15a)", boxShadow: 3 }}>
+      <MotionBox
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
-        {/* Desktop Navigation */}
-        <Box
-          sx={{
-            display: { xs: 'none', md: 'flex' },
-            gap: '20px',
-            flexGrow: 1,
-            justifyContent: 'center',
-          }}
-        >
-          <Tooltip title="Home" arrow>
-            <StyledButton component={Link} to="/" startIcon={<HomeIcon />}>
-              Home
-            </StyledButton>
-          </Tooltip>
-          <Tooltip title="Services" arrow>
-            <StyledButton component={Link} to="/services" startIcon={<FlightTakeoffIcon />}>
-              Services
-            </StyledButton>
-          </Tooltip>
-          <Tooltip title="About Us" arrow>
-            <StyledButton component={Link} to="/about" startIcon={<InfoIcon />}>
-              About Us
-            </StyledButton>
-          </Tooltip>
-          <Tooltip title="Contact" arrow>
-            <StyledButton component={Link} to="/contact" startIcon={<ContactMailIcon />}>
-              Contact
-            </StyledButton>
-          </Tooltip>
-          {isAdmin && (
-            <Tooltip title="Admin Contacts" arrow>
-              <StyledButton component={Link} to="/admincontacts" startIcon={<ContactMailIcon />}>
-                Admin Contacts
-              </StyledButton>
-            </Tooltip>
-          )}
-        </Box>
-
-        {/* Mobile Menu Icon */}
-        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <IconButton
-            color="inherit"
-            onClick={toggleMobileMenu}
-            sx={{
-              color: '#000',
-              '&:hover': {
-                transform: 'scale(1.1)',
-                transition: 'transform 0.3s ease',
-              },
-            }}
-          >
-            <MenuIcon sx={{ fontSize: '1.8rem' }} />
+        <Toolbar sx={{ display: "flex", justifyContent: "center", textAlign:"center" ,  flexDirection: isMobile ? "column" : "row", alignItems: "center" }}>
+          {/* Mobile Menu Icon */}
+          <IconButton onClick={toggleMobileMenu} sx={{ display: isSmallScreen ? "block" : "none" }}>
+            <IoMenuSharp style={{ fontSize: 30, color: "#000" }} />
           </IconButton>
-        </Box>
 
-        {/* Mobile Dropdown Menu */}
-        {mobileOpen && (
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '60px',
-              left: 0,
-              width: '100%',
-              backgroundColor: 'white',
-              zIndex: 2,
-              boxShadow: '0px 8px 20px rgba(0, 0, 0, 0.3)',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/" startIcon={<HomeIcon />}>
-              Home
-            </StyledMenuButton>
-            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/services" startIcon={<FlightTakeoffIcon />}>
-              Services
-            </StyledMenuButton>
-            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/about" startIcon={<InfoIcon />}>
-              About Us
-            </StyledMenuButton>
-            <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/contact" startIcon={<ContactMailIcon />}>
-              Contact
-            </StyledMenuButton>
-            {isAdmin && (
-              <StyledMenuButton onClick={toggleMobileMenu} component={Link} to="/admincontacts" startIcon={<ContactMailIcon />}>
-                Admin Contacts
-              </StyledMenuButton>
-            )}
-          </Box>
-        )}
-      </Toolbar>
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <Stack direction="row" spacing={8}>
+              <Link to="/" className="nav-link">
+                <IconButton sx={{ color: "#000" }}>
+                  <FaHome style={{ fontSize: 32 }} />
+                </IconButton>
+                <Typography variant="body1" sx={{ color: "#000" }}>Home</Typography>
+              </Link>
+              <Link to="/services" className="nav-link">
+                <IconButton sx={{ color: "#000" }}>
+                  <MdFlightTakeoff style={{ fontSize: 32 }} />
+                </IconButton>
+                <Typography variant="body1" sx={{ color: "#000" }}>Services</Typography>
+              </Link>
+              <Link to="/about" className="nav-link">
+                <IconButton sx={{ color: "#000" }}>
+                  <FaUsers style={{ fontSize: 32 }} />
+                </IconButton>
+                <Typography variant="body1" sx={{ color: "#000" }}>About Us</Typography>
+              </Link>
+              <Link to="/contact" className="nav-link">
+                <IconButton sx={{ color: "#000" }}>
+                  <MdContactEmergency style={{ fontSize: 32 }} />
+                </IconButton>
+                <Typography variant="body1" sx={{ color: "#000" }}>Contact</Typography>
+              </Link>
+              {isAdmin && (
+                <Link to="/admincontacts" className="nav-link">
+                  <IconButton sx={{ color: "#000" }}>
+                    <RiAdminFill style={{ fontSize: 32 }} />
+                  </IconButton>
+                  <Typography variant="body1" sx={{ color: "#000" }}>Admin Contacts</Typography>
+                </Link>
+              )}
+            </Stack>
+          )}
+
+          {/* Mobile Dropdown Menu */}
+          {mobileOpen && isMobile && (
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              sx={{ position: "absolute", bottom: "60px", width: "100%", backgroundColor: "white", boxShadow: 3, borderRadius: "8px" }}
+            >
+              <Stack spacing={2} sx={{ padding: 2  , color:"#000"}}>
+                <Link to="/" className="mobile-link" onClick={toggleMobileMenu}>
+                  <FaHome style={{ fontSize: 24, color: "#000" }} /> Home
+                </Link>
+                <Link to="/services" className="mobile-link" onClick={toggleMobileMenu}>
+                  <MdFlightTakeoff style={{ fontSize: 24, color: "#000" }} /> Services
+                </Link>
+                <Link to="/about" className="mobile-link" onClick={toggleMobileMenu}>
+                  <FaUsers style={{ fontSize: 24, color: "#000" }} /> About Us
+                </Link>
+                <Link to="/contact" className="mobile-link" onClick={toggleMobileMenu}>
+                  <MdContactEmergency style={{ fontSize: 24, color: "#000" }} /> Contact
+                </Link>
+                {isAdmin && (
+                  <Link to="/admincontacts" className="mobile-link" onClick={toggleMobileMenu}>
+                    <RiAdminFill style={{ fontSize: 24, color: "#000" }} /> Admin Contacts
+                  </Link>
+                )}
+              </Stack>
+            </MotionBox>
+          )}
+        </Toolbar>
+      </MotionBox>
     </AppBar>
   );
 };
-
-// Styled Button for Desktop Menu with hover animation
-const StyledButton = styled(Button)(({ theme }) => ({
-  color: '#000',
-  fontWeight: '700',
-  fontSize: '1.2rem',
-  fontFamily: 'Roboto, sans-serif',
-  padding: '10px 15px',
-  '&:hover': {
-    color: '#FF7F50', // Orange color
-    background: 'linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff)',
-    transform: 'scale(1.05)', // Zoom-in effect on hover
-    transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
-  },
-}));
-
-// Styled Button for Mobile Dropdown Menu
-const StyledMenuButton = styled(Button)(({ theme }) => ({
-  color: '#000',
-  fontWeight: '700',
-  fontSize: '1rem',
-  fontFamily: 'Roboto, sans-serif',
-  padding: '10px 15px',
-  justifyContent: 'flex-start',
-  '&:hover': {
-    color: '#FF7F50', // Orange color
-    background: 'linear-gradient(90deg , rgba(3, 161, 90, 0.975) , #fff)',
-    transform: 'scale(1.05)', // Zoom-in effect on hover
-    transition: 'transform 0.3s ease, color 0.3s ease', // Smooth transition for hover effect
-  },
-}));
 
 export default BottomNavbar;

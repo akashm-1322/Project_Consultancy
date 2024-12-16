@@ -1,116 +1,258 @@
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .about-page {
-  width: 98%;
-  margin:1%;
-  background: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 .about-title {
+  font-size: 2.5rem;
+  color: #03a15a;
   text-align: center;
-  font-size: 2rem;
   margin-bottom: 2rem;
-  color: #333;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative;
   animation: fadeInDown 1s ease-in-out;
+}
+
+.about-title::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background-color: #03a15a;
+  margin: 0.5rem auto;
+  border-radius: 4px;
 }
 
 .about-card {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
 }
 
 .about-card-container {
-  flex: 1 1 calc(100% - 2rem);
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  flex: 1 1 calc(33.33% - 1.5rem);
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .about-card-container:hover {
   transform: translateY(-10px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .about-box {
-  padding: 1.5rem;
-  text-align: left;
+  position: relative;
 }
 
 .about-section-title {
-  text-align: center;
-  font-size: 1.5rem;
-  color: #555;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  color: #03a15a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-section-title span {
+  font-size: 2rem;
+  margin-right: 0.5rem;
 }
 
 .about-description {
   font-size: 1rem;
-  color: #666;
-  line-height: 1.5;
+  color: #555;
+  line-height: 1.6;
 }
 
+/* Meet the Team Section */
 .meet-the-team {
   margin-top: 3rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.meet-the-team h4 {
+  font-size: 2rem;
+  color: #03a15a;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-in-out;
 }
 
 .team-build {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   gap: 1.5rem;
   justify-content: center;
+  padding: 1rem;
 }
 
 .team-card {
-  flex: 1 1 calc(100% - 2rem);
-  background: #fff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: calc(33.33% - 1.5rem); /* Default: 3 cards in a row */
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 1.5rem;
+  position: relative;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: center;
 }
 
 .team-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .team-photo-wrapper {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 1rem;
   overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #03a15a;
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-photo-wrapper {
+  transform: rotate(10deg);
 }
 
 .team-photo {
   width: 100%;
   height: auto;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.team-card:hover .team-photo {
-  transform: scale(1.1);
 }
 
 .team-name {
-  text-align: center;
-  font-size: 1.25rem;
-  color: #444;
-  margin: 1rem 0 0.5rem;
+  font-size: 1.5rem;
+  color: #03a15a;
+  margin: 0.5rem 0;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.team-card:hover .team-name {
+  color: #026a3a;
 }
 
 .team-designation {
-  text-align: center;
   font-size: 1rem;
-  color: #888;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+
+/* For tablets (<1024px) */
+@media (max-width: 1024px) {
+  .about-card-container, .team-card {
+    flex: 1 1 calc(50% - 1.5rem);
+  }
+
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .about-section-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* For smaller devices (<768px) */
+@media (max-width: 768px) {
+  .about-card-container, .team-card {
+    flex: 1 1 calc(50% - 1rem);
+  }
+
+  .about-title {
+    font-size: 1.8rem;
+  }
+  .team-card {
+    flex: 1 1 calc(50% - 1.5rem);
+  }
+
+  .team-photo-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .team-name {
+    font-size: 1.4rem;
+  }
+
+  .team-designation {
+    font-size: 0.9rem;
+  }
+}
+
+/* For mobile phones (<425px) */
+@media (max-width: 425px) {
+  .about-card-container, .team-card {
+    flex: 1 1 100%;
+  }
+
+  .about-title {
+    font-size: 1.6rem;
+  }
+
+  .about-section-title {
+    font-size: 1.4rem;
+  }
+
+  .team-card {
+    flex: 1 1 100%;
+    padding: 1rem;
+  }
+
+  .team-photo-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .team-name {
+    font-size: 1.2rem;
+  }
+
+  .team-designation {
+    font-size: 0.8rem;
+  }
+
+}
+
+/* For very small phones (<320px) */
+@media (max-width: 320px) {
+  .about-title {
+    font-size: 1.4rem;
+  }
+
+  .about-section-title {
+    font-size: 1.2rem;
+  }
+
+  .team-card {
+    padding: 0.8rem;
+  }
+
+  .team-photo-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .team-name {
+    font-size: 1rem;
+  }
+
+  .team-designation {
+    font-size: 0.7rem;
+  }
+
 }
 
 /* Animations */
@@ -122,90 +264,5 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Responsive Breakpoints */
-@media (max-width: 1024px) {
-  .about-title {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .about-title {
-    font-size: 1.6rem;
-  }
-
-  .about-card-container,
-  .team-card {
-    flex: 1 1 calc(50% - 1rem);
-  }
-}
-
-@media (max-width: 425px) {
-  .about-card-container,
-  .team-card {
-    flex: 1 1 100%;
-  }
-
-  .about-title {
-    font-size: 1.4rem;
-  }
-
-  .about-section-title {
-    font-size: 1.2rem;
-  }
-
-  .about-description {
-    font-size: 0.9rem;
-  }
-
-  .team-name {
-    font-size: 1rem;
-  }
-
-  .team-designation {
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 375px) {
-  .about-box {
-    padding: 1rem;
-  }
-
-  .about-description {
-    font-size: 0.8rem;
-  }
-
-  .team-name {
-    font-size: 0.9rem;
-  }
-
-  .team-designation {
-    font-size: 0.7rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .about-title {
-    font-size: 1.2rem;
-  }
-
-  .about-section-title {
-    font-size: 1rem;
-  }
-
-  .about-description {
-    font-size: 0.7rem;
-  }
-
-  .team-name {
-    font-size: 0.8rem;
-  }
-
-  .team-designation {
-    font-size: 0.6rem;
   }
 }

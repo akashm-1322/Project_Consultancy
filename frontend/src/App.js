@@ -118,10 +118,13 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
+function App() {
+  return (
   <Router>
     <AppContent />
   </Router>
-);
+
+  );
+}
 
 export default App;

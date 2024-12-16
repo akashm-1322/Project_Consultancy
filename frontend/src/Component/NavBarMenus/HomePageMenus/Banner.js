@@ -1,28 +1,80 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { FaCircleDot } from 'react-icons/fa6'; // Updated icon
-import './Banner.css';
+import React, { useState, useEffect, useRef } from "react";
+import { Box, Container, Grid, Typography, IconButton } from "@mui/material";
+import { styled, keyframes } from "@mui/system";
+import { FaCircleDot } from "react-icons/fa6"; // Using your existing icon
 
+// Keyframes for fade-in animation
+const fadeIn = keyframes`
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+`;
+
+// Styled video container for animations and graphics
+const VideoSlide = styled("div")(({ theme }) => ({
+  position: "relative",
+  width: "100%",
+  height: "auto",
+  overflow: "hidden",
+  "& video": {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  },
+}));
+
+const VideoContent = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  bottom: "20%",
+  left: "10%",
+  zIndex: 2,
+  color: "white",
+  animation: `${fadeIn} 1.5s ease-out`,
+  maxWidth: "100%",
+  textAlign: "left",
+}));
+
+const DotContainer = styled(Box)({
+  position: "absolute",
+  bottom: "10%",
+  left: "50%",
+  transform: "translateX(-50%)",
+  display: "flex",
+  gap: "10px",
+  zIndex: 3,
+});
+
+// Dot styling
+const StyledDot = styled(IconButton)(({ active }) => ({
+  color: active ? "#1976d2" : "rgba(255, 255, 255, 0.6)",
+  fontSize: active ? "1.5rem" : "1rem",
+  transition: "all 0.3s ease-in-out",
+}));
+
+// Videos Data
 const videos = [
   {
-    src: '/videos/Language_Learning_1.mp4',
-    title: 'Language Coaching',
-    description: 'Achieve fluency with our language training programs. Tailored courses to prepare you for global communication.',
+    src: "/videos/Language_Learning_1.mp4",
+    title: "Language Coaching",
+    description:
+      "Achieve fluency with our language training programs. Tailored courses to prepare you for global communication.",
   },
   {
-    src: '/videos/Study_Abroad_1.mp4',
-    title: 'Study Abroad',
-    description: 'Assistance with securing student visas. Explore educational opportunities across the globe.',
+    src: "/videos/Study_Abroad_1.mp4",
+    title: "Study Abroad",
+    description:
+      "Assistance with securing student visas. Explore educational opportunities across the globe.",
   },
   {
-    src: '/videos/Work_Abroad_1.mp4',
-    title: 'Travel and Work Abroad',
-    description: 'Do what you like at where you want. Discover the best travel options for your international journey.',
+    src: "/videos/Work_Abroad_1.mp4",
+    title: "Travel and Work Abroad",
+    description:
+      "Do what you like at where you want. Discover the best travel options for your international journey.",
   },
   {
-    src: '/videos/Domestic_Recruitment_1.mp4',
-    title: 'Domestic Placements',
-    description: 'Guidance to grow your career inside India. Find the best opportunities that match your skillset.',
+    src: "/videos/Domestic_Recruitment_1.mp4",
+    title: "Domestic Placements",
+    description:
+      "Guidance to grow your career inside India. Find the best opportunities that match your skillset.",
   },
 ];
 
@@ -39,13 +91,13 @@ const Banner = () => {
     };
 
     if (currentVideo) {
-      currentVideo.addEventListener('ended', handleVideoEnd);
-      currentVideo.play(); // Ensures videos autoplay on load
+      currentVideo.addEventListener("ended", handleVideoEnd);
+      currentVideo.play();
     }
 
     return () => {
       if (currentVideo) {
-        currentVideo.removeEventListener('ended', handleVideoEnd);
+        currentVideo.removeEventListener("ended", handleVideoEnd);
       }
     };
   }, [activeIndex]);
@@ -55,14 +107,13 @@ const Banner = () => {
   };
 
   return (
-    <Container fluid className="p-0 banner-container">
-      <Row noGutters>
-        <Col xs={12} className="position-relative">
+    <Container maxWidth="xl" className="mt-4 mb-4" disableGutters>
+      <Grid container>
+        <Grid item xs={12} position="relative">
           {videos.map((video, index) => (
-            <div
+            <VideoSlide
               key={index}
-              className={`video-slide ${activeIndex === index ? 'active' : ''}`}
-              style={{ display: activeIndex === index ? 'block' : 'none' }}
+              sx={{ display: activeIndex === index ? "block" : "none" }}
             >
               <video
                 ref={activeIndex === index ? videoRef : null}
@@ -70,34 +121,44 @@ const Banner = () => {
                 autoPlay
                 muted
                 loop={false}
-                style={{
-                  width: '100vw',
-                  height: '100vh',
-                  objectFit: 'cover',
-                }}
               />
-              <div
-                className={`video-content ${
-                  activeIndex === index ? 'fade-in' : ''
-                }`}
-              >
-                <h3 className="video-title">{video.title}</h3>
-                <p className="video-description">{video.description}</p>
-              </div>
-            </div>
+              <VideoContent>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
+                  }}
+                >
+                  {video.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    mt: 1,
+                    fontSize: { xs: "0.9rem", sm: "1rem", md: "1.2rem" },
+                  }}
+                >
+                  {video.description}
+                </Typography>
+              </VideoContent>
+            </VideoSlide>
           ))}
-          <div className="dot-container">
+
+          {/* Dot Indicators */}
+          <DotContainer>
             {videos.map((_, dotIndex) => (
-              <FaCircleDot
+              <StyledDot
                 key={dotIndex}
                 onClick={() => handleDotClick(dotIndex)}
-                size={activeIndex === dotIndex ? 24 : 18}
-                className={`dot ${activeIndex === dotIndex ? 'active' : ''}`}
-              />
+                active={activeIndex === dotIndex}
+              >
+                <FaCircleDot />
+              </StyledDot>
             ))}
-          </div>
-        </Col>
-      </Row>
+          </DotContainer>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

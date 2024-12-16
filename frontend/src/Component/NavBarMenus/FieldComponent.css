@@ -1,285 +1,307 @@
-/* Field Container */
-.field-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
+.field-container{
   padding: 20px;
-  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
   border-radius: 8px;
-  animation: fadeIn 0.5s ease-in-out;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-out;
 }
 
-/* Form Styles */
+  .error-message {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+
+.field-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .field-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .custom-form-control-f {
+  width: 48%;
+  margin-bottom: 15px;
   padding: 10px;
-  margin: 20px;
-  font-size: 16px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
 }
 
-.custom-form-control-f:hover {
+.custom-form-control-f:focus {
   border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
 }
 
 .field-form-button {
-  cursor: pointer;
-  padding: 10px 15px;
-  margin: 10px;
-  font-size: 16px;
+  background-color: #28a745;
+  color: white;
   border: none;
-  background-color: #007bff;
-  color: #000;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
 }
 
 .field-form-button:hover {
-  background-color:  #d5e3a8;
-  transform: scale(1.05);
-}
-
-.error-message {
-  color: #ff4d4f;
-  background-color: #fff3f3;
-  padding: 10px;
-  border: 1px solid #ff4d4f;
-  border-radius: 4px;
-}
-
-/* Table Styles */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-table th, td {
-  text-align: left;
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-th {
-  background: #e3665d;
-  cursor: pointer;
-}
-
-tr:hover {
-  background: #f6d365;
-}
-
-img {
-  border-radius: 4px;
-  object-fit: cover;
-}
-
-/* Action Buttons */
-button svg {
-  vertical-align: middle;
-}
-
-button:nth-of-type(1) {
-  background-color: #28a745;
-}
-
-button:nth-of-type(1):hover {
   background-color: #218838;
 }
 
-button:nth-of-type(2) {
-  background-color: #dc3545;
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:nth-of-type(2):hover {
-  background-color: #c82333;
+button[type="submit"]:hover {
+  background-color: #0056b3;
 }
 
-/* Pagination */
+button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+button:hover {
+  color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+  color: #007bff;
+}
+
+th:hover {
+  color: #0056b3;
+}
+
+td img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
 .pagination {
-  margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  margin-top: 20px;
 }
 
 .pagination button {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  border-radius: 4px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .pagination button:hover {
   background-color: #007bff;
-  color: #000;
+  color: white;
 }
 
-ul {
-  list-style-type: none;
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Design */
-
-/* For screens smaller than 1024px (e.g., tablets) */
+/* Responsive Styles */
 @media (max-width: 1024px) {
-  .field-container {
-    padding: 15px;
-  }
-  
-  .field-form {
-    gap: 12px;
-  }
-
-  .custom-form-control-f {
-    font-size: 15px;
-    padding: 8px;
-    margin: 15px;
-  }
-
-  .field-form-button {
-    font-size: 15px;
-    padding: 8px 12px;
-    margin: 8px;
-  }
-
-  table th, table td {
-    padding: 8px;
-  }
-
-  .pagination button {
-    padding: 7px 10px;
-  }
-}
-
-/* For screens smaller than 768px (e.g., phones in landscape) */
-@media (max-width: 768px) {
-  .field-container {
-    padding: 12px;
-  }
-
-  .field-form {
-    gap: 10px;
-  }
-
-  .custom-form-control-f {
-    font-size: 14px;
-    padding: 7px;
-    margin: 12px;
-  }
-
-  .field-form-button {
-    font-size: 14px;
-    padding: 7px 10px;
-    margin: 7px;
-  }
-
-  table th, table td {
-    padding: 6px;
-  }
-
-  .pagination button {
-    padding: 6px 9px;
-  }
-}
-
-/* For screens smaller than 500px (e.g., phones in portrait) */
-@media (max-width: 480px) {
   .field-container {
     padding: 10px;
   }
 
   .field-form {
-    gap: 8px;
+    flex-direction: column;
+    align-items: center;
   }
 
   .custom-form-control-f {
-    font-size: 13px;
-    padding: 6px;
-    margin: 10px;
+    width: 100%;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .field-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .custom-form-control-f {
+    width: 100%;
   }
 
   .field-form-button {
-    font-size: 13px;
-    padding: 6px 9px;
-    margin: 6px;
+    width: 100%;
   }
 
-  table th, table td {
+  table {
+    font-size: 0.9rem;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 425px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .custom-form-control-f {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .field-form-button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .field-form {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 375px) {
+  .field-container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .custom-form-control-f {
+    width: 100%;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .field-container {
     padding: 5px;
   }
 
-  .pagination button {
-    padding: 5px 8px;
-  }
-  
-  /* Adjust the form container for mobile screens */
-  .field-container {
-    width: 100%;
-    margin: 10px;
+  h1 {
+    font-size: 1.6rem;
   }
 
-  /* Reduce font sizes for table headers */
-  table th, table td {
-    font-size: 12px;
-  }
-
-  /* Adjust the pagination buttons for mobile screens */
-  .pagination button {
-    font-size: 12px;
-    padding: 5px 8px;
-  }
-}
-
-/* For large screens (>=1024px - desktops) */
-@media (min-width: 1024px) {
-  .field-container {
-    padding: 25px;
-  }
-
-  .field-form {
-    gap: 18px;
+  h2 {
+    font-size: 1.3rem;
   }
 
   .custom-form-control-f {
-    font-size: 16px;
-    padding: 10px;
-    margin: 20px;
-  }
-
-  .field-form-button {
-    font-size: 16px;
-    padding: 10px 15px;
-    margin: 10px;
-  }
-
-  table th, table td {
-    padding: 12px;
+    width: 100%;
   }
 
   .pagination button {
-    padding: 8px 12px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
+
+  .field-form-button {
+    width: 100%;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* Animation for form inputs */
+@keyframes slideIn {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.custom-form-control-f {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes bounceButton {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+button[type="submit"], .field-form-button {
+  animation: bounceButton 0.5s ease-out infinite;
 }

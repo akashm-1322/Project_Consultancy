@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./DepartmentPage.css"; // Include CSS for styling
+import { Box, Typography, Paper, List, ListItem } from "@mui/material";
 
 const DepartmentPage = () => {
   const [aggregatedData, setAggregatedData] = useState([]);
@@ -62,31 +62,94 @@ const DepartmentPage = () => {
     fetchData();
   }, []);
 
+  // Inline Styles for Responsive Design
+  const styles = {
+    container: {
+      padding: "20px",
+      backgroundColor: "#f4f4f4",
+      minHeight: "100vh",
+      fontFamily: "'Roboto', sans-serif",
+    },
+    header: {
+      fontSize: "2rem",
+      fontWeight: "bold",
+      textAlign: "center",
+      marginBottom: "20px",
+      color: "#333",
+    },
+    card: {
+      backgroundColor: "#fff",
+      padding: "15px",
+      margin: "10px auto",
+      borderRadius: "8px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      transition: "transform 0.3s ease-in-out",
+      width: "90%",
+      maxWidth: "600px",
+    },
+    cardHover: {
+      transform: "scale(1.02)",
+    },
+    title: {
+      fontSize: "1.5rem",
+      fontWeight: "bold",
+      color: "#007bff",
+    },
+    vacancyCount: {
+      fontSize: "1.2rem",
+      fontWeight: "bold",
+      color: "#e53935",
+    },
+    list: {
+      marginTop: "10px",
+      padding: "0",
+    },
+    listItem: {
+      fontSize: "1rem",
+      color: "#555",
+    },
+    noData: {
+      textAlign: "center",
+      fontSize: "1.2rem",
+      color: "#888",
+      marginTop: "30px",
+    },
+  };
+
   return (
-    <div className="department-container">
-      <h1>Departments and Total Vacancies</h1>
+    <Box sx={styles.container}>
+      <Typography sx={styles.header}>Departments and Total Vacancies</Typography>
+
       {aggregatedData.length > 0 ? (
         aggregatedData.map((dept) => (
-          <div className="department-card" key={dept.name}>
-            <h2>{dept.name}</h2>
-            <p>
+          <Paper
+            key={dept.name}
+            elevation={3}
+            sx={{
+              ...styles.card,
+              "&:hover": styles.cardHover,
+            }}
+          >
+            <Typography sx={styles.title}>{dept.name}</Typography>
+            <Typography>
               Total Vacancies:{" "}
-              <span className="vacancy-count">{dept.totalVacancies}</span>
-            </p>
-            <ul>
+              <span style={styles.vacancyCount}>{dept.totalVacancies}</span>
+            </Typography>
+
+            <List sx={styles.list}>
               {Array.isArray(dept.subNames) &&
                 dept.subNames.map((sub, index) => (
-                  <li key={index}>{sub}</li>
+                  <ListItem key={index} sx={styles.listItem}>
+                    {sub}
+                  </ListItem>
                 ))}
-            </ul>
-          </div>
+            </List>
+          </Paper>
         ))
       ) : (
-        <div>
-          <p>No Data Found</p>
-        </div>
+        <Typography sx={styles.noData}>No Data Found</Typography>
       )}
-    </div>
+    </Box>
   );
 };
 

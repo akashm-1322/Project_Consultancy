@@ -1,21 +1,105 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import "./CountryPage.css";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Collapse,
+  Container,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+
+// Styled Components
+const CountryStrip = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "16px",
+  margin: "16px 0",
+  borderRadius: "8px",
+  boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
+  backgroundColor: "#ffffff",
+  width: "100%",
+  flexWrap: "wrap",
+  transition: "box-shadow 0.3s ease",
+  "&:hover": {
+    boxShadow: "0 6px 15px rgba(0,0,0,0.25)",
+  },
+}));
+
+const CountryImage = styled("img")({
+  width: "80px",
+  height: "80px",
+  borderRadius: "8px",
+  objectFit: "cover",
+});
+
+const ContentBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  flex: 1,
+  gap: "8px",
+  padding: "0 16px",
+  minWidth: "200px",
+});
+
+const StyledButton = styled(Button)({
+  backgroundColor: "#007bff",
+  color: "#fff",
+  textTransform: "none",
+  padding: "8px 12px",
+  borderRadius: "6px",
+  "&:hover": {
+    backgroundColor: "#0056b3",
+    transform: "scale(1.05)",
+    transition: "transform 0.2s ease",
+  },
+});
+
+const CardsContainer = styled(Box)(({ theme }) => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+  gap: "20px",
+  marginTop: "12px",
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: "1fr",
+  },
+}));
+
+const CardStyled = styled(Card)({
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+  borderRadius: "12px",
+  transition: "transform 0.3s ease",
+  "&:hover": {
+    transform: "translateY(-5px)",
+    boxShadow: "0 8px 15px rgba(0, 0, 0, 0.3)",
+  },
+});
+
+const AnimatedNumber = styled("span")(({ theme }) => ({
+  fontWeight: "bold",
+  color: "#007bff",
+}));
 
 const CountryPage = () => {
   const [countries, setCountries] = useState([]);
   const [fields, setFields] = useState([]);
   const [expandedCountry, setExpandedCountry] = useState(null);
-  const updateTimeoutRef = useRef(null); // Use useRef to store the timeout
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch countries and fields data only once on component mount
         const countriesResponse = await axios.get(
           "http://localhost:5500/api/countries?all=true"
         );
-        const fieldsResponse = await axios.get("http://localhost:5500/api/field?all=true");
+        const fieldsResponse = await axios.get(
+          "http://localhost:5500/api/field?all=true"
+        );
 
         setCountries(countriesResponse.data.countries || []);
         setFields(fieldsResponse.data.fields || []);
@@ -25,19 +109,14 @@ const CountryPage = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to ensure this only runs once on component mount
+  }, []);
 
-  // Function to calculate total vacancies for each country
   const calculateTotalVacancies = useCallback(
     (country) => {
       const matchingFields = fields.filter(
-        (field) => field.countryData === country.name && field.fieldData === country.type
+        (field) =>
+          field.countryData === country.name && field.fieldData === country.type
       );
-
-      if (!matchingFields.length) {
-        console.warn(`No matching fields found for country: ${country.name} (${country.type})`);
-      }
-
       return matchingFields.reduce(
         (sum, field) => sum + field.vacancies.reduce((a, b) => a + b, 0),
         0
@@ -46,81 +125,43 @@ const CountryPage = () => {
     [fields]
   );
 
-  // Function to update country vacancies via API call
-  const updateCountryVacancies = useCallback(
-    async (countryId, totalVacancies) => {
-      try {
-        const countryToUpdate = countries.find((country) => country._id === countryId);
-        if (!countryToUpdate) {
-          console.error(`Country with ID ${countryId} not found`);
-          return;
-        }
-
-        if (countryToUpdate.vacancies !== totalVacancies) {
-          const response = await axios.patch(
-            `http://localhost:5500/api/countries/${countryId}`,
-            { vacancies: totalVacancies }
-          );
-          console.log("Updated Country:", response.data);
-        }
-      } catch (error) {
-        console.error(`Error updating country vacancies for ID ${countryId}:`, error);
-      }
-    },
-    [countries]
-  );
-
-  useEffect(() => {
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current);
-    }
-
-    updateTimeoutRef.current = setTimeout(() => {
-      countries.forEach((country) => {
-        const totalVacancies = calculateTotalVacancies(country);
-        updateCountryVacancies(country._id, totalVacancies);
-      });
-    }, 500); // Delay of 500ms to batch updates
-
-    // Cleanup function to clear the timeout
-    return () => {
-      if (updateTimeoutRef.current) {
-        clearTimeout(updateTimeoutRef.current);
-      }
-    };
-  }, [countries, fields, calculateTotalVacancies, updateCountryVacancies]);
-
   const toggleCountryCards = (countryId) => {
-    console.log(countryId);
     setExpandedCountry((prev) => (prev === countryId ? null : countryId));
   };
 
   const renderMatchingCards = (country) => {
     const matchingFields = fields.filter(
-      (field) => field.countryData === country.name && field.fieldData === country.type
+      (field) =>
+        field.countryData === country.name && field.fieldData === country.type
     );
 
     if (matchingFields.length === 0) {
-      return <p>No matching fields for this country.</p>;
+      return (
+        <Typography variant="body2" color="textSecondary">
+          No matching fields for this country.
+        </Typography>
+      );
     }
 
     return (
-      <div className="cards-container">
+      <CardsContainer>
         {matchingFields.map((field) => (
-          <div className="card" key={field._id}>
-            <div className="card-image">
-              <img
-                src={`http://localhost:5500${field.imageUrl}`}
-                alt={field.fieldData}
-              />
-            </div>
-            <div className="card-content">
-              <h3>{field.fieldData}</h3>
-              <table className="field-table">
+          <CardStyled key={field._id}>
+            <CardMedia
+              component="img"
+              height="160"
+              image={`http://localhost:5500${field.imageUrl}`}
+              alt={field.fieldData}
+            />
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {field.fieldData}
+              </Typography>
+              <Box component="table" width="100%" fontSize="0.9rem">
                 <thead>
                   <tr>
-                    <th>Names</th>
-                    <th>Vacancies</th>
+                    <th style={{ textAlign: "left" }}>Names</th>
+                    <th style={{ textAlign: "left" }}>Vacancies</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -131,11 +172,11 @@ const CountryPage = () => {
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
-          </div>
+              </Box>
+            </CardContent>
+          </CardStyled>
         ))}
-      </div>
+      </CardsContainer>
     );
   };
 
@@ -145,54 +186,65 @@ const CountryPage = () => {
       "Work Abroad",
       "Language Coaching",
       "Domestic Placements",
-      "Travel Abroad"
+      "Travel Abroad",
     ];
 
     return types.map((type) => (
-      <div key={type} className="type-section">
-        <h2>{type}</h2>
+      <Box key={type} mb={4}>
+        <Typography variant="h4" mb={2} color="primary" fontWeight="600">
+          {type}
+        </Typography>
         {countries
           .filter((country) => country.type === type)
           .map((country) => {
             const totalVacancies = calculateTotalVacancies(country);
 
             return (
-              <div key={country._id} className="country-strip">
-                <div className="country-header">
-                  <img
-                    className="country-image"
+              <Box key={country._id}>
+                <CountryStrip>
+                  <CountryImage
                     src={`http://localhost:5500${country.shapeImage}`}
                     alt={country.name}
                   />
-                  <div className="country-details">
-                    <h3>{country.name} ({country.code})</h3>
-                    <p className="total-vacancies">
+                  <ContentBox>
+                    <Typography variant="h5">{country.name}</Typography>
+                    <Typography variant="body1">
                       Total Vacancies:{" "}
-                      <span className="animated-number">{totalVacancies}</span>
-                    </p>
-                  </div>
-                  <button
-                    className="toggle-button"
+                      <AnimatedNumber>{totalVacancies}</AnimatedNumber>
+                    </Typography>
+                  </ContentBox>
+                  <StyledButton
+                    startIcon={
+                      expandedCountry === country._id ? (
+                        <ExpandLessIcon />
+                      ) : (
+                        <ExpandMoreIcon />
+                      )
+                    }
                     onClick={() => toggleCountryCards(country._id)}
                   >
-                    {expandedCountry === country._id ? "Hide Cards" : "Show Cards"}
-                  </button>
-                </div>
-                {expandedCountry === country._id && (
-                  <div className="matching-cards">{renderMatchingCards(country)}</div>
-                )}
-              </div>
+                    {expandedCountry === country._id
+                      ? "Hide Details"
+                      : "Show Details"}
+                  </StyledButton>
+                </CountryStrip>
+                <Collapse in={expandedCountry === country._id} timeout="auto">
+                  {renderMatchingCards(country)}
+                </Collapse>
+              </Box>
             );
           })}
-      </div>
+      </Box>
     ));
   };
 
   return (
-    <div className="country-page">
-      <h1>Country Fields</h1>
+    <Container maxWidth="lg">
+      <Typography variant="h3" align="center" mb={4} fontWeight="700">
+        Country Fields
+      </Typography>
       {renderCountryStrips()}
-    </div>
+    </Container>
   );
 };
 

@@ -7,14 +7,14 @@ import WeProcess from './HomePageMenus/WeProcess';
 import DepartmentPage from './HomePageMenus/DepartmentPage';
 
 const HomePage = () => (
-  <>
+  <div>
     <Banner />
     <CountryPage />
     <DepartmentPage />
     <Testimonials />
     <WeProcess />
     <Certifications />
-  </>
+  </div>
 );
 
 export default HomePage;

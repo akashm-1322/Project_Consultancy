@@ -1,152 +1,166 @@
 import React from "react";
-import { Box, AppBar, Toolbar, Typography, IconButton } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";  // Import the logout icon
-import { keyframes } from "@mui/system";
-import { FaPhone, FaEnvelope } from "react-icons/fa";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  Stack,
+  Avatar,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-const scaleAnimation = keyframes`
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-`;
-
-const bounceAnimation = keyframes`
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-`;
-
-const fadeInAnimation = keyframes`
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-`;
+const MotionBox = motion(Box);
 
 const TopNavbar = ({ userRole, adminName, onLogout }) => {
-  const renderUserDetails = () => {
-    if (userRole === "admin") {
-      const displayName = adminName.slice(0, 4).toUpperCase(); // First 4 letters of admin username
-      return (
-        <>
-          <AccountCircleIcon sx={{ ...iconStyles, animation: `${scaleAnimation} 1s ease-in-out` }} />
-          <Typography sx={{ ...userTextStyles, animation: `${fadeInAnimation} 2s ease` }}>
-            {displayName}
-          </Typography>
-        </>
-      );
+  const theme = useTheme();
+
+  // Breakpoints for responsiveness
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // For screens <768px
+
+  // Generate first two letters of username
+  const getAvatarLetters = () => {
+    if (userRole === "admin" && adminName) {
+      return adminName.slice(0, 2).toUpperCase();
     } else if (userRole === "user") {
-      return (
-        <>
-          <AccountCircleIcon sx={{ ...iconStyles, animation: `${scaleAnimation} 1s ease-in-out` }} />
-          <Typography sx={{ ...userTextStyles, animation: `${fadeInAnimation} 2s ease` }}>
-            USER
-          </Typography>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <AccountCircleIcon sx={{ ...iconStyles, animation: `${scaleAnimation} 1s ease-in-out` }} />
-          <Typography sx={{ ...userTextStyles, animation: `${fadeInAnimation} 2s ease` }}>
-            Guest
-          </Typography>
-        </>
-      );
+      return "US";
     }
+    return "GU"; // For Guest
+  };
+
+  // Function to display user details
+  const renderUserDetails = () => {
+    const displayName =
+      userRole === "admin" ? adminName.slice(0, 4).toUpperCase() : userRole === "user" ? "USER" : "Guest";
+
+    return (
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Avatar
+          sx={{
+            bgcolor: "#ff9800",
+            color: "black",
+            width: isMobile ? 32 : 40,
+            height: isMobile ? 32 : 40,
+            fontSize: isMobile ? "0.8rem" : "1rem",
+          }}
+        >
+          {getAvatarLetters()}
+        </Avatar>
+        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+          {displayName}
+        </Typography>
+      </Stack>
+    );
   };
 
   return (
     <AppBar
-      position="sticky"
+      position="static"
       sx={{
-        background: "linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975))",
-        backgroundSize: "300% 300%",
+        background: "linear-gradient(90deg, #ffffff, #03a15a)", // Background gradient
+        backgroundSize: "cover",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
       }}
     >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+      {/* Framer Motion Animation */}
+      <MotionBox
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
       >
-        <Box display="flex" alignItems="center">
-        <div className="logo-container ml-2">
-        <img src="/j99_logo.png" alt="logo" width="80" height="50" />
-        </div>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "rgba(3, 161, 90, 0.975)",
-              fontWeight: "bold",
-              textDecoration: "none",
-              fontSize: "1.8rem",
-              fontFamily: "Times New Roman, serif",
-              animation: `${fadeInAnimation} 3s ease`,
-            }}
-          >
-            J99 Recruitment Services Pvt. Ltd
-          </Typography>
-        </Box>
-
-        <Box display="flex" alignItems="center" gap={3}>
-          <Box sx={{ ...contactBoxStyles, animation: `${bounceAnimation} 2s infinite` }}>
-            <FaPhone sx={{ fontSize: "32px"}}  style ={{color: "#000" }} />
-            <Typography sx={contactTextStyles}>+91 9884945606</Typography>
-          </Box>
-          <Box sx={{ ...contactBoxStyles, animation: `${bounceAnimation} 2s infinite` }}>
-            <FaEnvelope sx={{ fontSize: "32px"}} style ={{color: "#000" }} />
-            <Typography sx={contactTextStyles}>
-              J99Recruitmentservices@gmail.com
+        <Toolbar  sx={{
+            display: "flex",
+            justifyContent: "center", // Center content horizontally
+            alignItems: "center", // Center content vertically
+            gap: 4, // Add gap between elements
+            flexWrap: "wrap", // Ensure responsiveness
+          }}>
+          {/* Logo Section */}
+          <Box display="flex" alignItems="center" gap={2} sx={{ justifyContent: "center" }}>
+            <img
+              src="/j99_logo.png"
+              alt="logo"
+              width={isMobile ? 50 : 80}
+              height={isMobile ? 50 : 80}
+              style={{ borderRadius: "8px" }}
+            />
+            <Typography
+              variant={isMobile ? "h6" : "h5"}
+              component="div"
+              sx={{ fontWeight: "bold", lineHeight: 1.2, color: "black" , textAlign: "center"}}
+            >
+              J99 Recruitment Services Pvt. Ltd
             </Typography>
           </Box>
-          <Box display="flex" alignItems="center" gap={1}>
+
+          {/* Contact Information */}
+          {!isMobile && (
+            <Stack direction="row" spacing={4} alignItems="center" justifyContent="center">
+              <Stack
+  direction="row"
+  spacing={1}
+  alignItems="center"
+  sx={{
+    backgroundColor: "white",
+    borderRadius: "50px", // Makes the container cylindrical
+    padding: "8px 16px", // Vertical and horizontal padding
+    color: "black",
+    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Subtle shadow for a 3D effect
+  }}
+>
+  <PhoneIcon sx={{ color: "#03a15a" }} /> {/* Phone icon color */}
+  <Typography variant="body1" sx={{ fontWeight: "500" }}>
+    +91 9884945606
+  </Typography>
+</Stack>
+
+<Stack
+  direction="row"
+  spacing={1}
+  alignItems="center"
+  sx={{
+    backgroundColor: "white",
+    borderRadius: "50px", // Makes the container cylindrical
+    padding: "8px 16px",
+    color: "black",
+    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)", // Subtle shadow for a 3D effect
+  }}
+>
+  <EmailIcon sx={{ color: "#03a15a" }} /> {/* Email icon color */}
+  <Typography variant="body1" sx={{ fontWeight: "500" }}>
+    J99Recruitmentservices@gmail.com
+  </Typography>
+</Stack>
+
+            </Stack>
+          )}
+
+          {/* User Actions */}
+          <Stack direction="row" spacing={2} alignItems="center">
             {renderUserDetails()}
-            <IconButton onClick={onLogout} sx={{ color: "#fff", marginLeft: 2 }}>
-              <LogoutIcon />
-            </IconButton>
-          </Box>
-        </Box>
-      </Toolbar>
+            <Button
+              variant="contained"
+              color="error"
+              startIcon={<LogoutIcon />}
+              onClick={onLogout}
+              sx={{
+                fontSize: isMobile ? "0.7rem" : "0.875rem",
+                "&:hover": { transform: "scale(1.05)" },
+                transition: "transform 0.3s ease-in-out",
+              }}
+            >
+              Logout
+            </Button>
+          </Stack>
+        </Toolbar>
+      </MotionBox>
     </AppBar>
   );
-};
-
-// Styles
-const iconStyles = {
-  width: "40px",
-  height: "40px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  borderRadius: "50%",
-  backgroundColor: "#fff",
-  color: "#000",
-  fontWeight: "bold",
-  fontSize: "1rem",
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-};
-
-const userTextStyles = {
-  color: "#000",
-  fontWeight: "bold",
-  fontSize: "1.1rem",
-};
-
-const contactBoxStyles = {
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "white",
-  padding: "8px",
-  borderRadius: "50px",
-  boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-};
-
-const contactTextStyles = {
-  marginLeft: "8px",
-  color: "#000",
-  fontSize: "1rem",
-  fontWeight: "600",
 };
 
 export default TopNavbar;

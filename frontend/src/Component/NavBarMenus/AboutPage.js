@@ -1,6 +1,8 @@
-import React from 'react';
-import './AboutPage.css';
+import React from "react";
+import { Box, Typography, Paper, Avatar } from "@mui/material";
+import { motion } from "framer-motion";
 
+// Content Data
 const aboutContent = [
   {
     title: "Our Mission",
@@ -42,59 +44,104 @@ const teamMembers = [
 
 const AboutPage = () => {
   return (
-    <div className="about-page">
+    <Box
+      sx={{
+        py: 5,
+        px: { xs: 2, sm: 4, md: 8 },
+        backgroundColor: "#f9f9f9",
+        textAlign: "center",
+      }}
+    >
       {/* About Us Title */}
-      <h4 className="about-title">
+      <Typography variant="h4" fontWeight="bold" gutterBottom>
         About Us
-      </h4>
+      </Typography>
 
       {/* About Section */}
-      <div className="about-card" justifyContent="center">
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", md: "row" }}
+        justifyContent="space-around"
+        gap={4}
+        mb={6}
+      >
         {aboutContent.map((section, index) => (
-          <div  className="about-card-container" item xs={12} sm={6} md={4} key={index}>
-            <div className="about-box">
-              <h4 className="about-section-title">
-                <span>{section.icon}</span> {section.title}
-              </h4>
-              <h1 className="about-description">
-                {section.description}
-              </h1>
-            </div>
-          </div>
+          <Paper
+            key={index}
+            elevation={6}
+            sx={{
+              p: 4,
+              maxWidth: { xs: "100%", md: "30%" },
+              borderRadius: 4,
+              transition: "transform 0.3s ease",
+              "&:hover": { transform: "scale(1.03)" },
+            }}
+          >
+            <Typography
+              variant="h5"
+              fontWeight="bold"
+              color="primary"
+              sx={{ mb: 2 }}
+            >
+              {section.icon} {section.title}
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              {section.description}
+            </Typography>
+          </Paper>
         ))}
-      </div>
+      </Box>
 
       {/* Meet the Team Section */}
-      <section className="meet-the-team">
-        <h4 className="about-title">
-          Meet the Team
-        </h4>
+      <Typography variant="h4" fontWeight="bold" gutterBottom>
+        Meet the Team
+      </Typography>
 
-        <div className='team-build'>
-          {teamMembers.map((member, index) => (
-            <div item xs={12} sm={4} key={index}>
-              <div className="team-card">
-                <div className="team-photo-wrapper">
-                  <img
-                    alt={member.name}
-                    src={member.photo}
-                    className="team-photo"
-                  />
-                </div>
-                <div>
-                  <h6 className="team-name">
-                    {member.name}
-                  </h6>
-                  <h2 className="team-designation">
-                    {member.designation}
-                  </h2>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
+        flexWrap="wrap"
+        justifyContent="center"
+        gap={4}
+      >
+        {teamMembers.map((member, index) => (
+          <Box
+            key={index}
+            component={motion.div}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              p: 2,
+              borderRadius: "12px",
+              backgroundColor: "white",
+              boxShadow: "0 8px 15px rgba(0,0,0,0.2)",
+              width: { xs: "100%", sm: "300px" },
+              textAlign: "center",
+            }}
+          >
+            <Avatar
+              src={member.photo}
+              alt={member.name}
+              sx={{
+                width: 120,
+                height: 120,
+                mb: 2,
+                boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+              }}
+            />
+            <Typography variant="h6" fontWeight="bold">
+              {member.name}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+              {member.designation}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
   );
 };
 

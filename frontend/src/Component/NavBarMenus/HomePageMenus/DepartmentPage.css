@@ -1,312 +1,222 @@
-/* General container styling */
+/* General Styles */
 .department-container {
-  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-  min-height: 100vh;
-  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f9;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-family: 'Arial', sans-serif;
-  color: #000;
-  overflow: hidden;
-  position: relative;
 }
 
-/* Animated background graphic */
-.department-container::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(3, 161, 90, 0.975), transparent 70%);
-  animation: rotateBackground 10s linear infinite;
-  z-index: 0;
-}
-
-/* Background rotation animation */
-@keyframes rotateBackground {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Main heading */
 .department-container h1 {
-  font-size: 3rem;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-  z-index: 1;
-  margin-bottom: 2rem;
-  animation: fadeIn 1.5s ease-out;
+  font-size: 2.5rem;
+  color: #3a3a3a;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
-/* Fade-in animation */
+.department-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 15px;
+  width: 90%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.department-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.department-card h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.department-card p {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+.vacancy-count {
+  font-weight: bold;
+  color: #e74c3c;
+  font-size: 1.2rem;
+  animation: pulse 1.5s infinite;
+}
+
+.department-card ul {
+  margin-top: 15px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.department-card ul li {
+  font-size: 1rem;
+  color: #34495e;
+  padding: 5px 0;
+}
+
+.department-card ul li:not(:last-child) {
+  border-bottom: 1px solid #ecf0f1;
+}
+
+/* Keyframe Animations */
 @keyframes fadeIn {
-  from {
+  0% {
     opacity: 0;
     transform: translateY(-20px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Department card styling */
-.department-card {
-  background: rgba(3, 161, 90, 0.975);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 1.5rem;
-  width: 80%;
-  max-width: 600px;
-  margin: 1rem 0;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-  transform: scale(1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  z-index: 1;
-  animation: slideIn 0.8s ease-out;
-}
-
-/* Hover effect for cards */
-.department-card:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg , #fff , rgba(3, 161, 90, 0.975));
-  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.5);
-}
-
-/* Slide-in animation */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    transform: scale(1.1);
   }
-}
-
-/* Card heading */
-.department-card h2 {
-  font-size: 1.8rem;
-  color: #ffd700;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  margin-bottom: 1rem;
-}
-
-/* Vacancy count */
-.vacancy-count {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #00ff00;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* SubNames list */
-.department-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 0 0;
-  color: #000;
-}
-
-/* List items */
-.department-card ul li {
-  margin: 0.5rem 0;
-  font-size: 1rem;
-  position: relative;
-  padding-left: 20px;
-  animation: popIn 1s ease-in-out;
-}
-
-/* Pop-in animation */
-@keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
+  100% {
     transform: scale(1);
   }
 }
 
-/* Decorative bullet points */
-.department-card ul li::before {
-  content: '★';
-  position: absolute;
-  left: 0;
-  color: #ff6347;
-  font-size: 1rem;
-  animation: spin 2s linear infinite;
-}
-
-/* Star spin animation */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* No data message */
-.department-container > div {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  animation: fadeIn 1s ease-out;
-}
-
 /* Responsive Styles */
 
-/* Small devices (<500px) */
-@media (max-width: 480px) {
-  .department-container {
-    padding: 1rem;
-  }
-
+/* Medium Devices (<1024px) */
+@media (max-width: 1024px) {
   .department-container h1 {
     font-size: 2rem;
-    margin-bottom: 1rem;
+  }
+
+  .department-card {
+    width: 80%;
+  }
+
+  .department-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Small Devices (<768px) */
+@media (max-width: 768px) {
+  .department-container h1 {
+    font-size: 1.7rem;
   }
 
   .department-card {
     width: 90%;
-    padding: 1rem;
+  }
+
+  .department-card p {
+    font-size: 0.85rem;
+  }
+
+  .vacancy-count {
+    font-size: 1rem;
+  }
+
+  .department-card ul li {
+    font-size: 0.9rem;
+  }
+}
+
+/* Very Small Devices (<425px) */
+@media (max-width: 425px) {
+  .department-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .department-card {
+    width: 100%;
+    padding: 15px;
   }
 
   .department-card h2 {
     font-size: 1.5rem;
   }
 
-  .vacancy-count {
-    font-size: 1rem;
+  .department-card p {
+    font-size: 0.85rem;
   }
 
   .department-card ul li {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
-  .department-card ul li::before {
-    font-size: 0.9rem;
-  }
-
-  .department-container > div {
+  .vacancy-count {
     font-size: 1rem;
   }
 }
 
-/* Medium devices (500px to 768px) */
-@media (max-width: 768px) {
-  .department-container {
-    padding: 1.5rem;
-  }
-
+/* Ultra Small Devices (<375px) */
+@media (max-width: 375px) {
   .department-container h1 {
-    font-size: 2.5rem;
+    font-size: 1.4rem;
   }
 
   .department-card {
-    width: 85%;
-    padding: 1.2rem;
+    width: 100%;
+    padding: 12px;
   }
 
   .department-card h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 
-  .vacancy-count {
-    font-size: 1.1rem;
+  .department-card p {
+    font-size: 0.8rem;
   }
 
   .department-card ul li {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
-  .department-card ul li::before {
-    font-size: 1rem;
-  }
-
-  .department-container > div {
-    font-size: 1.2rem;
+  .vacancy-count {
+    font-size: 0.9rem;
   }
 }
 
-/* Large devices (768px to 1024px) */
-@media (max-width: 1024px) {
-  .department-container {
-    padding: 2rem;
-  }
-
+/* Tiny Devices (<320px) */
+@media (max-width: 320px) {
   .department-container h1 {
-    font-size: 2.8rem;
-  }
-
-  .department-card {
-    width: 80%;
-    padding: 1.5rem;
-  }
-
-  .department-card h2 {
-    font-size: 1.8rem;
-  }
-
-  .vacancy-count {
-    font-size: 1.2rem;
-  }
-
-  .department-card ul li {
-    font-size: 1.1rem;
-  }
-
-  .department-card ul li::before {
-    font-size: 1.1rem;
-  }
-
-  .department-container > div {
     font-size: 1.3rem;
   }
-}
-
-/* Extra large devices (1024px and above) */
-@media (min-width: 1024px) {
-  .department-container {
-    padding: 2rem 4rem;
-  }
-
-  .department-container h1 {
-    font-size: 3rem;
-  }
 
   .department-card {
-    width: 80%;
-    padding: 1.5rem;
+    width: 100%;
+    padding: 10px;
   }
 
   .department-card h2 {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
   }
 
-  .vacancy-count {
-    font-size: 1.2rem;
+  .department-card p {
+    font-size: 0.75rem;
   }
 
   .department-card ul li {
-    font-size: 1.2rem;
+    font-size: 0.7rem;
   }
 
-  .department-card ul li::before {
-    font-size: 1.2rem;
+  .vacancy-count {
+    font-size: 0.8rem;
   }
+}
 
-  .department-container > div {
-    font-size: 1.5rem;
+/* Ensure correct display of department info on all sizes */
+@media (max-width: 1024px) {
+  .department-card {
+    margin: 10px;
   }
 }

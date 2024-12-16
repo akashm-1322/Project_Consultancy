@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { Card, Col, Row, Container} from "react-bootstrap";
-import { FaPassport, FaBriefcase, FaUserGraduate, FaLanguage } from "react-icons/fa";
-import DomesticPlacements from "./ServicePageMenus/DomesticPlacements";
-import LanguageTrainingProcess from "./ServicePageMenus/LanguageTrainingProcess";
-import StudyAbroadProcess from "./ServicePageMenus/StudyAbroadProcess";
-import TravelAbroadProcess from "./ServicePageMenus/TravelANDWorklAbroadProcess";
-import { motion } from "framer-motion"; // Framer Motion for animations
+import React, { useState } from 'react';
+import { Box, Button, Typography, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { FaPassport, FaBriefcase, FaSchool, FaLanguage } from 'react-icons/fa';
+import DomesticPlacements from './ServicePageMenus/DomesticPlacements';
+import LanguageTrainingProcess from './ServicePageMenus/LanguageTrainingProcess';
+import StudyAbroadProcess from './ServicePageMenus/StudyAbroadProcess';
+import TravelAbroadProcess from './ServicePageMenus/TravelANDWorklAbroadProcess';
 import './Service.css';  // Importing external CSS file
 
 const services = [
   {
     title: "Travel and Work Abroad",
     icon: <FaPassport />,
-    description: "Explore exciting destinations and start your global journey with ease.Get into your Favourite Jobs in your Favourite Destinations.",
+    description: "Explore exciting destinations and start your global journey with ease. Get into your favourite jobs in your favourite destinations.",
   },
   {
     title: "Study Abroad",
@@ -21,7 +20,7 @@ const services = [
   },
   {
     title: "Domestic Placements",
-    icon: <FaUserGraduate />,
+    icon: <FaSchool />,
     description: "Domestic recruitment focuses on sourcing and placing qualified candidates within IT and non-IT sectors across the country, tailored to meet both employer and job seeker needs.",
   },
   {
@@ -33,73 +32,72 @@ const services = [
 
 const Service = () => {
   const [selectedService, setSelectedService] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleReadMore = (service) => {
     setSelectedService(service.title);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedService(null);
   };
 
   return (
-    <Container fluid className="service-container">  {/* Use specific class name */}
-      {/* Add Background Graphics */}
-      <div className="background-circle top-left" />
-      <div className="background-circle bottom-left" />
+    <Box className="service-container">
+      <Box className="background-circle top-left" />
+      <Box className="background-circle bottom-left" />
 
-      <Row>
+      <Box display="flex" flexWrap="wrap" justifyContent="space-between" gap={2} padding={2}>
         {services.map((service, index) => (
-          <Col key={index} md={3} className="mb-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
+          <Box
+            key={index}
+            flex="1 1 45%"  // Make each card responsive
+            p={2}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="space-between"
+            boxShadow={3}
+            borderRadius={2}
+            className="service-card"
+            sx={{
+              transition: 'transform 0.3s',
+              '&:hover': { transform: 'scale(1.05)' },
+            }}
+          >
+            <Box sx={{ fontSize: '2rem', marginBottom: 2 }}>{service.icon}</Box>
+            <Typography variant="h6" align="center" className="title">{service.title}</Typography>
+            <Typography variant="body2" align="center" className="description">{service.description}</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ marginTop: 2 }}
+              onClick={() => handleReadMore(service)}
             >
-              <ServiceCard service={service} onReadMore={() => handleReadMore(service)} />
-            </motion.div>
-          </Col>
+              Learn More
+            </Button>
+          </Box>
         ))}
-      </Row>
+      </Box>
 
-      {/* Conditionally render the correct process component */}
-      {selectedService === "Travel and Work Abroad" && 
-      <div className="travel-cont"><TravelAbroadProcess onClose={() => setSelectedService(null)} /></div>}
-      {selectedService === "Study Abroad" && 
-      <div className="study-cont"><StudyAbroadProcess onClose={() => setSelectedService(null)} /> </div>}
-      {selectedService === "Domestic Placements" && 
-      <div className="domestic-cont"><DomesticPlacements onClose={() => setSelectedService(null)} /></div>}
-      {selectedService === "Language Coaching" && 
-      <div className="language-cont"><LanguageTrainingProcess onClose={() => setSelectedService(null)} /></div>}
-    </Container>
+      <Dialog open={openDialog} onClose={handleCloseDialog} fullWidth>
+        <DialogTitle>{selectedService}</DialogTitle>
+        <DialogContent>
+          {selectedService === "Travel and Work Abroad" && <TravelAbroadProcess />}
+          {selectedService === "Study Abroad" && <StudyAbroadProcess />}
+          {selectedService === "Domestic Placements" && <DomesticPlacements />}
+          {selectedService === "Language Coaching" && <LanguageTrainingProcess />}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
-
-const ServiceCard = ({ service, onReadMore }) => (
-  <Card className="service-card shadow-sm">
-    <Card.Body>
-      <motion.div
-        whileHover={{ rotate: 15, scale: 1.2 }}
-        transition={{ type: "spring", stiffness: 200 }}
-        className="icon"
-      >
-        {service.icon}
-      </motion.div>
-      <Card.Title className="title">{service.title}</Card.Title>
-      <Card.Text className="description">{service.description}</Card.Text>
-      <button
-        variant="link"
-        onClick={onReadMore}
-        className="learn-more-btn"
-      >
-        Learn More
-      </button>
-    </Card.Body>
-    <motion.div
-      initial={{ scaleX: 0 }}
-      animate={{ scaleX: 1 }}
-      transition={{ duration: 0.5 }}
-      className="bottom-line"
-    />
-  </Card>
-);
 
 export default Service;

@@ -1,190 +1,289 @@
-/* General Container Styling */
+/* General styles for the container */
 .service-container {
-  position: relative;
-  padding: 3% 5%;
-  background: linear-gradient(to bottom right, #f4f4f9, #e8f5e9);
-  overflow-x: hidden;
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping to the next line on smaller screens */
+  justify-content: space-between; /* Space between the cards */
+  gap: 1rem; /* Space between the cards */
+  padding: 1rem; /* Padding inside the container */
+  width: 100%; /* Ensure it spans the full container */
+  box-sizing: border-box; /* Includes padding and borders in width calculation */
 }
 
-/* Background Graphics */
-.background-circle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.2;
-  z-index: -1;
+.top-left {
+  top: -30px;
+  left: -30px;
 }
 
-.background-circle.top-left {
-  width: 300px;
-  height: 300px;
-  top: -50px;
-  left: -50px;
-  background: rgba(3, 161, 90, 0.4);
+.bottom-left {
+  bottom: -30px;
+  left: -30px;
 }
 
-.background-circle.bottom-left {
-  width: 400px;
-  height: 400px;
-  bottom: -100px;
-  left: -100px;
-  background: rgba(255, 205, 86, 0.3);
+/* Service cards container */
+.service-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  z-index: 10;
 }
 
-/* Service Cards */
+/* Service card wrapper with animation */
+.service-card-wrapper {
+  flex: 1;
+  width: auto;
+  transition: transform 0.3s ease;
+  margin: 10px;
+}
+
+/* Service Card */
 .service-card {
+  flex: 1 1 calc(25% - 1rem); /* Each card takes 25% width minus the gap */
   border: none;
-  border-radius: 12px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background: #fff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  cursor: pointer;
 }
 
 .service-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.service-card .icon {
+.icon {
   font-size: 3rem;
   color: #03a15a;
-  margin-bottom: 15px;
-  transition: transform 0.3s ease;
-}
-
-.service-card:hover .icon {
-  transform: rotate(15deg) scale(1.2);
-}
-
-.service-card .title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
   margin-bottom: 10px;
 }
 
-.service-card .description {
-  font-size: 1rem;
-  color: #666;
-}
-
-.service-card .learn-more-btn {
-  background: #03a15a;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
+.title {
+  font-size: 1.2rem;
   font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.service-card .learn-more-btn:hover {
-  background: #028847;
-}
-
-/* Dynamic Read More Cards */
-.travel-cont,
-.study-cont,
-.domestic-cont,
-.language-cont {
-  margin-top: 20px;
-  padding: 20px;
-  background: linear-gradient(to bottom, #ffffff, #f1f8e9);
-  border-radius: 12px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease;
-}
-
-.travel-cont,
-.study-cont,
-.domestic-cont,
-.language-cont .heading {
-  font-size: 1.8rem;
+  margin-bottom: 10px;
   color: #333;
+}
+
+.description {
+  font-size: 0.95rem;
+  color: #555;
   margin-bottom: 15px;
 }
 
-.travel-cont,
-.study-cont,
-.domestic-cont,
-.language-cont .description {
-  font-size: 1rem;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Read More Button */
-.read-more-back-btn {
-  background: #ff6f61;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
+.learn-more-btn {
+  font-size: 0.85rem;
+  color: #000;
+  background: #22639b;
   border: none;
+  padding: 5px 10px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.read-more-back-btn:hover {
-  background: #d84315;
+.learn-more-btn:hover {
+  color: #0c80e3;
 }
 
-/* Responsive Design */
+/* Decorative Bottom Line */
+.bottom-line {
+  height: 4px;
+  background: linear-gradient(to right, #03a15a, #0c80e3);
+  margin-top: 15px;
+}
 
-/* Small devices */
-@media (max-width: 480px) {
-  .service-container {
-    padding: 5%;
+/* Media Queries for Responsiveness */
+
+/* Large Screens (>1024px) */
+@media (min-width: 1025px) {
+  .service-cards-container {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .service-card-wrapper {
+    width: 22%; /* Each card takes up 22% of the container */
+  }
+}
+
+/* Medium Screens (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .service-cards-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .service-card-wrapper {
+    width: 90%;
+    margin: 10px auto;
   }
 
   .service-card {
-    padding: 15px;
+    flex: 1 1 calc(50% - 1rem); /* Each card takes 50% width */
+    max-width: calc(50% - 1rem);
+  }
+}
+
+/* Small Screens (425px - 768px) */
+@media (max-width: 768px) and (min-width: 425px) {
+  .service-cards-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .service-card {
+    flex: 1 1 calc(50% - 1rem); /* Each card takes 50% width */
+    max-width: calc(50% - 1rem);
+  }
+
+  .service-card-wrapper {
+    width: 90%;
+    margin: 10px auto;
+  }
+}
+
+/* Extra Small Screens (<425px) */
+@media (max-width: 425px) {
+  .service-cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card-wrapper {
+    width: 90%;
+    margin: 10px auto;
+  }
+
+  .service-card {
+    flex: 1 1 calc(100% - 1rem); /* Each card takes full width */
+    max-width: calc(100% - 1rem);
+  }
+}
+
+
+/* Responsive Styles */
+/* Very Small Devices (<320px) */
+@media (max-width: 320px) {
+  .service-container {
+    padding: 0.8%;
+  }
+
+  .service-card {
+    margin-bottom: 1.5%;
+  }
+
+  .service-card .icon {
+    font-size: 2rem;
   }
 
   .service-card .title {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
   }
 
   .service-card .description {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
   }
 
-  .travel-cont,
-  .study-cont,
-  .domestic-cont,
-  .language-cont .heading {
-    font-size: 1.5rem;
+  .travel-cont, .study-cont, .domestic-cont, .language-cont {
+    padding: 1%;
   }
 
-  .travel-cont,
-  .study-cont,
-  .domestic-cont,
-  .language-cont .description {
-    font-size: 0.9rem;
+  .travel-cont h2, .study-cont h2, .domestic-cont h2, .language-cont h2 {
+    font-size: 1rem;
   }
 }
 
-/* Medium devices */
-@media (max-width: 768px) {
-  .service-card {
-    margin-bottom: 15px;
+/* Tiny Devices (<375px) */
+@media (max-width: 375px) {
+  .service-container {
+    padding: 1%;
+  }
+
+  .service-card .icon {
+    font-size: 2.5rem;
   }
 
   .service-card .title {
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 
-  .travel-cont,
-  .study-cont,
-  .domestic-cont,
-  .language-cont .heading {
-    font-size: 1.6rem;
+  .service-card .description {
+    font-size: 0.8rem;
+  }
+
+  .travel-cont, .study-cont, .domestic-cont, .language-cont {
+    padding: 1.5%;
+  }
+
+  .travel-cont h2, .study-cont h2, .domestic-cont h2, .language-cont h2 {
+    font-size: 1.2rem;
   }
 }
 
-/* Keyframe Animations */
+/* Small Devices (<425px) */
+@media (max-width: 425px) {
+  .service-container {
+    padding: 1.2%;
+  }
+
+  .service-card .icon {
+    font-size: 2.2rem;
+  }
+
+  .service-card .title {
+    font-size: 1rem;
+  }
+
+  .service-card .description {
+    font-size: 0.8rem;
+  }
+
+  .travel-cont, .study-cont, .domestic-cont, .language-cont {
+    padding: 1.2%;
+  }
+
+  .travel-cont h2, .study-cont h2, .domestic-cont h2, .language-cont h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Small Devices (<768px) */
+@media (max-width: 768px) {
+  .service-container {
+    padding: 1%;
+  }
+
+  .service-card {
+    margin-bottom: 2%;
+  }
+
+  .travel-cont, .study-cont, .domestic-cont, .language-cont {
+    padding: 2%;
+  }
+
+  .travel-cont h2, .study-cont h2, .domestic-cont h2, .language-cont h2 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Tablets (<1024px) */
+@media (max-width: 1024px) {
+  .service-card {
+    margin-bottom: 3%;
+  }
+
+  .service-card .icon {
+    font-size: 3rem;
+  }
+
+  .travel-cont, .study-cont, .domestic-cont, .language-cont {
+    padding: 2.5%;
+  }
+}
+
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;

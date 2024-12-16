@@ -1,8 +1,9 @@
-import React, { useState, useEffect , useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import "./FieldComponent.css";
+import { Box, Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, CircularProgress, Paper } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import { FaSort, FaUserEdit } from "react-icons/fa";
+import "./FieldComponent.css";
 
 const FieldComponent = () => {
   const [fields, setFields] = useState([]);
@@ -22,6 +23,7 @@ const FieldComponent = () => {
   const [sortKey, setSortKey] = useState("name");
   const [sortDirection, setSortDirection] = useState("asc");
   const API_BASE_URL_FIELD = "http://localhost:5500/api/field";
+  
 
   const fetchFields = useCallback(async () => {
     try {
@@ -34,37 +36,25 @@ const FieldComponent = () => {
       console.error("Error fetching fields:", error);
       setError("Error fetching fields.");
     }
-  } ,  [API_BASE_URL_FIELD, currentPage, itemsPerPage , sortDirection , sortKey]);
+  }, [API_BASE_URL_FIELD, currentPage, itemsPerPage, sortDirection, sortKey]);
 
   useEffect(() => {
     fetchFields();
-  }, [currentPage, sortDirection, sortKey, currentPage , itemsPerPage , fetchFields]);
+  }, [currentPage, sortDirection, sortKey, fetchFields]);
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.names.length || formData.names.some((n) => n.trim() === ""))
-      errors.names = "Field names are required.";
-    const uniqueNames = new Set(
-      formData.names.map((name) => name.trim().toLowerCase())
-    );
-    if (uniqueNames.size !== formData.names.length) {
-      errors.names = "Duplicate department names are not allowed.";
-    }
-    if (!formData.vacancies.length || formData.vacancies.some((v) => v <= 0))
-      errors.vacancies = "Valid vacancies are required.";
-    if (!formData.countryData)
-      errors.countryData = "Country data is required.";
-    if (!formData.fieldData)
-      errors.fieldData = "Field data is required.";
+    if (!formData.names.length || formData.names.some((n) => n.trim() === "")) errors.names = "Field names are required.";
+    const uniqueNames = new Set(formData.names.map((name) => name.trim().toLowerCase()));
+    if (uniqueNames.size !== formData.names.length) errors.names = "Duplicate department names are not allowed.";
+    if (!formData.vacancies.length || formData.vacancies.some((v) => v <= 0)) errors.vacancies = "Valid vacancies are required.";
+    if (!formData.countryData) errors.countryData = "Country data is required.";
+    if (!formData.fieldData) errors.fieldData = "Field data is required.";
     return Object.keys(errors).length === 0;
   };
 
   const handleAddField = () => {
-    setFormData({
-      ...formData,
-      names: [...formData.names, ""],
-      vacancies: [...formData.vacancies, 0],
-    });
+    setFormData({ ...formData, names: [...formData.names, ""], vacancies: [...formData.vacancies, 0] });
   };
 
   const handleRemoveField = (index) => {
@@ -84,8 +74,7 @@ const FieldComponent = () => {
         fieldData: field.fieldData,
       });
       setEditingFieldId(id);
-    }
-    else {
+    } else {
       setError('Field not found.');
     }
   };
@@ -95,20 +84,14 @@ const FieldComponent = () => {
     if (!validateForm()) return;
     setLoading(true);
     const formDataToSend = new FormData();
-    formData.names.forEach((name, index) =>
-      formDataToSend.append(`names[${index}]`, name)
-    );
-    formData.vacancies.forEach((vacancy, index) =>
-      formDataToSend.append(`vacancies[${index}]`, vacancy)
-    );
+    formData.names.forEach((name, index) => formDataToSend.append(`names[${index}]`, name));
+    formData.vacancies.forEach((vacancy, index) => formDataToSend.append(`vacancies[${index}]`, vacancy));
     formDataToSend.append("countryData", formData.countryData);
     formDataToSend.append("fieldData", formData.fieldData);
-    if (formData.imageUrl) {
-      formDataToSend.append("imageUrl", formData.imageUrl);
-    }
+    if (formData.imageUrl) formDataToSend.append("imageUrl", formData.imageUrl);
 
     setLoading(true);
-    setError(null); 
+    setError(null);
     let response;
     try {
       if (editingFieldId) {
@@ -120,13 +103,7 @@ const FieldComponent = () => {
           headers: { "Content-Type": "multipart/form-data" },
         });
       }
-      setFormData({
-        names: [""],
-        vacancies: [0],
-        countryData: "",
-        imageUrl: null,
-        fieldData: "",
-      });
+      setFormData({ names: [""], vacancies: [0], countryData: "", imageUrl: null, fieldData: "" });
       setEditingFieldId(null);
       await fetchFields();
     } catch (error) {
@@ -137,9 +114,7 @@ const FieldComponent = () => {
     }
   };
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleSortChange = (key) => {
     setSortKey(key);
@@ -170,136 +145,132 @@ const FieldComponent = () => {
   };
 
   return (
-    <div className="field-container">
-      <h1>Field Management</h1>
-      {error && <div className="error-message">{error}</div>}
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h4" sx={{ marginBottom: 2 }}>Field Management</Typography>
+      {error && <Typography color="error">{error}</Typography>}
 
       <form onSubmit={handleSubmit} className="field-form">
         {formData.names.map((_, index) => (
-          <div key={index} className="dynamic-field-group">
-            <input
-            className='custom-form-control-f'
-              type="text"
+          <Box key={index} sx={{ marginBottom: 2, display: 'flex', gap: 2 }}>
+            <TextField
+              fullWidth
+              label="Department Name"
+              variant="outlined"
               name="names"
               value={formData.names[index]}
               onChange={(e) => handleChange(e, index)}
-              placeholder="Department Name"
               required
             />
-            <input
-            className='custom-form-control-f'
-              type="number"
+            <TextField
+              fullWidth
+              label="Vacancies"
+              variant="outlined"
               name="vacancies"
+              type="number"
               value={formData.vacancies[index]}
               onChange={(e) => handleChange(e, index)}
-              placeholder="Vacancies"
               required
             />
-            <button className='field-form-button' type="button" onClick={() => handleRemoveField(index)}>
+            <Button variant="contained" color="error" onClick={() => handleRemoveField(index)} sx={{ alignSelf: 'center' }}>
               Remove
-            </button>
-          </div>
+            </Button>
+          </Box>
         ))}
-        <button  className='field-form-button' type="button" onClick={handleAddField}>
-          Add Field
-        </button>
-        <input
-         className='custom-form-control-f'
-          type="text"
+        <Button variant="contained" onClick={handleAddField}>Add Field</Button>
+
+        <TextField
+          fullWidth
+          label="Country"
+          variant="outlined"
           name="countryData"
           value={formData.countryData}
           onChange={handleChange}
-          placeholder="Country"
           required
+          sx={{ marginTop: 2 }}
         />
-        <input
-         className="custom-form-control-f"
-          type="text"
+        <TextField
+          fullWidth
+          label="Field Type"
+          variant="outlined"
           name="fieldData"
           value={formData.fieldData}
           onChange={handleChange}
-          placeholder="Field Type"
           required
+          sx={{ marginTop: 2 }}
         />
-        <input className="custom-form-control-f" type="file" name="imageUrl" onChange={handleChange} />
-        <button type="submit">
+        <Button variant="contained" component="label" sx={{ marginTop: 2 }}>
+          Upload Image
+          <input type="file" name="imageUrl" hidden onChange={handleChange} />
+        </Button>
+        <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>
           {editingFieldId ? "Update Field" : "Add Field"}
-        </button>
+        </Button>
       </form>
 
-      <h2>Fields List</h2>
+      <Typography variant="h5" sx={{ marginTop: 4 }}>Fields List</Typography>
       {loading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSortChange("name")}>Name <FaSort/></th>
-              <th onClick={() => handleSortChange("vacancies")}>Vacancies <FaSort/></th>
-              <th onClick={() => handleSortChange("countryData")}>Country Name <FaSort/></th>
-              <th onClick={() => handleSortChange("fieldData")}>Type <FaSort/></th>
-              <th>Image</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(Array.isArray(fields) && fields.length > 0 ) ? (
-              fields.map((field) => (
-                <tr key={field._id}>
-                  <td>
-                    <ul>
-                      {field.names.map((name, index) => (
-                        <li key={index}>{name}</li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td>
-                    <ul>
-                      {field.vacancies.map((vacancy, index) => (
-                        <li key={index}>{vacancy}</li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td>{field.countryData}</td>
-                  <td>{field.fieldData}</td>
-                  <td>
-                    {field.imageUrl && (
-                      <img
-                        src={`http://localhost:5500${field.imageUrl}`}
-                        alt={field._id} width="70" height="30"
-                      />
-                    )}
-                  </td>
-                  <td>
-                    <button onClick={() => handleEdit(field._id)}>
-                      <FaUserEdit />
-                    </button>
-                    <button onClick={() => handleDelete(field._id)}>
-                      <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No fields found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell onClick={() => handleSortChange("name")}>Name <FaSort /></TableCell>
+                <TableCell onClick={() => handleSortChange("vacancies")}>Vacancies <FaSort /></TableCell>
+                <TableCell onClick={() => handleSortChange("countryData")}>Country</TableCell>
+                <TableCell onClick={() => handleSortChange("fieldData")}>Type</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {fields.length > 0 ? (
+                fields.map((field) => (
+                  <TableRow key={field._id}>
+                    <TableCell>{field.names.join(", ")}</TableCell>
+                    <TableCell>{field.vacancies.join(", ")}</TableCell>
+                    <TableCell>{field.countryData}</TableCell>
+                    <TableCell>{field.fieldData}</TableCell>
+                    <TableCell>
+                      {field.imageUrl && (
+                        <img
+                          src={`http://localhost:5500${field.imageUrl}`}
+                          alt={field._id}
+                          width="70"
+                          height="30"
+                        />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton onClick={() => handleEdit(field._id)}>
+                        <FaUserEdit />
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(field._id)}>
+                        <MdDelete />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan="6">No fields found.</TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
-      <div className="pagination">
-      {Number.isFinite(total) && itemsPerPage > 0 ? (
-        [...Array(Math.ceil(total / itemsPerPage)).keys()].map((number) => (
-        <button key={number + 1} onClick={() => handlePageChange(number + 1)}>
-        {number + 1}
-      </button>
-    ))
-  ) : (
-    <p>No data available for pagination.</p>
-  )}
-      </div>
-    </div>
+      
+      <Box sx={{ marginTop: 2 }}>
+        {Number.isFinite(total) && itemsPerPage > 0 ? (
+          [...Array(Math.ceil(total / itemsPerPage)).keys()].map((number) => (
+            <Button key={number + 1} onClick={() => handlePageChange(number + 1)}>{number + 1}</Button>
+          ))
+        ) : (
+          <Typography>No data available for pagination.</Typography>
+        )}
+      </Box>
+    </Box>
   );
 };
 

@@ -1,12 +1,13 @@
-import React, { useState, useEffect , useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import './CountryComponent.css';
+import { Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
 import { MdDelete } from 'react-icons/md';
-import { FaUserEdit , FaSort } from 'react-icons/fa';
+import { FaUserEdit, FaSort } from 'react-icons/fa';
+import './CountryComponent.css';
 
 const CountryComponent = () => {
   const [countries, setCountries] = useState([]);
-  const [fields, setFields] = useState([]); // To store fields data
+  const [fields, setFields] = useState([]);
   const [total, setTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const contactsPerPage = 10;
@@ -24,7 +25,7 @@ const CountryComponent = () => {
   const [sortKey, setSortKey] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
   const API_BASE_URL_COUN = 'http://localhost:5500/api/countries';
-  const API_BASE_URL_FIELDS = 'http://localhost:5500/api/field'; // Example endpoint for fields
+  const API_BASE_URL_FIELDS = 'http://localhost:5500/api/field';
 
   const fetchCountries = useCallback(async () => {
     try {
@@ -37,7 +38,7 @@ const CountryComponent = () => {
       console.error("Error fetching countries:", error);
       setError("Failed to fetch countries.");
     }
-  }, [API_BASE_URL_COUN, currentPage, contactsPerPage , sortDirection , sortKey]);
+  }, [currentPage, contactsPerPage, sortKey, sortDirection]);
 
   const fetchFields = useCallback(async () => {
     try {
@@ -47,12 +48,12 @@ const CountryComponent = () => {
       console.error('Error fetching fields:', error);
       setError('Failed to fetch fields.');
     }
-  }, [API_BASE_URL_FIELDS]);
+  }, []);
 
   useEffect(() => {
     fetchCountries();
     fetchFields();
-  }, [currentPage, sortDirection, sortKey, currentPage , contactsPerPage ,fetchFields ,  fetchCountries]);
+  }, [currentPage, sortKey, sortDirection , fetchCountries , fetchFields]);
 
   const validateForm = () => {
     const errors = {};
@@ -70,7 +71,7 @@ const CountryComponent = () => {
     e.preventDefault();
 
     if (!validateForm()) {
-      return; // Stop if validation fails
+      return;
     }
 
     const formDataToSend = new FormData();
@@ -151,7 +152,6 @@ const CountryComponent = () => {
   };
 
   const getVacanciesFromFields = (countryName, countryType) => {
-    // Filter fields that match the country and fieldType
     const matchedFields = Array.isArray(fields)
       ? fields.filter(
           (field) =>
@@ -161,93 +161,111 @@ const CountryComponent = () => {
     
     if (matchedFields.length === 0) return 0;
   
-    // Sum the vacancies across all matched fields
     const totalVacancies = matchedFields.reduce((sum, field) => {
       const vacancies = Array.isArray(field.vacancies)
-        ? field.vacancies.reduce((subSum, num) => subSum + num, 0) // Sum the numbers in the vacancies array
+        ? field.vacancies.reduce((subSum, num) => subSum + num, 0)
         : 0;
-      return sum + vacancies; // Add this field's total vacancies to the overall sum
+      return sum + vacancies;
     }, 0);
   
     return totalVacancies;
   };
-  
 
   return (
     <div className="country-container">
-      <h1>Country Management</h1>
+      <Typography variant="h4" gutterBottom>
+        Country Management
+      </Typography>
       {error && <div className="error-message">{error}</div>}
+
       <form onSubmit={handleSubmit} className="country-form">
-        <input
-          className='custom-form-control-1'
-          type="text"
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          label="Country Name"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Country Name"
           required
+          error={!!formErrors.name}
+          helperText={formErrors.name}
         />
-        {formErrors.name && <span className="error">{formErrors.name}</span>}
-        <input
-          className='custom-form-control-1'
-          type="text"
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          label="Country Code"
           name="code"
           value={formData.code}
           onChange={handleChange}
-          placeholder="Country Code"
           required
+          error={!!formErrors.code}
+          helperText={formErrors.code}
         />
-        {formErrors.code && <span className="error">{formErrors.code}</span>}
-        <input
-          className='custom-form-control-1'
-          type="text"
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          label="Type"
           name="type"
           value={formData.type}
           onChange={handleChange}
-          placeholder="Type"
           required
+          error={!!formErrors.type}
+          helperText={formErrors.type}
         />
-        {formErrors.type && <span className="error">{formErrors.type}</span>}
-        <input
-         className='custom-form-control-1'
-          type="number"
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          label="Vacancies"
           name="vacancies"
+          type="number"
           value={formData.vacancies}
           onChange={handleChange}
-          placeholder="Vacancies"
           required
+          error={!!formErrors.vacancies}
+          helperText={formErrors.vacancies}
         />
-        {formErrors.vacancies && <span className="error">{formErrors.vacancies}</span>}
-        <input className='custom-form-control-1' type="file" name="shapeImage" onChange={handleChange} />
-        <button className="country-form-button" type="submit">
+        <input
+          type="file"
+          name="shapeImage"
+          onChange={handleChange}
+          style={{ marginBottom: '16px' }}
+        />
+        <Button variant="contained" color="primary" type="submit" fullWidth>
           {editingCountryId ? 'Update Field' : 'Add Field'}
-        </button>
+        </Button>
       </form>
 
-      <h2>Countries List</h2>
+      <Typography variant="h6" gutterBottom>
+        Countries List
+      </Typography>
+
       {loading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
-        <table>
-          <thead>
-            <tr>
-            <th onClick={() => handleSortChange('name')}>Country Name <FaSort /></th>
-            <th onClick={() => handleSortChange('code')}>Country Code <FaSort /></th>
-            <th onClick={() => handleSortChange('type')}>Type <FaSort /></th>
-            <th onClick={() => handleSortChange('vacancies')}>Vacancies <FaSort /></th>
-            <th>Image Shape <FaSort /></th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(countries) && countries.length > 0 ? (
-              countries.map((country) => (
-                <tr key={country._id}>
-                  <td>{country.name}</td>
-                  <td>{country.code}</td>
-                  <td>{country.type}</td>
-                  <td>{getVacanciesFromFields(country.name, country.type)}</td>
-                  <td>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell onClick={() => handleSortChange('name')}>Country Name <FaSort /></TableCell>
+                <TableCell onClick={() => handleSortChange('code')}>Country Code <FaSort /></TableCell>
+                <TableCell onClick={() => handleSortChange('type')}>Type <FaSort /></TableCell>
+                <TableCell onClick={() => handleSortChange('vacancies')}>Vacancies <FaSort /></TableCell>
+                <TableCell>Image Shape</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {countries.map((country) => (
+                <TableRow key={country._id}>
+                  <TableCell>{country.name}</TableCell>
+                  <TableCell>{country.code}</TableCell>
+                  <TableCell>{country.type}</TableCell>
+                  <TableCell>{getVacanciesFromFields(country.name, country.type)}</TableCell>
+                  <TableCell>
                     {country.shapeImage && (
                       <img
                         src={`http://localhost:5500${country.shapeImage}`}
@@ -256,35 +274,31 @@ const CountryComponent = () => {
                         height="30"
                       />
                     )}
-                  </td>
-                  <td>
-                    <button onClick={() => handleEdit(country._id)}>
+                  </TableCell>
+                  <TableCell>
+                    <Button onClick={() => handleEdit(country._id)}>
                       <FaUserEdit />
-                    </button>
-                    <button onClick={() => handleDelete(country._id)}>
+                    </Button>
+                    <Button onClick={() => handleDelete(country._id)}>
                       <MdDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No countries found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
 
       <div className="pagination">
         {Array.from({ length: Math.ceil(total / contactsPerPage) }, (_, i) => (
-          <button
+          <Button
             key={i}
             onClick={() => handlePageChange(i + 1)}
-            className={currentPage === i + 1 ? 'active' : ''}
+            variant={currentPage === i + 1 ? 'contained' : 'outlined'}
           >
             {i + 1}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

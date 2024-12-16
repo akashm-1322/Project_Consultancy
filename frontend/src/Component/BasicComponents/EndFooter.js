@@ -1,34 +1,82 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import './Endfooter.css'; // Import the CSS file
 
 const EndFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="end-footer">
-      <Container>
-        <Row>
-          <Col className="footer-section">
-            <p>&copy; {currentYear} - J99 Recruitment Services Pvt. Ltd. All Rights Reserved.</p>
-          </Col>
-          <Col className="footer-section">
-            <p>
-              Follow Us: 
-              <a href="https://www.facebook.com" className="footer-link">Facebook</a> |
-              <a href="https://www.twitter.com" className="footer-link">Twitter</a> |
-              <a href="https://www.instagram.com" className="footer-link">Instagram</a>
-            </p>
-          </Col>
-          <Col className="footer-section">
-            <p>
-              Contact us: 
-              <a href="mailto:J99WorldTour@gmail.com" className="footer-link">J99Recruitmentservices@gmail.com</a>
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <footer
+      style={{
+        backgroundColor: '#222',
+        color: '#ffffff',
+        borderTop: '2px solid #1976d2',
+        padding: '20px 0',
+      }}
+    >
+      <div className="container">
+        <div className="row d-flex justify-content-center align-items-center">
+          {/* Left Section */}
+          <div
+            className="col-12 col-md-6 col-lg-4 text-center text-lg-start mb-3 mb-md-0"
+            style={{ fontSize: '14px' }}
+          >
+            <p className="mb-0">&copy; {currentYear} - J99 Recruitment Services Pvt. Ltd.</p>
+            <p className="mb-0">All Rights Reserved.</p>
+          </div>
+
+          {/* Center Section */}
+          <div
+            className="col-12 col-md-6 col-lg-4 text-center mb-3 mb-md-0"
+            style={{ fontSize: '14px' }}
+          >
+            <p className="mb-1">Follow Us:</p>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white mx-2"
+              style={{ textDecoration: 'none' }}
+            >
+              Facebook
+            </a>
+            |
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white mx-2"
+              style={{ textDecoration: 'none' }}
+            >
+              Twitter
+            </a>
+            |
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white mx-2"
+              style={{ textDecoration: 'none' }}
+            >
+              Instagram
+            </a>
+          </div>
+
+          {/* Right Section */}
+          <div
+            className="col-12 col-lg-4 text-center text-lg-end"
+            style={{ fontSize: '14px' }}
+          >
+            <p className="mb-1">Contact us:</p>
+            <a
+              href="mailto:J99Recruitmentservices@gmail.com"
+              className="text-white"
+              style={{ textDecoration: 'none' }}
+            >
+              J99Recruitmentservices@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

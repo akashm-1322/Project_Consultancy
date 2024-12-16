@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit} from 'react-icons/fa';
+import { TextField, Button, Box, Typography, Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaEdit } from 'react-icons/fa';
 import { IoManOutline } from "react-icons/io5";
 import ContactImage from '../../Asset/Contact.jpg'; // Adjust path as needed
 import axios from 'axios'; // For fetching country data
@@ -101,122 +101,114 @@ const ContactPage = () => {
   };
 
   return (
-    <Container fluid className="contact-container">
-      <Row className="contact-row">
-        <Col md={6} className="contact-form-col">
-          <h3 className="contact-heading">Contact Us</h3>
-          <Form onSubmit={handleSubmit} className="contact-form">
-            <Form.Group>
-              <Form.Label><IoManOutline /> Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                onChange={handleChange}
-                value={formData.name}
-                placeholder="Enter your name"
-                className="custom-form-control"
-                required
-              />
-              {errors.name && <div className="error-message">{errors.name}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaPhoneAlt /> Phone</Form.Label>
-              <Form.Control
-                type="text"
-                name="phone"
-                onChange={handleChange}
-                value={formData.phone}
-                placeholder="Enter your phone number"
-                className="custom-form-control"
-                required
-              />
-              {errors.phone && <div className="error-message">{errors.phone}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaEnvelope /> Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                onChange={handleChange}
-                value={formData.email}
-                placeholder="Enter your email"
-                className="custom-form-control"
-                required
-              />
-              {errors.email && <div className="error-message">{errors.email}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaEnvelope /> Date of Joining</Form.Label>
-              <Form.Control
-                type="date"
-                name="dateofjoining"
-                onChange={handleChange}
-                value={formData.dateofjoining}
-                className="custom-form-control"
-                required
-              />
-              {errors.dateofjoining && <div className="error-message">{errors.dateofjoining}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaMapMarkerAlt /> Type</Form.Label>
-              <Form.Control
-                as="select"
-                name="type"
-                onChange={handleTypeChange}
-                value={formData.type}
-                required
-                className="custom-form-control"
-              >
-                <option value="">Select Type</option>
-                {uniqueTypes.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </Form.Control>
-              {errors.type && <div className="error-message">{errors.type}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaMapMarkerAlt /> Destination</Form.Label>
-              <Form.Control
-                as="select"
-                name="destination"
-                onChange={handleChange}
-                value={formData.destination}
-                required
-                className="custom-form-control"
-              >
-                <option value="">Select Destination</option>
-                {filteredDestinations.map((destination, index) => (
-                  <option key={index} value={destination}>
-                    {destination}
-                  </option>
-                ))}
-              </Form.Control>
-              {errors.destination && <div className="error-message">{errors.destination}</div>}
-            </Form.Group>
-            <Form.Group>
-              <Form.Label><FaEdit /> Message</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="message"
-                onChange={handleChange}
-                value={formData.message}
-                rows={3}
-                className="custom-form-control"
-                required
-              />
-              {errors.message && <div className="error-message">{errors.message}</div>}
-            </Form.Group>
-            <Button variant="primary" type="submit">Send Message</Button>
-            {statusMessage && <div className="status-message">{statusMessage}</div>}
-          </Form>
-        </Col>
-        <Col md={6} className="contact-image-col">
-          <img src={ContactImage} alt="Contact" className="contact-image" />
-        </Col>
-      </Row>
-    </Container>
+    <Box sx={{ display: 'flex', margin: '2vh', flexDirection: { xs: 'column', md: 'row' }, height: '100vh' }}>
+      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 2 }}>
+        <Typography variant="h3" gutterBottom>Contact Us</Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label={<><IoManOutline /> Name</>}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+            error={Boolean(errors.name)}
+            helperText={errors.name}
+          />
+          <TextField
+            label={<><FaPhoneAlt /> Phone</>}
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+            error={Boolean(errors.phone)}
+            helperText={errors.phone}
+          />
+          <TextField
+            label={<><FaEnvelope /> Email</>}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+            error={Boolean(errors.email)}
+            helperText={errors.email}
+          />
+          <TextField
+            label={<><FaEdit /> Message</>}
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+            multiline
+            rows={4}
+            error={Boolean(errors.message)}
+            helperText={errors.message}
+          />
+          <TextField
+            label={<><FaMapMarkerAlt /> Date of Joining</>}
+            name="dateofjoining"
+            value={formData.dateofjoining}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+            required
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            error={Boolean(errors.dateofjoining)}
+            helperText={errors.dateofjoining}
+          />
+          <FormControl fullWidth margin="normal" required>
+            <InputLabel>Type</InputLabel>
+            <Select
+              name="type"
+              value={formData.type}
+              onChange={handleTypeChange}
+              error={Boolean(errors.type)}
+            >
+              <MenuItem value="">Select Type</MenuItem>
+              {uniqueTypes.map((type, index) => (
+                <MenuItem key={index} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.type && <FormHelperText error>{errors.type}</FormHelperText>}
+          </FormControl>
+          <FormControl fullWidth margin="normal" required>
+            <InputLabel>Destination</InputLabel>
+            <Select
+              name="destination"
+              value={formData.destination}
+              onChange={handleChange}
+              error={Boolean(errors.destination)}
+            >
+              <MenuItem value="">Select Destination</MenuItem>
+              {filteredDestinations.map((destination, index) => (
+                <MenuItem key={index} value={destination}>
+                  {destination}
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.destination && <FormHelperText error>{errors.destination}</FormHelperText>}
+          </FormControl>
+          <Button variant="contained" color="primary" type="submit" fullWidth sx={{ marginTop: 2 }}>
+            Send Message
+          </Button>
+          {statusMessage && <Typography variant="body1" color="success" sx={{ marginTop: 2 }}>{statusMessage}</Typography>}
+        </form>
+      </Box>
+
+      <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+        <img src={ContactImage} alt="Contact" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+      </Box>
+    </Box>
   );
 };
 

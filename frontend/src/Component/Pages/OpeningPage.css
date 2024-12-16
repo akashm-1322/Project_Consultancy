@@ -1,255 +1,222 @@
-/* Background animation */
-@keyframes backgroundSlide {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
-/* Main container */
+/* Main Container */
 .opening-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  background: linear-gradient(90deg , #fff , rgba(141, 206, 177, 0.927));
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  animation: fadeIn 2s ease-in-out;
 }
 
-/* Wrapper for content */
+/* Content Wrapper */
 .content-wrapper {
   display: flex;
-  flex-direction: row;
-  width: 90%;
-  max-width: 1200px;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  transform: translateY(-30px);
-  animation: fadeInUp 1s ease-in-out forwards;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Left section styles */
+/* Left Box */
 .left-box {
   flex: 1;
-  padding: 40px 20px;
-  background: linear-gradient(90deg , #fff , rgba(141, 206, 177, 0.927));
-  animation: pulseGlow 2s infinite;
-}
-
-/* Right Section Styles */
-.right-box {
-  flex: 1;
-  background: linear-gradient(90deg , rgba(141, 206, 177, 0.927) , #fff);
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(3, 161, 90, 0.9), rgba(255, 127, 80, 0.8));
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  flex-direction: column;
   text-align: center;
-  position: relative;
-  animation: slideInRight 1s ease-in-out;
+  animation: slideInLeft 1s ease-out;
 }
 
-.company-logo img {
-  width: 200px;
-  height: auto;
+.page-content {
+  color: white;
+}
+
+.title {
+  font-size: 2.5rem;
   margin-bottom: 20px;
+  font-weight: bold;
+  animation: fadeInUp 1.5s ease-in-out;
 }
 
-/* Responsive Design for Mobile and Tablet */
-
-/* For screens up to 768px (Tablets and smaller devices) */
-@media (max-width: 768px) {
-  .content-wrapper {
-    flex-direction: column;
-    width: 95%;
-    max-width: 100%;
-    padding: 10px;
-  }
-
-  .left-box,
-  .right-box {
-    flex: 1 1 100%;
-    padding: 20px;
-  }
-
-  .title {
-    font-size: 2rem;
-    margin-bottom: 15px;
-  }
-
-  .subheading {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-  }
-
-  .button-container {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .button {
-    font-size: 1rem;
-    padding: 12px 25px;
-  }
-
-  .company-logo img {
-    width: 150px;
-  }
-
-  .consultancy-name {
-    font-size: 1.2rem;
-  }
+.subheading {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  animation: fadeInUp 2s ease-in-out;
 }
 
-/* For screens up to 480px (Mobile devices) */
-@media (max-width: 480px) {
-  .content-wrapper {
-    flex-direction: column;
-    width: 100%;
-    padding: 5px;
-  }
-
-  .left-box,
-  .right-box {
-    flex: 1 1 100%;
-    padding: 15px;
-  }
-
-  .title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-
-  .subheading {
-    font-size: 1rem;
-    margin-bottom: 20px;
-  }
-
-  .button-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .button {
-    font-size: 0.9rem;
-    padding: 10px 20px;
-  }
-
-  .company-logo img {
-    width: 120px;
-  }
-
-  .consultancy-name {
-    font-size: 1.1rem;
-  }
-
-  /* Adjust form elements for mobile */
-  .input-field {
-    font-size: 0.9rem;
-    padding: 10px 15px;
-  }
-
-  .submit-button {
-    font-size: 0.9rem;
-    padding: 12px 25px;
-  }
-
-  .error-message {
-    font-size: 0.8rem;
-  }
+.button-container {
+  display: flex;
+  gap: 20px;
+  animation: fadeInUp 2.5s ease-in-out;
 }
 
-/* Form Styles (Mobile and tablet-friendly) */
+.button {
+  background: #ff7f50;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.button:hover {
+  background: #f57c00;
+  transform: scale(1.05);
+}
+
+.button-icon {
+  margin-right: 10px;
+}
+
+.admin-button {
+  background: #3a3a3a;
+}
+
+.admin-button:hover {
+  background: #444;
+}
+
+/* Admin Login Form */
 .admin-login-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  text-align: left;
+  animation: fadeInUp 2.5s ease-in-out;
 }
 
-.input-container {
-  position: relative;
-}
-
-.input-field {
-  width: 100%;
-  padding: 12px 20px;
+.input-container input {
+  padding: 15px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.input-field:focus {
-  border-color: #4caf50;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+  border: 2px solid #ccc;
+  border-radius: 10px;
   outline: none;
+  transition: border 0.3s ease;
 }
 
-.input-field::placeholder {
-  color: #000;
-  font-style: italic;
+.input-container input:focus {
+  border: 2px solid #ff7f50;
 }
 
-/* Submit Button */
-.submit-button {
-  background: linear-gradient(90deg, #4caf50, #81c784);
-  color: #000;
-  padding: 15px 30px;
-  font-size: 1rem;
-  border: none;
+button.custom-form-control-o {
+  padding: 15px;
+  font-size: 1.2rem;
   border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-}
-
-.submit-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.5);
-}
-
-.submit-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Back Button */
-.back-button {
-  background: linear-gradient(90deg, #ccc, #bbb);
-  color: black;
-  padding: 10px 20px;
-  font-size: 1rem;
+  background: #ff7f50;
+  color: white;
   border: none;
-  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.back-button:hover {
-  background: linear-gradient(90deg, #aaa, #999);
+button.custom-form-control-o:hover {
+  background: #f57c00;
   transform: scale(1.05);
 }
 
-/* Error Message */
 .error-message {
   color: red;
-  font-size: 0.9rem;
-  text-align: center;
-  animation: shake 0.5s;
+  font-size: 1rem;
+  margin-top: 15px;
+  animation: shake 0.5s ease-in-out;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid #ff7f50;
+  color: #ff7f50;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.back-button:hover {
+  background: #ff7f50;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Right Box */
+.right-box {
+  background-color: #f5f5f5;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+.company-logo img {
+  max-width: 100%;
+  border-radius: 10px;
+  animation: fadeInRight 2s ease-in-out;
+}
+
+.consultancy-name {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  color: #444;
+  font-weight: bold;
+  animation: fadeInRight 2.5s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   25% {
@@ -263,25 +230,105 @@
   }
 }
 
-/* Button Animations */
-.button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-45deg);
-  transition: left 0.3s ease;
-  z-index: 0;
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .opening-page {
+    flex-direction: column;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .left-box {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .right-box {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .button {
+    font-size: 1rem;
+    width: 100%;
+  }
 }
 
-.button:hover::after {
-  left: 100%;
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subheading {
+    font-size: 1rem;
+  }
+
+  .company-logo img {
+    width: 80%;
+  }
+
+  .consultancy-name {
+    font-size: 1.2rem;
+  }
 }
 
-.button:hover {
-  transform: scale(1.1);
-  opacity: 0.95;
+@media (max-width: 425px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subheading {
+    font-size: 0.9rem;
+  }
+
+  .button {
+    font-size: 1rem;
+  }
+
+  .company-logo img {
+    width: 70%;
+  }
+}
+
+@media (max-width: 375px) {
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .subheading {
+    font-size: 0.8rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+  }
+
+  .company-logo img {
+    width: 60%;
+  }
+}
+
+@media (max-width: 320px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .subheading {
+    font-size: 0.7rem;
+  }
+
+  .button {
+    font-size: 0.8rem;
+  }
+
+  .company-logo img {
+    width: 50%;
+  }
 }
