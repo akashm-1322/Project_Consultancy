@@ -5,6 +5,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import multer from 'multer';
+import compression from 'compression'; // For Gzip compression
+import helmet from 'helmet'; // For security headers
 import { fileURLToPath } from 'url';
 
 // Load environment variables from .env
@@ -20,11 +22,22 @@ const app = express();
 // Middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(bodyParser.json());
+app.use(compression()); // Enable Gzip compression
+app.use(helmet()); // Security headers
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded images
+
+// Disable caching
+app.use((req, res, next) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+  next();
+});
+
 
 // Connect to MongoDB (Main DB)
 mongoose
-  .connect(process.env.MAIN_DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MAIN_DB_URI)
   .then(() => console.log('Connected to the main database!'))
   .catch((err) => console.error('Error connecting to database', err));
 
@@ -63,7 +76,7 @@ app.get('*', (req, res) => {
 });
 
 // Start the server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5500;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
