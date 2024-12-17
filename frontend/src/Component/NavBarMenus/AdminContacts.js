@@ -222,7 +222,7 @@ const AdminContacts = () => {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
         />
-        <Button variant="contained" type="submit">
+        <Button type="submit">
           {editingContactId ? "Update Contact" : "Add Contact"}
         </Button>
       </Box>
@@ -230,12 +230,38 @@ const AdminContacts = () => {
   </Paper>
 
   {/* Table */}
-  <TableContainer component={Paper} elevation={3} sx={{ mb: 4 }}>
-  <Table>
-    {/* Table Headers */}
+  <TableContainer
+  component={Paper}
+  elevation={3}
+  sx={{
+    mb: 4,
+    width: "100%", // Ensures it occupies full width
+    overflowX: "auto", // Enables horizontal scrolling
+    "&::-webkit-scrollbar": {
+      height: "8px", // Customize scrollbar height
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#888", // Scrollbar thumb color
+      borderRadius: "4px",
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#f1f1f1", // Scrollbar track color
+    },
+  }}
+>
+  <Table sx={{ minWidth: 700 }}> {/* minWidth ensures content doesn't collapse */}
     <TableHead>
       <TableRow>
-        {["Name", "Email", "Phone", "Type", "Message", "Destination", "Date of Joining", "Actions"].map((head) => (
+        {[
+          "Name",
+          "Email",
+          "Phone",
+          "Type",
+          "Message",
+          "Destination",
+          "Date of Joining",
+          "Actions",
+        ].map((head) => (
           <TableCell key={head} onClick={() => handleSortChange(head)}>
             {head} <FaSort />
           </TableCell>
@@ -243,7 +269,6 @@ const AdminContacts = () => {
       </TableRow>
     </TableHead>
 
-    {/* Table Body */}
     <TableBody>
       {contacts.map((contact) => (
         <TableRow key={contact._id}>
@@ -267,6 +292,7 @@ const AdminContacts = () => {
     </TableBody>
   </Table>
 </TableContainer>
+
 
 
   {/* Pagination */}

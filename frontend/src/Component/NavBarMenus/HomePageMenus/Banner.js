@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Container, Grid, Typography, IconButton } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
-import { FaCircleDot } from "react-icons/fa6"; // Using your existing icon
+import { FaCircleDot } from "react-icons/fa6";
 
 // Keyframes for fade-in animation
 const fadeIn = keyframes`
@@ -9,7 +9,7 @@ const fadeIn = keyframes`
   100% { opacity: 1; transform: translateY(0); }
 `;
 
-// Styled video container for animations and graphics
+// Styled video container
 const VideoSlide = styled("div")(({ theme }) => ({
   position: "relative",
   width: "100%",
@@ -25,28 +25,35 @@ const VideoSlide = styled("div")(({ theme }) => ({
 const VideoContent = styled(Box)(({ theme }) => ({
   position: "absolute",
   bottom: "20%",
-  left: "10%",
+  left: "50%",
+  transform: "translateX(-50%)",
   zIndex: 2,
   color: "white",
+  textAlign: "center", // Center align text
   animation: `${fadeIn} 1.5s ease-out`,
-  maxWidth: "100%",
-  textAlign: "left",
+  maxWidth: "90%",
+  padding: theme.spacing(2),
+  [theme.breakpoints.down("sm")]: {
+    bottom: "25%",
+  },
 }));
 
-const DotContainer = styled(Box)({
+const DotContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
-  bottom: "10%",
+  bottom: "5%", // Spaced perfectly at the bottom
   left: "50%",
   transform: "translateX(-50%)",
   display: "flex",
   gap: "10px",
   zIndex: 3,
-});
+  [theme.breakpoints.down("sm")]: {
+    bottom: "3%",
+  },
+}));
 
-// Dot styling
 const StyledDot = styled(IconButton)(({ active }) => ({
   color: active ? "#1976d2" : "rgba(255, 255, 255, 0.6)",
-  fontSize: active ? "1.5rem" : "1rem",
+  fontSize: active ? "1.4rem" : "1rem",
   transition: "all 0.3s ease-in-out",
 }));
 
@@ -127,7 +134,7 @@ const Banner = () => {
                   variant="h3"
                   sx={{
                     fontWeight: "bold",
-                    fontSize: { xs: "1.8rem", sm: "2.5rem", md: "3rem" },
+                    fontSize: { xs: "1.8rem", sm: "2.2rem", md: "3rem" },
                   }}
                 >
                   {video.title}

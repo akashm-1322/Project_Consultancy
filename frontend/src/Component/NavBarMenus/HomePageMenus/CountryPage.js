@@ -37,6 +37,7 @@ const CountryImage = styled("img")({
   height: "80px",
   borderRadius: "8px",
   objectFit: "cover",
+  marginRight: "16px", // Added margin to separate from the button
 });
 
 const ContentBox = styled(Box)({
@@ -54,6 +55,7 @@ const StyledButton = styled(Button)({
   textTransform: "none",
   padding: "8px 12px",
   borderRadius: "6px",
+  marginLeft: "16px", // Added margin to align with flag
   "&:hover": {
     backgroundColor: "#0056b3",
     transform: "scale(1.05)",
@@ -63,29 +65,42 @@ const StyledButton = styled(Button)({
 
 const CardsContainer = styled(Box)(({ theme }) => ({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+  gridTemplateColumns: "repeat(3, 1fr)", // Default: 3 cards per row
   gap: "20px",
+  justifyContent: "center",
   marginTop: "12px",
+  [theme.breakpoints.down("md")]: {
+    gridTemplateColumns: "repeat(2, 1fr)", // 2 cards for tablets
+  },
   [theme.breakpoints.down("sm")]: {
-    gridTemplateColumns: "1fr",
+    gridTemplateColumns: "1fr", // 1 card for mobile
   },
 }));
 
 const CardStyled = styled(Card)({
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Card shadow effect
   borderRadius: "12px",
-  transition: "transform 0.3s ease",
+  margin: "8px", // Adds margin between cards
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
   "&:hover": {
-    transform: "translateY(-5px)",
+    transform: "translateY(-5px)", // Slight upward hover effect
     boxShadow: "0 8px 15px rgba(0, 0, 0, 0.3)",
   },
 });
+
+const CardMediaStyled = styled(CardMedia)({
+  width: "100%", // Ensures image spans the card width
+  height: "500px", // Fixed image height for consistency
+  objectFit: "cover",
+});
+
 
 const AnimatedNumber = styled("span")(({ theme }) => ({
   fontWeight: "bold",
   color: "#007bff",
 }));
 
+// Main Component
 const CountryPage = () => {
   const [countries, setCountries] = useState([]);
   const [fields, setFields] = useState([]);
@@ -145,38 +160,37 @@ const CountryPage = () => {
 
     return (
       <CardsContainer>
-        {matchingFields.map((field) => (
-          <CardStyled key={field._id}>
-            <CardMedia
-              component="img"
-              height="160"
-              image={`http://localhost:5500${field.imageUrl}`}
-              alt={field.fieldData}
-            />
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                {field.fieldData}
-              </Typography>
-              <Box component="table" width="100%" fontSize="0.9rem">
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: "left" }}>Names</th>
-                    <th style={{ textAlign: "left" }}>Vacancies</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {field.names.map((name, index) => (
-                    <tr key={index}>
-                      <td>{name}</td>
-                      <td>{field.vacancies[index]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Box>
-            </CardContent>
-          </CardStyled>
-        ))}
-      </CardsContainer>
+  {matchingFields.map((field) => (
+    <CardStyled key={field._id}>
+      <CardMediaStyled
+        component="img"
+        image={`http://localhost:5500${field.imageUrl}`}
+        alt={field.fieldData}
+      />
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          {field.fieldData}
+        </Typography>
+        <Box component="table" width="100%" fontSize="0.9rem">
+          <thead>
+            <tr>
+              <th style={{ textAlign: "left" }}>Names</th>
+              <th style={{ textAlign: "left" }}>Vacancies</th>
+            </tr>
+          </thead>
+          <tbody>
+            {field.names.map((name, index) => (
+              <tr key={index}>
+                <td>{name}</td>
+                <td>{field.vacancies[index]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Box>
+      </CardContent>
+    </CardStyled>
+  ))}
+</CardsContainer>
     );
   };
 

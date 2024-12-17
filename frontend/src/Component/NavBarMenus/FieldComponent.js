@@ -3,7 +3,7 @@ import axios from "axios";
 import { Box, Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, CircularProgress, Paper } from "@mui/material";
 import { MdDelete } from "react-icons/md";
 import { FaSort, FaUserEdit } from "react-icons/fa";
-import "./FieldComponent.css";
+import { AlignHorizontalCenterOutlined} from "@mui/icons-material";
 
 const FieldComponent = () => {
   const [fields, setFields] = useState([]);
@@ -171,12 +171,12 @@ const FieldComponent = () => {
               onChange={(e) => handleChange(e, index)}
               required
             />
-            <Button variant="contained" color="error" onClick={() => handleRemoveField(index)} sx={{ alignSelf: 'center' }}>
+            <Button color="error" onClick={() => handleRemoveField(index)} sx={{ alignSelf: 'center' , color:"#333" , backgroundColor: "#03a15a"}}>
               Remove
             </Button>
           </Box>
         ))}
-        <Button variant="contained" onClick={handleAddField}>Add Field</Button>
+        <Button sx={{ alignSelf: 'center' , color:"#333" , backgroundColor: "#03a15a"}} onClick={handleAddField}>Add Field</Button>
 
         <TextField
           fullWidth
@@ -198,11 +198,11 @@ const FieldComponent = () => {
           required
           sx={{ marginTop: 2 }}
         />
-        <Button variant="contained" component="label" sx={{ marginTop: 2 }}>
+        <Button component="label" sx={{ marginRight: 2 , marginBottom: 2 , marginTop: 2 , alignSelf: 'center' , color:"#333" , backgroundColor: "#03a15a"}}>
           Upload Image
           <input type="file" name="imageUrl" hidden onChange={handleChange} />
         </Button>
-        <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>
+        <Button type="submit" sx={{ width: '80%' , margin: 2  , color:"#333" , backgroundColor:"#03a15a"}}>
           {editingFieldId ? "Update Field" : "Add Field"}
         </Button>
       </form>
@@ -261,17 +261,20 @@ const FieldComponent = () => {
         </TableContainer>
       )}
       
-      <Box sx={{ marginTop: 2 }}>
-        {Number.isFinite(total) && itemsPerPage > 0 ? (
-          [...Array(Math.ceil(total / itemsPerPage)).keys()].map((number) => (
-            <Button key={number + 1} onClick={() => handlePageChange(number + 1)}>{number + 1}</Button>
-          ))
-        ) : (
-          <Typography>No data available for pagination.</Typography>
-        )}
-      </Box>
+      <div className="pagination text-align-center justify-content-center m-3" sx={{margin: 2 , justifyContent: 'center' , AlignHorizontalCenterOutlined}}>
+        {Array.from({ length: Math.ceil(total / itemsPerPage) }, (_, i) => (
+        <Button sx={{ alignSelf: 'center' , justifyContent:'center' , color:"#333" , backgroundColor: "#aaa"}}
+          key={i}
+          onClick={() => handlePageChange(i + 1)}
+          >
+          {i + 1}
+        </Button>
+        ))}
+      </div>
     </Box>
   );
 };
+
+
 
 export default FieldComponent;

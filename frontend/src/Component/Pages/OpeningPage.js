@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { FaUser, FaSignInAlt } from "react-icons/fa";
+import {
+  Box,
+  Button,
+  Typography,
+  TextField,
+  CircularProgress,
+  Fade,
+} from "@mui/material";
 import axios from "axios";
-import "./OpeningPage.css";
 
 const OpeningPage = ({ onNavigate }) => {
   const [isAdminLogin, setIsAdminLogin] = useState(false);
@@ -21,115 +28,225 @@ const OpeningPage = ({ onNavigate }) => {
     setLoading(true);
     setErrorMessage("");
 
-    // Password validation regex
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!passwordRegex.test(password)) {
       setErrorMessage(
-        "Use a strong password: At least one uppercase letter, one lowercase letter, one number, one special character, and minimum 8 characters."
+        "Strong password required: 8+ chars, uppercase, lowercase, number, and special char."
       );
       setLoading(false);
       return;
     }
 
     try {
-      // Send login request to the backend
-      const response = await axios.post("http://localhost:5500/api/admin/login", {
-        username,
-        password,
-      });
-    
+      const response = await axios.post(
+        "http://localhost:5500/api/admin/login",
+        { username, password }
+      );
       if (response.data.message === "Login successful") {
-        // Navigate to Admin Page with username
         onNavigate("ADMIN", response.data.username);
       } else {
-        // Handle unexpected responses
-        setErrorMessage("Unexpected response from server.");
+        setErrorMessage("Unexpected server response.");
       }
     } catch (error) {
-      // Display error messages based on server response
       setErrorMessage(
-        error.response?.data?.message || "Error connecting to the database"
+        error.response?.data?.message || "Error connecting to server."
       );
     } finally {
       setLoading(false);
     }
-    
   };
 
   return (
-    <div className="opening-page">
-      <div className="content-wrapper">
-        <div className="left-box">
-          <div className="page-content">
-            <h1 className="title">Welcome to Our Application</h1>
-            <p className="subheading">Select your role to continue:</p>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        height: "100vh",
+        background: "linear-gradient(to right, #f5f7fa, #c3cfe2)",
+      }}
+    >
+      {/* Left Box */}
+      <Box
+        sx={{
+          flex: 1,
+          p: { xs: 3, md: 5 },
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          animation: "fadeIn 1.2s ease-in",
+          "@keyframes fadeIn": {
+            from: { opacity: 0 },
+            to: { opacity: 1 },
+          },
+        }}
+      >
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+            color: "#333",
+            fontWeight: "bold",
+            textAlign: "center",
+            textShadow: "2px 2px 4px rgba(0,0,0,0.2)",
+          }}
+        >
+          Welcome to Our Application
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 4,
+            textAlign: "center",
+            color: "#555",
+          }}
+        >
+          Select your role to continue:
+        </Typography>
 
-            {/* Render User or Admin login options */}
-            {!isAdminLogin ? (
-              <div className="button-container">
-                <button onClick={handleUserLogin} className="button user-button">
-                  <FaUser className="button-icon" /> User Page
-                </button>
-                <button
-                  onClick={() => setIsAdminLogin(true)}
-                  className="button admin-button"
-                >
-                  <FaSignInAlt className="button-icon" /> Admin Login
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleAdminLogin} className="admin-login-form">
-                <div className="input-container">
-                  <input
-                   className="custom-form-control-o"
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="input-container">
-                  <input
-                    className="custom-form-control-o"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <button className="custom-form-control-o" type="submit" disabled={loading}>
-                  {loading ? "Logging in..." : "Login"}
-                </button>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <button
-                  type="button"
-                  onClick={() => setIsAdminLogin(false)}
-                  className="back-button"
-                >
-                  Back
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
+        {/* Role Selection Buttons */}
+        {!isAdminLogin ? (
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button
+              variant="contained"
+              startIcon={<FaUser />}
+              onClick={handleUserLogin}
+              sx={{
+                backgroundColor: "#1976d2",
+                color: "#fff",
+                px: 4,
+                py: 1.5,
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "#145da0",
+                  transform: "scale(1.05)",
+                },
+              }}
+            >
+              User Page
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<FaSignInAlt />}
+              onClick={() => setIsAdminLogin(true)}
+              sx={{
+                px: 4,
+                py: 1.5,
+                color: "#1976d2",
+                borderColor: "#1976d2",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "#1976d2",
+                  color: "#fff",
+                  transform: "scale(1.05)",
+                },
+              }}
+            >
+              Admin Login
+            </Button>
+          </Box>
+        ) : (
+          <Fade in={isAdminLogin}>
+            <Box
+              component="form"
+              onSubmit={handleAdminLogin}
+              sx={{
+                width: "100%",
+                maxWidth: 400,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                mt: 2,
+              }}
+            >
+              <TextField
+                label="Username"
+                variant="outlined"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              {errorMessage && (
+                <Typography color="error" variant="body2">
+                  {errorMessage}
+                </Typography>
+              )}
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={loading}
+                sx={{
+                  py: 1.5,
+                  backgroundColor: "#1976d2",
+                  "&:hover": {
+                    backgroundColor: "#145da0",
+                  },
+                }}
+              >
+                {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+              </Button>
+              <Button
+                variant="text"
+                onClick={() => setIsAdminLogin(false)}
+                sx={{ color: "#1976d2" }}
+              >
+                Back
+              </Button>
+            </Box>
+          </Fade>
+        )}
+      </Box>
 
-        <div className="right-box">
-          <div className="company-logo">
-            <img
-              src="/j99_logo.png" // Replace with the actual path to the logo
-              alt="Company Logo"
-              width="400"
-              height="400"
-            />
-          </div>
-          <p className="consultancy-name">J99 Recruitment Services Pvt. Ltd</p>
-        </div>
-      </div>
-    </div>
+      {/* Right Box */}
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#fff",
+          boxShadow: "-5px 0 10px rgba(0, 0, 0, 0.2)",
+          position: "relative",
+          animation: "slideIn 1.2s ease-out",
+          "@keyframes slideIn": {
+            from: { transform: "translateX(100%)", opacity: 0 },
+            to: { transform: "translateX(0)", opacity: 1 },
+          },
+        }}
+      >
+        <Box textAlign="center">
+          <img
+            src="/j99_logo.png"
+            alt="Company Logo"
+            style={{
+              width: "60%",
+              maxWidth: "300px",
+              marginBottom: "20px",
+              animation: "bounce 2s infinite",
+            }}
+          />
+          <Typography
+            variant="h5"
+            sx={{
+              color: "#1976d2",
+              fontWeight: "bold",
+            }}
+          >
+            J99 Recruitment Services Pvt. Ltd
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

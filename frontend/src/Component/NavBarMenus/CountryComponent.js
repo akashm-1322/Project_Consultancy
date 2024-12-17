@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Button, TextField, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
 import { MdDelete } from 'react-icons/md';
 import { FaUserEdit, FaSort } from 'react-icons/fa';
-import './CountryComponent.css';
 
 const CountryComponent = () => {
   const [countries, setCountries] = useState([]);
@@ -234,7 +233,7 @@ const CountryComponent = () => {
           onChange={handleChange}
           style={{ marginBottom: '16px' }}
         />
-        <Button variant="contained" color="primary" type="submit" fullWidth>
+        <Button color="primary" type="submit" sx={{ width: '80%' , margin: 2  , color:"#333" , backgroundColor:"#03a15a"}}>
           {editingCountryId ? 'Update Field' : 'Add Field'}
         </Button>
       </form>
@@ -290,12 +289,11 @@ const CountryComponent = () => {
         </TableContainer>
       )}
 
-      <div className="pagination">
+      <div className="pagination text-align-center justify-content-center m-3" sx={{margin: 2 , justifyContent: 'center'}}>
         {Array.from({ length: Math.ceil(total / contactsPerPage) }, (_, i) => (
-          <Button
+          <Button sx={{ alignSelf: 'center' , justifyContent:'center' , color:"#333" , backgroundColor: "#aaa"}}
             key={i}
             onClick={() => handlePageChange(i + 1)}
-            variant={currentPage === i + 1 ? 'contained' : 'outlined'}
           >
             {i + 1}
           </Button>
